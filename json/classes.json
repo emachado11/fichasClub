@@ -25,7 +25,7 @@
     "vidaPorNivel": 3,
     "esforcoPorNivel": 3,
     "sanidadePorNivel": 4,
-    "habilidade": ["eletico", "perito"]
+    "habilidade": ["ecletico", "perito"]
   },
   {
     "nome": "Ocultista",
@@ -33,7 +33,7 @@
     "vidaInicial": 12,
     "esforcoInicial": 4,
     "sanidadeInicial": 20,
-    "periciasTreinadas": ["Ocultismo", "Vontade"],
+    "periciasTreinadas": ["ocultismo", "vontade"],
     "quantidadePericias": 3,
     "proficiencias": ["Armas simples"],
     "vidaPorNivel": 2,

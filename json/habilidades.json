@@ -48,6 +48,12 @@
     "tag": "origem"
   },
   {
+    "id": "tracos_do_outro_lado",
+    "nome": "Traços do Outro Lado",
+    "descricao": "Você possui um poder paranormal à sua escolha. Porém, começa o jogo com metade da Sanidade normal para sua classe.",
+    "tag": "origem"
+  },
+  {
     "id": "calejado",
     "nome": "Calejado",
     "descricao": "Você recebe +1 PV para cada 5% de NEX.",
@@ -90,6 +96,114 @@
     "tag": "origem"
   },
   {
+    "id": "faro_para_pistas",
+    "nome": "Faro para Pistas",
+    "descricao": "Uma vez por cena, quando fizer um teste para procurar pistas, você pode gastar 1 PE para receber +5 nesse teste.",
+    "tag": "origem"
+  },
+  {
+    "id": "fontes_confiaveis",
+    "nome": "Fontes Confiáveis",
+    "descricao": "Uma vez por sessão de jogo, você pode gastar 1 PE para contatar suas fontes - pessoas com acesso a informações nas quais você confia. Isso permite que você role novamente um teste já realizado para encontrar uma pista, com +5 de bônus, ou receba outra informação relevante (a critério do mestre).",
+    "tag": "origem"
+  },
+  {
+    "id": "maos_pesadas",
+    "nome": "Mãos Pesadas",
+    "descricao": "Você recebe +2 em rolagens de dano com ataques corpo a corpo.",
+    "tag": "origem"
+  },
+  {
+    "id": "patrocinador_da_ordem",
+    "nome": "Patrocinador da Ordem",
+    "descricao": "Seu limite de crédito é sempre considerado um acima do atual.",
+    "tag": "origem"
+  },
+  {
+    "id": "posicao_de_combate",
+    "nome": "Posição de Combate",
+    "descricao": "No primeiro turno de cada cena de ação, você pode gastar 2 PE para receber uma ação de movimento adicional.",
+    "tag": "origem"
+  },
+  {
+    "id": "para_bellum",
+    "nome": "Para Bellum",
+    "descricao": "Você recebe +2 em rolagens de dano com armas de fogo.",
+    "tag": "origem"
+  },
+  {
+    "id": "ferramenta_de_trabalho",
+    "nome": "Ferramenta de Trabalho",
+    "descricao": "Escolha uma arma simples ou tática que, a critério do mestre, poderia ser usada como ferramenta em sua profissão (como uma marreta para um pedreiro). Você sabe usar a arma escolhida e recebe +1 em testes de ataque, rolagens de dano e margem de ameaça com ela.",
+    "tag": "origem"
+  },
+  {
+    "id": "patrulha",
+    "nome": "Patrulha",
+    "descricao": "Você recebe +2 em Defesa.",
+    "tag": "origem"
+  },
+  {
+    "id": "aula_de_campo",
+    "nome": "Aula de Campo",
+    "descricao": "Você sabe extrair o melhor das pessoas. Uma vez por cena, pode gastar uma ação padrão e 2 PE para fornecer +1 em um atributo de outro personagem em alcance curto até o fim da cena.",
+    "tag": "origem"
+  },
+  {
+    "id": "acalentar",
+    "nome": "Acalentar",
+    "descricao": "Você recebe +5 em testes de Religião para acalmar. Além disso, quando acalma uma pessoa, ela recebe um número de pontos de Sanidade igual a 1d6 + a sua Presença.",
+    "tag": "origem"
+  },
+  {
+    "id": "antes_so",
+    "nome": "Antes Só",
+    "descricao": "Você recebe +1 na Defesa, em testes de perícias e em seu limite de PE por turno se estiver sem nenhum aliado em alcance curto.",
+    "tag": "origem"
+  },
+  {
+    "id": "espirito_civico",
+    "nome": "Espírito Cívico",
+    "descricao": "Sempre que faz um teste para ajudar, você pode gastar 1 PE para aumentar o bônus concedido em +2.",
+    "tag": "origem"
+  },
+  {
+    "id": "eu_ja_sabia",
+    "nome": "Eu Já Sabia",
+    "descricao": "A critério do Mestre, sempre que tiver acesso a internet, você pode gastar 2 PE para substituir um teste de perícia qualquer por um teste de Tecnologia.",
+    "tag": "origem"
+  },
+  {
+    "id": "motor_de_busca",
+    "nome": "Motor de Busca",
+    "descricao": "A critério do Mestre, sempre que tiver acesso a internet, você pode gastar 2 PE para substituir um teste de perícia qualquer por um teste de Tecnologia.",
+    "tag": "origem"
+  },
+  {
+    "id": "desbravador",
+    "nome": "Desbravador",
+    "descricao": "Quando faz um teste de Adestramento ou Sobrevivência, você pode gastar 2 PE para receber +5 nesse teste. Além disso, você não sofre penalidade em deslocamento por terreno difícil.",
+    "tag": "origem"
+  },
+  {
+    "id": "impostor",
+    "nome": "Impostor",
+    "descricao": "Uma vez por cena, você pode gastar 2 PE para substituir um teste de perícia qualquer por um teste de Enganação.",
+    "tag": "origem"
+  },
+  {
+    "id": "dedicacao",
+    "nome": "Dedicação",
+    "descricao": "Você recebe +1 PE, e mais 1 PE adicional a cada NEX ímpar (15%, 25%...). Além disso, seu limite de PE por turno aumenta em 1 (em NEX 5% seu limite é 2, em NEX 10% é 3 e assim por diante; isso não afeta a DT de seus efeitos).",
+    "tag": "origem"
+  },
+  {
+    "id": "cicatrizes_psicologicas",
+    "nome": "Cicatrizes Psicológicas",
+    "descricao": "Você recebe +1 de Sanidade para cada 5% de NEX.",
+    "tag": "origem"
+  },
+  {
     "id": "escolhido_pelo_outro_lado",
     "nome": "Escolhido pelo Outro Lado",
     "descricao": "Você teve uma experiência paranormal e foi marcado pelo Outro Lado, absorvendo conhecimento e poder para realizar rituais. Pode lançar rituais de 1º círculo e aprende novos conforme avança de NEX.",
@@ -102,7 +216,7 @@
     "tag": "classe"
   },
   {
-    "id": "eletico",
+    "id": "ecletico",
     "nome": "Eclético",
     "descricao": "Quando faz um teste de uma perícia, você pode gastar 2 PE para receber os benefícios de ser treinado nesta perícia.",
     "tag": "classe"

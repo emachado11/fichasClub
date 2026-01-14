@@ -2,168 +2,196 @@
     {
         "id": "acrobacia",
         "nome": "Acrobacia",
+        "atributo": "AGI",
         "carga": true,
         "treino": false
     },
     {
         "id": "adestramento",
         "nome": "Adestramento",
+        "atributo": "PRE",
         "carga": false,
         "treino": true
     },
     {
         "id": "artes",
         "nome": "Artes",
+        "atributo": "PRE",
         "carga": false,
         "treino": true
     },
     {
         "id": "atletismo",
         "nome": "Atletismo",
+        "atributo": "FOR",
         "carga": false,
         "treino": false
     },
     {
         "id": "atualidades",
         "nome": "Atualidades",
+        "atributo": "INT",
         "carga": false,
         "treino": false
     },
     {
         "id": "ciencias",
         "nome": "Ciências",
+        "atributo": "INT",
         "carga": false,
         "treino": true
     },
     {
         "id": "crime",
         "nome": "Crime",
+        "atributo": "AGI",
         "carga": true,
         "treino": true
     },
     {
         "id": "diplomacia",
         "nome": "Diplomacia",
+        "atributo": "PRE",
         "carga": false,
         "treino": false
     },
     {
         "id": "enganacao",
         "nome": "Enganação",
+        "atributo": "PRE",
         "carga": false,
         "treino": false
     },
     {
         "id": "fortitude",
         "nome": "Fortitude",
+        "atributo": "VIG",
         "carga": false,
         "treino": false
     },
     {
         "id": "furtividade",
         "nome": "Furtividade",
+        "atributo": "AGI",
         "carga": true,
         "treino": false
     },
     {
         "id": "iniciativa",
         "nome": "Iniciativa",
+        "atributo": "AGI",
         "carga": false,
         "treino": false
     },
     {
         "id": "intimidacao",
         "nome": "Intimidação",
+        "atributo": "PRE",
         "carga": false,
         "treino": false
     },
     {
         "id": "intuicao",
         "nome": "Intuição",
+        "atributo": "PRE",
         "carga": false,
         "treino": false
     },
     {
         "id": "investigacao",
         "nome": "Investigação",
+        "atributo": "INT",
         "carga": false,
         "treino": false
     },
     {
         "id": "luta",
         "nome": "Luta",
+        "atributo": "FOR",
         "carga": false,
         "treino": false
     },
     {
         "id": "medicina",
         "nome": "Medicina",
+        "atributo": "INT",
         "carga": false,
         "treino": false
     },
     {
         "id": "ocultismo",
         "nome": "Ocultismo",
+        "atributo": "INT",
         "carga": false,
         "treino": true
     },
     {
         "id": "percepcao",
         "nome": "Percepção",
+        "atributo": "PRE",
         "carga": false,
         "treino": false
     },
     {
         "id": "pilotagem",
         "nome": "Pilotagem",
+        "atributo": "AGI",
         "carga": false,
         "treino": true
     },
     {
         "id": "pontaria",
         "nome": "Pontaria",
+        "atributo": "AGI",
         "carga": false,
         "treino": false
     },
     {
         "id": "profissao",
         "nome": "Profissão",
+        "atributo": "INT",
         "carga": false,
         "treino": true
     },
     {
         "id": "reflexos",
         "nome": "Reflexos",
+        "atributo": "AGI",
         "carga": false,
         "treino": false
     },
     {
         "id": "religiao",
         "nome": "Religião",
+        "atributo": "PRE",
         "carga": false,
         "treino": true
     },
     {
         "id": "sobrevivencia",
         "nome": "Sobrevivência",
+        "atributo": "INT",
         "carga": false,
         "treino": false
     },
     {
         "id": "tatica",
         "nome": "Tática",
+        "atributo": "INT",
         "carga": false,
         "treino": true
     },
     {
         "id": "tecnologia",
         "nome": "Tecnologia",
+        "atributo": "INT",
         "carga": false,
         "treino": true
     },
     {
         "id": "vontade",
         "nome": "Vontade",
+        "atributo": "PRE",
         "carga": false,
         "treino": false
     }
