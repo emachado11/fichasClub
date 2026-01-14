@@ -5,7 +5,7 @@
     "vidaInicial": 20,
     "esforcoInicial": 2,
     "sanidadeInicial": 12,
-    "periciasTreinadas": [],
+    "periciasTreinadas": ["Luta/Pontaria","Reflexos/Fortitude"],
     "quantidadePericias": 1,
     "proficiencias": ["Armas simples", "Armas táticas", "Proteções leves"],
     "vidaPorNivel": 4,

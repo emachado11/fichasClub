@@ -57,8 +57,8 @@
     "nome": "Chef",
     "info": "Você é um cozinheiro amador ou profissional. Talvez trabalhasse em um restaurante, talvez simplesmente gostasse de cozinhar para a família e amigos. Como sua comida fez com que você se envolvesse com o paranormal? Ninguém sabe. Mas os outros agentes adoram quando você vai para a missão!",
     "periciasTreinadas": [
-      "ciencias",
-      "investigacao"
+      "fortitude",
+      "profissao"
     ],
     "habilidade": [
       "ingrediente_secreto"
@@ -68,8 +68,8 @@
     "nome": "Cientista Forense",
     "info": "Você era um pesquisador ou professor universitário. De forma proposital ou não, seus estudos tocaram em assuntos misteriosos e chamaram a atenção da Ordo Realitas.",
     "periciasTreinadas": [
-      "fortitude",
-      "profissao"
+      "ciencias",
+      "investigacao"
     ],
     "habilidade": [
       "investigacao_cientifica"
@@ -90,8 +90,8 @@
     "nome": "Cultista Arrependido",
     "info": "Você fez parte de um culto paranormal. Talvez fossem ignorantes iludidos, que acreditavam estar contatando entidades benevolentes. Talvez soubessem exatamente o que estavam fazendo. Seja como for, algo abriu seus olhos e agora você luta pelo lado certo — embora carregue para sempre traços de sua vida pregressa. Outros membros da Ordem podem desconfiar de sua conversão e você sabe que precisará se esforçar para conquistar a confiança de todos.",
     "periciasTreinadas": [
-      "ciencias",
-      "investigacao"
+      "ocultismo",
+      "religiao"
     ],
     "habilidade": [
       "tracos_do_outro_lado"

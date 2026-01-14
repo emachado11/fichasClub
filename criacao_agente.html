@@ -1,54 +1,58 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
-    <title>Ficha de Personagem</title>
+    <title>Criação de Agente</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/criacao_agente.css">
 </head>
+
 <body>
 
-    <!-- Coluna esquerda: Classes + Origens -->
-    <div class="left-panel">
-        <h2>Classes</h2>
-        <div class="card-container" id="classes-container"></div>
-
-        <h2>Origens</h2>
-        <div class="card-container" id="origens-cards"></div>
+    <div class="sidebar-wrapper">
+        <button data-tab="classes-tab">Classe</button>
+        <button data-tab="trilhas-tab">Trilhas</button>
+        <button data-tab="origens-tab">Origens</button>
+        <button data-tab="outros-tab">Outros</button>
     </div>
 
-    <!-- Coluna central: Atributos + Nome -->
+    <!-- ABAS -->
+    <div class="tab-panel" id="classes-tab"></div>
+    <div class="tab-panel" id="trilhas-tab">Trilhas - placeholder</div>
+    <div class="tab-panel" id="origens-tab"></div>
+    <div class="tab-panel" id="outros-tab">
+        <label>Aparência</label><input type="text">
+        <label>Personalidade</label><input type="text">
+        <label>Histórico</label><input type="text">
+        <label>Objetivo</label><input type="text">
+    </div>
+
+    <!-- CENTRO -->
     <div class="center-panel">
         <div class="name-inputs">
             <input type="text" placeholder="Nome">
             <input type="text" placeholder="Sobrenome">
         </div>
-
         <div class="attributes-wrapper">
-            <img src="assets/atributos.png" alt="Atributos" class="attributes-img">
+            <img src="assets/atributos.png" class="attributes-img" alt="Atributos">
             <div class="attribute AGI"><span contenteditable="true" class="attr-input">1</span></div>
             <div class="attribute INT"><span contenteditable="true" class="attr-input">1</span></div>
             <div class="attribute VIG"><span contenteditable="true" class="attr-input">1</span></div>
             <div class="attribute PRE"><span contenteditable="true" class="attr-input">1</span></div>
             <div class="attribute FOR"><span contenteditable="true" class="attr-input">1</span></div>
-
-            <div class="counter">
-                Pontos restantes: <span id="points-left">4</span>
+            <div class="counter">Pontos restantes: <span id="points-left">4</span></div>
+            <div class="finalizar-wrapper">
+                <button class="finalizar-btn">Finalizar Criação</button>
             </div>
         </div>
     </div>
 
-    <!-- Coluna direita: Perícias -->
-    <div class="right-panel">
-        <h2>Perícias</h2>
-        <div id="pericias-container"></div>
-    </div>
+    <!-- DIREITA - Perícias -->
+    <div class="right-panel" id="pericias-container"></div>
 
-    <!-- Popup flutuante -->
-    <div id="details-popup" class="details-popup" style="display:none;"></div>
-
-<script type="module" src="./js/criacao_agente.js"></script>
-<script type="module" src="./js/header.js"></script>
-
+    <script src="./js/criacao_agente.js"></script>
+    <script type="module" src="./js/header.js"></script>
 </body>
+
 </html>
