@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ficha de Personagem</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/criacao_agente.css">
+</head>
+
+<body>
+
+    <!-- Lado esquerdo -->
+    <div class="left-panel">
+        <div class="name-inputs">
+            <input type="text" placeholder="Nome">
+            <input type="text" placeholder="Sobrenome">
+        </div>
+        <div class="attributes-wrapper">
+            <img src="assets/atributos.png" alt="Atributos" class="attributes-img">
+
+            <!-- Atributos -->
+            <div class="attribute AGI"><span contenteditable="true" class="attr-input">1</span></div>
+            <div class="attribute INT"><span contenteditable="true" class="attr-input">1</span></div>
+            <div class="attribute VIG"><span contenteditable="true" class="attr-input">1</span></div>
+            <div class="attribute PRE"><span contenteditable="true" class="attr-input">1</span></div>
+            <div class="attribute FOR"><span contenteditable="true" class="attr-input">1</span></div>
+
+            <div class="counter">
+                Pontos restantes: <span id="points-left">4</span>
+            </div>
+        </div>
+
+
+
+        <h2>Classes</h2>
+        <div class="card-container" id="classes-container">
+            <!-- Cards preenchidos via JS -->
+        </div>
+    </div>
+
+    <!-- Centro/Direita -->
+    <div class="right-panel">
+        <div class="pericias" id="pericias-container">
+            <h2>Perícias</h2>
+        </div>
+        <div class="origens" id="origens-container">
+            <h2>Origens</h2>
+            <div class="card-container" id="origens-cards"></div>
+        </div>
+    </div>
+
+    <script>
+        // ====== Função para atualizar atributos ======
+        const attrSpans = document.querySelectorAll('.attr-input');
+        const pointsLeft = document.getElementById('points-left');
+
+        let limite = 9;   // limite total editável
+        const maxAttr = 3; // máximo por atributo
+
+        function updateAttributes() {
+            let total = 0;
+
+            // 1ª passada: garante limites individuais
+            attrSpans.forEach(span => {
+                let val = parseInt(span.textContent) || 0;
+                if (val < 0) val = 0;
+                if (val > maxAttr) val = maxAttr;
+                span.textContent = val;
+                total += val;
+            });
+
+            // 2ª passada: se total ultrapassa limite, ajusta proporcionalmente
+            if (total > limite) {
+                let excess = total - limite;
+                for (let i = attrSpans.length - 1; i >= 0; i--) {
+                    let val = parseInt(attrSpans[i].textContent);
+                    if (val > 0) {
+                        let reduce = Math.min(val, excess);
+                        val -= reduce;
+                        attrSpans[i].textContent = val;
+                        excess -= reduce;
+                        if (excess <= 0) break;
+                    }
+                }
+            }
+
+            // Atualiza contador
+            let sum = 0;
+            attrSpans.forEach(span => sum += parseInt(span.textContent) || 0);
+            pointsLeft.textContent = limite - sum;
+        }
+
+        attrSpans.forEach(span => {
+            span.addEventListener('input', updateAttributes);
+            span.addEventListener('keypress', e => {
+                if (!/[0-9]/.test(e.key)) e.preventDefault();
+            });
+        });
+
+        updateAttributes();
+
+        // ====== Função para criar cards ======
+        function createCard(item, containerId) {
+            const container = document.getElementById(containerId);
+            const card = document.createElement('div');
+            card.classList.add('card');
+
+            // Título e botão
+            card.innerHTML = `<h3>${item.nome}</h3><button class="select-btn">Selecionar</button>`;
+
+            // Detalhes expansíveis
+            const detailsContent = document.createElement('div');
+            detailsContent.classList.add('details');
+
+            if (item.vidaInicial !== undefined) {
+                detailsContent.innerHTML = `
+            <div class="class-info">${item.info || ''}</div>
+            <div class="class-stats">
+                <div class="stat-line">
+                    <span>Pontos de Vida iniciais</span>
+                    <span class="stat-value">${item.vidaInicial} + VIG</span>
+                    <span class="stat-sub">PV por NEX/nível: ${item.vidaPorNivel} + VIG</span>
+                </div>
+                <div class="stat-line">
+                    <span>Esforço inicial</span>
+                    <span class="stat-value">${item.esforcoInicial} + PRE</span>
+                    <span class="stat-sub">Esforço por NEX/nível: ${item.esforcoPorNivel} + PRE</span>
+                </div>
+                <div class="stat-line">
+                    <span>Sanidade inicial</span>
+                    <span class="stat-value">${item.sanidadeInicial}</span>
+                    <span class="stat-sub">Sanidade por NEX/nível: ${item.sanidadePorNivel}</span>
+                </div>
+                <div class="stat-line">
+                    <span>Perícias treinadas</span>
+                    <span class="stat-value">${Array.isArray(item.periciasTreinadas) && item.periciasTreinadas.length ? item.periciasTreinadas.join(', ') : 'Nenhuma'}</span>
+                </div>
+                <div class="stat-line">
+                    <span>Proficiencias</span>
+                    <span class="stat-value">${Array.isArray(item.proficiencias) && item.proficiencias.length ? item.proficiencias.join(', ') : 'Nenhuma'}</span>
+                </div>
+                <div class="stat-line">
+                    <span>Habilidades</span>
+                    ${Array.isArray(item.habilidade) && item.habilidade.length
+                        ? item.habilidade.map((hab, index) => `
+                        <div class="ability-block">
+                            <span class="ability-name">${hab}</span>
+                            <span class="ability-info">${item.infoHabilidade[index] || 'Sem descrição'}</span>
+                        </div>
+                    `).join('')
+                        : '<span class="ability-name">Nenhuma</span>'
+                    }
+                </div>
+            </div>
+        `;
+            } else {
+                detailsContent.innerHTML = `<div class="details-text">${item.info || ''}</div>`;
+            }
+
+            card.appendChild(detailsContent);
+
+            const btn = card.querySelector('.select-btn');
+
+            // Clique no card (expansível)
+            card.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') return;
+                document.querySelectorAll(`#${containerId} .card`).forEach(c => c !== card ? c.classList.remove('active') : null);
+                card.classList.toggle('active');
+            });
+
+            // Clique no botão Selecionar
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+
+                // Reset de todos os botões
+                document.querySelectorAll(`#${containerId} .select-btn`).forEach(b => {
+                    b.textContent = 'Selecionar';
+                    b.style.opacity = '1';
+                });
+
+                // Botão atual marcado
+                btn.textContent = 'Selecionado';
+                btn.style.opacity = '0.5';
+
+                // Ajusta limite de atributos
+                if (item.nome.toLowerCase() === 'mundano/sobrevivente') {
+                    limite = 8;
+                } else {
+                    limite = 9;
+                }
+                updateAttributes();
+            });
+
+            container.appendChild(card);
+        }
+
+        // ====== Carregar classes do JSON ======
+        fetch('json/classes.json')
+            .then(res => res.json())
+            .then(classesData => {
+                if (!Array.isArray(classesData)) throw new Error("JSON inválido");
+                classesData.forEach(c => createCard(c, 'classes-container'));
+            })
+            .catch(err => console.error("Erro ao carregar classes:", err));
+
+        // ====== Origens ======
+        const origens = [
+            { nome: "Nome da origem 1", info: "Detalhes da origem 1" },
+            { nome: "Nome da origem 2", info: "Detalhes da origem 2" },
+            { nome: "Nome da origem 3", info: "Detalhes da origem 3" }
+        ];
+        origens.forEach(o => createCard(o, 'origens-cards'));
+
+        // ====== Perícias ======
+        const periciasContainer = document.getElementById('pericias-container');
+        for (let i = 1; i <= 10; i++) {
+            const line = document.createElement('div');
+            line.classList.add('pericia-line');
+            line.innerHTML = `<span>Perícia ${i} (Atributo)</span>
+                          <select>${[...Array(16).keys()].map(n => `<option value="${n}">${n}</option>`).join('')}</select>
+                          <input type="number" value="0" min="0">`;
+            periciasContainer.appendChild(line);
+        }
+    </script>
+
+    <script type="module" src="js/header.js"></script>
+    <script type="module" src="./js/auth-guard.js"></script>
+
+</body>
+
+</html>

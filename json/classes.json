@@ -1,0 +1,64 @@
+[
+  {
+    "nome": "Combatente",
+    "info": "Treinado para lutar com todo tipo de armas, e com a força e a coragem para encarar os perigos de frente, É o tipo de agente que prefere abordagens mais diretas e costuma atirar primeiro e perguntar depois.",
+    "vidaInicial": 20,
+    "esforcoInicial": 2,
+    "sanidadeInicial": 12,
+    "periciasTreinadas": [],
+    "quantidadePericias": 1,
+    "proficiencias": ["Armas simples", "Armas táticas", "Proteções leves"],
+    "vidaPorNivel": 4,
+    "esforcoPorNivel": 2,
+    "sanidadePorNivel": 3,
+    "habilidade": ["Ataque Especial"],
+    "infoHabilidade":["Quando faz um ataque, você pode gastar 2 PE para receber +5 no teste de ataque ou na rolagem de dano. Conforme avança de NEX, você pode gastar +1 PE para receber mais bônus de +5. Você pode aplicar cada bônus de +5 em ataque ou dano. Por exemplo, em NEX 55%, você pode gastar 4 PE para receber +5 no teste de ataque e +10 na rolagem de dano."]
+  },
+  {
+    "nome": "Especialista",
+    "info": "Um agente que confia mais em esperteza do que em força bruta. Um especialista se vale de conhecimento técnico, raciocínio rápido ou mesmo lábia para resolver mistérios e enfrentar o paranormal.",
+    "vidaInicial": 16,
+    "esforcoInicial": 3,
+    "sanidadeInicial": 16,
+    "periciasTreinadas": [""],
+    "quantidadePericias": 7,
+    "proficiencias": ["Armas simples", "Proteções leves"],
+    "vidaPorNivel": 3,
+    "esforcoPorNivel": 3,
+    "sanidadePorNivel": 4,
+    "habilidade": ["Eclético", "Perito"],
+    "infoHabilidade":["Quando faz um teste de uma perícia, você pode gastar 2 PE para receber os benefícios de ser treinado nesta perícia.", "Escolha duas perícias nas quais você é treinado (exceto Luta e Pontaria). Quando faz um teste de uma dessas perícias, você pode gastar 2 PE para somar +1d6 no resultado do teste. Conforme avança de NEX, você pode gastar +1 PE para aumentar o dado de bônus. Por exemplo, em NEX 55%, pode gastar 4 PE para receber +1d10 no teste."]
+  },
+  {
+    "nome": "Ocultista",
+    "info": "O Outro Lado é misterioso, perigoso e, de certa forma, cativante. Muitos estudiosos das entidades se perdem em seus reinos obscuros em busca de poder, mas existem aqueles que visam compreender e dominar os mistérios paranormais para usá-los para combater o próprio Outro Lado. Esse tipo de agente não é apenas um conhecedor do oculto, como também possui talento para se conectar com elementos paranormais.",
+    "vidaInicial": 12,
+    "esforcoInicial": 4,
+    "sanidadeInicial": 20,
+    "periciasTreinadas": ["Ocultismo", "Vontade"],
+    "quantidadePericias": 3,
+    "proficiencias": ["Armas simples"],
+    "vidaPorNivel": 2,
+    "esforcoPorNivel": 4,
+    "sanidadePorNivel": 5,
+    "habilidade": ["Escolhido pelo Outro Lado"],
+    "infoHabilidade":["Você teve uma experiência paranormal e foi marcado pelo Outro Lado, absorvendo o conhecimento e poder necessários para realizar rituais. Você pode lançar rituais de 1º círculo. À medida que aumenta seu NEX, pode lançar rituais de círculos maiores (2º círculo em NEX 25%, 3º círculo em NEX 55% e 4º círculo em NEX 85%). Você começa com três rituais de 1º círculo. Sempre que avança de NEX, aprende um ritual de qualquer círculo que possa lançar. Esses rituais não contam no seu limite de rituais conhecidos."]
+    
+  },
+  {
+    "nome": "Mundano/Sobrevivente",
+    "info": "Você é uma pessoa comum, com uma ocupação regular e uma vida normal. Claro, considerando que você é um personagem de Ordem Paranormal RPG, essa normalidade toda não vai durar muito…",
+    "vidaInicial": 8,
+    "esforcoInicial": 2,
+    "sanidadeInicial": 8,
+    "periciasTreinadas": [""],
+    "quantidadePericias": 1,
+    "proficiencias": ["Armas simples"],
+    "vidaPorNivel": 2,
+    "esforcoPorNivel": 1,
+    "sanidadePorNivel": 2,
+    "habilidade": ["Empenho"],
+    "infoHabilidade":["Você pode não ter treinamento especial, mas compensa com dedicação e esforço. Quando faz um teste de perícia, você pode gastar 1 PE para receber +2 nesse teste."]
+  }
+
+]

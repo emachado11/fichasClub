@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar Campanha • Club</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/criacao_campanha.css">
+</head>
+<body>
+    <!-- CONTEÚDO CENTRAL -->
+    <main class="criacao-wrapper">
+        <h1>Criar Campanha</h1>
+
+        <div class="criacao-box">
+            <!-- NOME -->
+            <div class="campo">
+                <label for="nome">Nome da campanha</label>
+                <input
+                    type="text"
+                    id="nome-campanha"
+                    placeholder="Digite o nome da campanha"
+                >
+            </div>
+
+            <!-- IMAGEM -->
+            <div class="campo">
+                <label for="imagem-campanha">Imagem da campanha</label>
+                <input
+                    type="url"
+                    id="imagem-campanha"
+                    placeholder="Cole a URL da imagem (opcional)"
+                >
+            </div>
+
+            <!-- BOTÕES -->
+            <div class="botoes">
+                <a href="campanhas.html" class="btn cancelar">
+                    Cancelar
+                </a>
+
+                <button class="btn criar" id="btn-criar">
+                    Criar Campanha
+                </button>
+            </div>
+        </div>
+    </main>
+
+</body>
+<script type="module">
+import { auth, db } from "./js/firebase.js";
+import { addDoc, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const btn = document.getElementById("btn-criar");
+
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  btn.onclick = async () => {
+    const nome = document.getElementById("nome-campanha").value.trim();
+    const imagemUrl = document.getElementById("imagem-campanha").value.trim();
+
+    if (!nome) {
+      alert("Digite um nome para a campanha");
+      return;
+    }
+
+    await addDoc(
+      collection(db, "users", user.uid, "campaigns"),
+      {
+        nome,
+        imagem: imagemUrl || null,
+        agentes: [],
+        mestreId:user.uid,
+        regrasOpcionais: {},
+        criadaEm: Date.now()
+      }
+    );
+
+    window.location.href = "campanhas.html";
+  };
+});
+</script>
+<script type="module" src="js/header.js"></script>
+</html>
+

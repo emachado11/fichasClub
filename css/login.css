@@ -1,0 +1,88 @@
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+}
+
+.login-wrapper h1 {
+    font-family: "Playfair Display", serif;
+    font-size: 36px;
+}
+
+.login-box {
+    width: 320px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 32px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.campo label {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.campo input {
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+}
+
+.btn {
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+}
+
+.btn.entrar {
+    background: #2b3a4a;
+    color: white;
+}
+
+.btn.criar {
+    background: transparent;
+    border: 1px solid #2b3a4a;
+    color: white;
+}
+
+.erro {
+    color: #ff6b6b;
+    font-size: 14px;
+    text-align: center;
+}
+
+.btn.google {
+    background: #1a1a1a;
+    border: 1px solid #444;
+    color: white;
+}
+
+.login-wrapper,
+.login-box,
+.login-box * {
+    pointer-events: auto;
+}
+
+.logo-club {
+    pointer-events: auto;
+    z-index: 1;
+}
+
+.login-wrapper {
+    position: relative;
+    z-index: 10;
+}

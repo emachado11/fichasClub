@@ -1,0 +1,83 @@
+/* WRAPPER CENTRAL */
+.criacao-wrapper {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    text-align: center;
+}
+
+.criacao-wrapper h1 {
+    font-family: "Playfair Display", serif;
+    font-size: 48px;
+}
+
+/* CAIXA */
+.criacao-box {
+    width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* CAMPOS */
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+}
+
+.campo label {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.campo input[type="text"],
+.campo input[type="file"] {
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.85);
+    padding: 12px;
+    color: white;
+    font-size: 16px;
+    outline: none;
+}
+
+.campo input::placeholder {
+    color: rgba(255,255,255,0.4);
+}
+
+/* BOTÕES */
+.botoes {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.btn {
+    flex: 1;
+    padding: 12px 0;
+    border: 2px solid white;
+    text-decoration: none;
+    font-family: "Playfair Display", serif;
+    font-size: 18px;
+    text-align: center;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+/* CANCELAR */
+.btn.cancelar {
+    opacity: 0.7;
+}
+
+.btn.cancelar:hover {
+    background: rgba(255,255,255,0.06);
+}
+
+/* CRIAR */
+.btn.criar:hover {
+    background: rgba(180,200,255,0.08);
+    box-shadow: 0 0 25px rgba(180,200,255,0.2);
+}

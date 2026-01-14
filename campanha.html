@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Campanha • Club</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/campanha.css">
+</head>
+
+<body class="campanha-layout">
+
+    <!-- HERO -->
+    <section class="campanha-hero"></section>
+
+    <!-- PAINÉIS -->
+    <section class="campanha-paineis">
+        <div class="painel">
+
+            <!-- HEADER -->
+            <div class="painel-header">
+                <h2>Agentes</h2>
+
+                <div class="dropdown-wrapper">
+                    <button class="btn-add-agente" id="btn-agente-menu">+</button>
+
+                    <div class="dropdown-menu" id="agente-menu">
+                        <button data-acao="add-agente">Adicionar agente</button>
+                        <button data-acao="convidar-jogador">Convidar jogador</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTEÚDO -->
+            <div class="painel-conteudo">
+                <p class="placeholder">Nenhum agente adicionado ainda.</p>
+            </div>
+
+        </div>
+
+
+        <div class="painel">
+            <h2>Iniciativa</h2>
+            <p class="placeholder">Nada por aqui ainda.</p>
+        </div>
+
+        <div class="painel regras-opcionais">
+            <h2>Regras Opcionais</h2>
+
+            <div class="regras-bloco">
+                <h3>Regras Opcionais do Livro Básico</h3>
+
+                <label class="regra-item"><input type="checkbox" data-regra="nex0">Personagens de NEX 0%<br>(OPRPG, p.
+                    171)</label>
+                <label class="regra-item"><input type="checkbox" data-regra="idade">Personagens de Idade
+                    Variada<br>(OPRPG, p. 172)</label>
+                <label class="regra-item"><input type="checkbox" data-regra="municao">Contagem de Munição<br>(OPRPG, p.
+                    174)</label>
+                <label class="regra-item"><input type="checkbox" data-regra="lesoes">Lesões<br>(OPRPG, p. 174)</label>
+                <label class="regra-item"><input type="checkbox" data-regra="inspiracao">Inspiração Resoluta<br>(OPRPG,
+                    p. 174)</label>
+                <label class="regra-item"><input type="checkbox" data-regra="loucura">Loucura Não Letal<br>(OPRPG, p.
+                    175)</label>
+            </div>
+            <div class="regras-bloco">
+                <h3>Regras Opcionais do Sobrevivendo ao Horror</h3>
+                <label class="regra-item"><input type="checkbox" data-regra="nex_exp"> NEX & Experiência<br>(SaH, p.
+                    98)</label>
+                <label class="regra-item"><input type="checkbox" data-regra="sem_sanidade"> Jogando sem
+                    Sanidade<br>(SaH, p. 104)</label>
+                <label class="regra-item"><input type="checkbox" data-regra="ferimentos"> Ferimentos
+                    Debilitantes<br>(SaH, p. 105)</label>
+                <label class="regra-item"><input type="checkbox" data-regra="sem_mapa"> Jogando sem Mapa<br>(SaH, p.
+                    106)</label>
+                <label class="regra-item"><input type="checkbox" data-regra="patentes"> Evolução por Patentes<br>(SaH,
+                    p. 108)</label>
+                <label class="regra-item"><input type="checkbox" data-regra="limites"> Os Limites da Compreensão
+                    Humana<br>(SaH, p. 113)</label>
+                <label class="regra-item"><input type="checkbox" data-regra="conjuracao_complexa"> Conjuração
+                    Complexa<br>(SaH, p. 114)</label>
+                <label class="regra-item"><input type="checkbox" data-regra="rituais_desconhecidos"> Conjurando Rituais
+                    Desconhecidos<br>(SaH, p. 117)</label>
+                <label class="regra-item"><input type="checkbox" data-regra="combate_narrativo"> Combate
+                    Narrativo<br>(SaH, p. 119)</label>
+            </div>
+        </div>
+
+    </section>
+
+</body>
+<script type="module">
+    import { auth, db } from "./js/firebase.js";
+    import { doc, getDoc, updateDoc } from
+        "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { onAuthStateChanged } from
+        "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    const params = new URLSearchParams(window.location.search);
+    const campanhaId = params.get("id");
+    if (!campanhaId) {
+        window.location.href = "campanhas.html";
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        const campanhaRef = doc(db, "users", user.uid, "campaigns", campanhaId);
+        const snap = await getDoc(campanhaRef);
+
+        if (!snap.exists()) {
+            window.location.href = "campanhas.html";
+            return;
+        }
+
+        const campanha = snap.data();
+
+        document.title = `${campanha.nome} • Club`;
+
+        /* HERO */
+        if (campanha.imagem) {
+            document.querySelector(".campanha-hero")
+                .style.backgroundImage = `url(${campanha.imagem})`;
+        }
+
+        /* ===== REGRAS OPCIONAIS ===== */
+
+        const regrasSalvas = campanha.regrasOpcionais || {};
+        const checkboxes = document.querySelectorAll(
+            '.regras-opcionais input[type="checkbox"]'
+        );
+
+        // RESTAURAR
+        checkboxes.forEach(cb => {
+            const id = cb.dataset.regra;
+            const label = cb.closest(".regra-item");
+
+            if (regrasSalvas[id]) {
+                cb.checked = true;
+                label.classList.add("ativa");
+            }
+
+            // SALVAR
+            cb.addEventListener("change", async () => {
+                const ativa = cb.checked;
+                label.classList.toggle("ativa", ativa);
+
+                await updateDoc(campanhaRef, {
+                    [`regrasOpcionais.${id}`]: ativa
+                });
+            });
+        });
+
+        /* ===== DROPDOWN AGENTES ===== */
+
+        const btnMenu = document.getElementById("btn-agente-menu");
+        const menu = document.getElementById("agente-menu");
+
+        btnMenu.addEventListener("click", (e) => {
+            e.stopPropagation();
+            menu.classList.toggle("ativo");
+        });
+
+        // fechar ao clicar fora
+        document.addEventListener("click", () => {
+            menu.classList.remove("ativo");
+        });
+
+        // ações
+        menu.addEventListener("click", (e) => {
+            const acao = e.target.dataset.acao;
+            if (!acao) return;
+
+            menu.classList.remove("ativo");
+
+            if (acao === "add-agente") {
+                alert("Adicionar agente (em breve)");
+            }
+
+            if (acao === "convidar-jogador") {
+                alert("Convidar jogador (em breve)");
+            }
+        });
+
+
+
+
+    });
+
+    const isMestre = campanha.mestreId === user.uid;
+
+    if (!isMestre) {
+        document.body.classList.add("modo-jogador");
+    }
+
+</script>
+
+<script type="module" src="js/header.js"></script>
+
+</html>

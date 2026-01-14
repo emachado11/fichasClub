@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Campanhas • Club</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/listagem.css">
+</head>
+
+<body>
+  <main class="pagina-wrapper">
+
+    <header class="pagina-topo campanhas-topo">
+      <h1>Campanhas</h1>
+      <span class="qtd">0 Campanhas</span>
+      <a href="criacao_campanha.html" class="btn-add">+</a>
+    </header>
+
+    <section class="pagina-container">
+      <div class="campanhas-lista" id="lista-campanhas">
+        <div class="campanha-card">
+          <!-- cards -->
+    </section>
+  </main>
+</body>
+<script type="module">
+  import { auth, db } from "./js/firebase.js";
+  import { collection, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+  const lista = document.getElementById("lista-campanhas");
+  const qtdSpan = document.querySelector(".qtd");
+
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    const ref = collection(db, "users", user.uid, "campaigns");
+    const snap = await getDocs(ref);
+
+    qtdSpan.textContent = `${snap.size} Campanha${snap.size !== 1 ? "s" : ""}`;
+
+    if (snap.empty) {
+      lista.innerHTML = "<p>Nenhuma campanha criada.</p>";
+      return;
+    }
+
+    snap.forEach((docSnap) => {
+      const campanha = docSnap.data();
+      const id = docSnap.id;
+
+      const agentes = campanha.agentes ? campanha.agentes.length : 0;
+
+      const imagem =
+        typeof campanha.imagem === "string" &&
+          campanha.imagem.startsWith("https://i.imgur.com/")
+          ? campanha.imagem
+          : "";
+
+      const card = document.createElement("div");
+      card.className = "campanha-card";
+
+      card.innerHTML = `
+    <div class="campanha-esq">
+      <div class="campanha-img"
+           style="background-image: url('${imagem}')">
+      </div>
+
+      <div class="campanha-info">
+        <h2>${campanha.nome}</h2>
+        <p>${agentes} agente${agentes !== 1 ? "s" : ""}</p>
+
+        <button class="btn-ver">ver campanha</button>
+      </div>
+    </div>
+
+    <button class="btn-deletar">✖</button>
+  `;
+
+
+      card.querySelector(".btn-ver").onclick = () => {
+        window.location.href = `campanha.html?id=${id}`;
+      };
+
+      card.querySelector(".btn-deletar").onclick = async () => {
+        if (confirm("Apagar campanha?")) {
+          await deleteDoc(
+            doc(db, "users", user.uid, "campaigns", id)
+          );
+          location.reload();
+        }
+      };
+
+      lista.appendChild(card);
+    });
+  });
+</script>
+
+<script type="module" src="js/header.js"></script>
+<script type="module" src="./js/auth-guard.js"></script>
+
+</html>

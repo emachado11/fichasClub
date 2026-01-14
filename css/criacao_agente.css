@@ -1,0 +1,278 @@
+/* ====== Reset ====== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    padding: 20px;
+    height: 100vh;
+    overflow: hidden;
+    margin-top: 72px;
+}
+
+/* ====== Lado esquerdo ====== */
+.left-panel {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.name-inputs {
+    display: flex;
+    gap: 10px;
+}
+
+.name-inputs input {
+    flex: 1;
+    padding: 8px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+}
+
+.attributes-img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+}
+
+/* Container de cards das classes */
+/* Container de cards das classes */
+#classes-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    /* Scroll do container se muitos cards */
+    max-height: 70vh;
+    /* define altura máxima do painel das classes */
+    overflow-y: auto;
+    /* habilita scroll interno do painel */
+    padding-right: 5px;
+    /* evita que a barra encoste no conteúdo */
+}
+
+/* Scrollbar do container */
+#classes-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+#classes-container::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 3px;
+}
+
+#classes-container::-webkit-scrollbar-track {
+    background: #1a1b1f;
+}
+
+
+/* ====== Cards ====== */
+.card {
+    background: #0c0e12;
+    border: 1px solid #fff;
+    padding: 10px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.card h3 {
+    margin-bottom: 5px;
+}
+
+.card button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+/* ====== Detalhes expansíveis com scroll interno ====== */
+.card .details {
+    max-height: 0;
+    /* começa fechado */
+    overflow-y: auto;
+    /* scroll interno */
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.card.active .details {
+    max-height: 300px;
+    /* altura máxima do card expandido */
+    padding-top: 10px;
+}
+
+/* Scrollbar interno do card */
+.card .details::-webkit-scrollbar {
+    width: 6px;
+}
+
+.card .details::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 3px;
+}
+
+.card .details::-webkit-scrollbar-track {
+    background: #1a1b1f;
+}
+
+/* Informações gerais da classe */
+.card .class-info {
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    color: #ccc;
+}
+
+/* Container de atributos */
+.card .class-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Cada linha de atributo */
+.card .class-stats .stat-line {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.card .class-stats .stat-line span {
+    display: block;
+}
+
+.card .class-stats .stat-line .stat-value {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #fff;
+}
+
+.card .class-stats .stat-line .stat-sub {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+/* ====== Centro/Direita ====== */
+.right-panel {
+    width: 65%;
+    display: flex;
+    gap: 20px;
+}
+
+.pericias,
+.origens {
+    flex: 1;
+    border: 1px solid #fff;
+    padding: 10px;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.pericia-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.pericia-line select,
+.pericia-line input {
+    padding: 4px;
+    border-radius: 4px;
+    border: none;
+    width: 60px;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+.ability-block {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px;
+}
+
+.ability-name {
+    font-weight: bold;
+    color: #fff;
+}
+
+.ability-info {
+    font-size: 0.85rem;
+    color: #ccc;
+    margin-left: 6px;
+    /* pequeno recuo */
+}
+
+.attributes-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    /* ajuste conforme necessário */
+}
+
+.attributes-wrapper .attributes-img {
+    width: 100%;
+    height: auto;
+}
+
+.attribute {
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+.attr-input {
+    display: inline-block;
+    min-width: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 3rem;
+    color: #fff;
+    outline: none;
+    background: transparent;
+    border: none;
+    cursor: text;
+}
+
+/* Posicionamento exato dos atributos */
+.AGI {
+    top: 17%;
+    left: 50.5%;
+}
+
+.INT {
+    top: 37%;
+    left: 81.5%;
+}
+
+.VIG {
+    top: 71%;
+    left: 70.5%;
+}
+
+.PRE {
+    top: 71%;
+    left: 29%;
+}
+
+.FOR {
+    top: 37%;
+    left: 19.25%;
+}
+
+.counter {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #fff;
+}
