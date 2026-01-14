@@ -1,0 +1,122 @@
+[
+  {
+    "id": "saber_e_poder",
+    "nome": "Saber é Poder",
+    "descricao": "Quando faz um teste usando Intelecto, você pode gastar 2 PE para receber +5 nesse teste.",
+    "tag": "origem"
+  },
+  {
+    "id": "tecnica_medicinal",
+    "nome": "Técnica Medicinal",
+    "descricao": "Sempre que cura um personagem, você adiciona seu Intelecto no total de PV curados.",
+    "tag": "origem"
+  },
+  {
+    "id": "vislumbres_do_passado",
+    "nome": "Vislumbres do Passado",
+    "descricao": "Uma vez por sessão, você pode fazer um teste de Intelecto (DT 10) para reconhecer pessoas ou lugares familiares que tenha encontrado antes de perder a memória. Se passar, recebe 1d4 PE temporários e, a critério do mestre, uma informação útil.",
+    "tag": "origem"
+  },
+  {
+    "id": "magnum_opus",
+    "nome": "Magnum Opus",
+    "descricao": "Você é famoso por uma de suas obras. Uma vez por missão, pode determinar que um personagem envolvido em uma cena de interação o reconheça. Você recebe +5 em testes de Presença e de perícias baseadas em Presença contra aquele personagem.",
+    "tag": "origem"
+  },
+  {
+    "id": "110_porcento",
+    "nome": "110%",
+    "descricao": "Quando faz um teste de perícia usando Força ou Agilidade (exceto Luta e Pontaria) você pode gastar 2 PE para receber +5 nesse teste.",
+    "tag": "origem"
+  },
+  {
+    "id": "ingrediente_secreto",
+    "nome": "Ingrediente Secreto",
+    "descricao": "Em cenas de interlúdio, você pode fazer a ação alimentar-se para cozinhar um prato especial. Você e todos os membros do grupo que fizeram a ação alimentar-se recebem o benefício de dois pratos (efeitos se acumulam se repetidos).",
+    "tag": "origem"
+  },
+  {
+    "id": "investigacao_cientifica",
+    "nome": "Investigação Científica",
+    "descricao": "Uma vez por cena de investigação, você pode gastar uma ação livre para procurar pistas, usando Ciências no lugar da perícia que seria usada para tentar encontrar a pista em questão.",
+    "tag": "origem"
+  },
+  {
+    "id": "o_crime_compensa",
+    "nome": "O Crime Compensa",
+    "descricao": "No final de uma missão, escolha um item encontrado. Na próxima missão, você pode incluir esse item em seu inventário sem que ele conte no limite de itens por patente.",
+    "tag": "origem"
+  },
+  {
+    "id": "calejado",
+    "nome": "Calejado",
+    "descricao": "Você recebe +1 PV para cada 5% de NEX.",
+    "tag": "origem"
+  },
+  {
+    "id": "destemido",
+    "nome": "Destemido",
+    "descricao": "Quando faz um teste de perícia que pode causar dano ou condição negativa em caso de falha, você recebe +5 nesse teste.",
+    "tag": "origem"
+  },
+  {
+    "id": "ferramenta_favorita",
+    "nome": "Ferramenta Favorita",
+    "descricao": "Um item a sua escolha (exceto armas) conta como uma categoria abaixo (ex: um item de categoria II conta como categoria I para você).",
+    "tag": "origem"
+  },
+  {
+    "id": "bagagem_de_leitura",
+    "nome": "Bagagem de Leitura",
+    "descricao": "Por seu trabalho, você já leu - e aprendeu - de tudo um pouco. Uma vez por cena, pode gastar 2 PE para se tornar treinado em uma perícia qualquer até o fim da cena.",
+    "tag": "origem"
+  },
+  {
+    "id": "processo_otimizado",
+    "nome": "Processo Otimizado",
+    "descricao": "Sempre que faz um teste de perícia durante um teste estendido, ou uma ação para revisar documentos, pode gastar 2 PE para receber +5 nesse teste.",
+    "tag": "origem"
+  },
+  {
+    "id": "fraternidade_gauderia",
+    "nome": "Fraternidade Gaudéria",
+    "descricao": "Uma vez por rodada, quando um aliado adjacente é alvo de um ataque ou efeito, você pode gastar 1 PE para trocar de lugar com ele e se tornar o alvo. Recebe +2 em testes de ataque contra o agressor no próximo turno.",
+    "tag": "origem"
+  },
+  {
+    "id": "mobilidade_acrobatica",
+    "nome": "Mobilidade Acrobática",
+    "descricao": "Você recebe +2 na Defesa e seu deslocamento aumenta em +3m.",
+    "tag": "origem"
+  },
+  {
+    "id": "escolhido_pelo_outro_lado",
+    "nome": "Escolhido pelo Outro Lado",
+    "descricao": "Você teve uma experiência paranormal e foi marcado pelo Outro Lado, absorvendo conhecimento e poder para realizar rituais. Pode lançar rituais de 1º círculo e aprende novos conforme avança de NEX.",
+    "tag": "classe"
+  },
+  {
+    "id": "ataque_especial",
+    "nome": "Ataque Especial",
+    "descricao": "Quando faz um ataque, você pode gastar 2 PE para receber +5 no teste de ataque ou na rolagem de dano. Conforme avança de NEX, pode gastar +1 PE para aumentar o bônus.",
+    "tag": "classe"
+  },
+  {
+    "id": "eletico",
+    "nome": "Eclético",
+    "descricao": "Quando faz um teste de uma perícia, você pode gastar 2 PE para receber os benefícios de ser treinado nesta perícia.",
+    "tag": "classe"
+  },
+  {
+    "id": "perito",
+    "nome": "Perito",
+    "descricao": "Escolha duas perícias nas quais você é treinado. Quando faz um teste de uma delas, pode gastar 2 PE para somar +1d6 no resultado do teste. Conforme avança de NEX, pode gastar +1 PE para aumentar o dado de bônus.",
+    "tag": "classe"
+  },
+  {
+    "id": "empenho",
+    "nome": "Empenho",
+    "descricao": "Quando faz um teste de perícia, você pode gastar 1 PE para receber +2 nesse teste.",
+    "tag": "classe"
+  }
+]

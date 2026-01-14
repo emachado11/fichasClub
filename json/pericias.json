@@ -1,0 +1,170 @@
+[
+    {
+        "id": "acrobacia",
+        "nome": "Acrobacia",
+        "carga": true,
+        "treino": false
+    },
+    {
+        "id": "adestramento",
+        "nome": "Adestramento",
+        "carga": false,
+        "treino": true
+    },
+    {
+        "id": "artes",
+        "nome": "Artes",
+        "carga": false,
+        "treino": true
+    },
+    {
+        "id": "atletismo",
+        "nome": "Atletismo",
+        "carga": false,
+        "treino": false
+    },
+    {
+        "id": "atualidades",
+        "nome": "Atualidades",
+        "carga": false,
+        "treino": false
+    },
+    {
+        "id": "ciencias",
+        "nome": "Ciências",
+        "carga": false,
+        "treino": true
+    },
+    {
+        "id": "crime",
+        "nome": "Crime",
+        "carga": true,
+        "treino": true
+    },
+    {
+        "id": "diplomacia",
+        "nome": "Diplomacia",
+        "carga": false,
+        "treino": false
+    },
+    {
+        "id": "enganacao",
+        "nome": "Enganação",
+        "carga": false,
+        "treino": false
+    },
+    {
+        "id": "fortitude",
+        "nome": "Fortitude",
+        "carga": false,
+        "treino": false
+    },
+    {
+        "id": "furtividade",
+        "nome": "Furtividade",
+        "carga": true,
+        "treino": false
+    },
+    {
+        "id": "iniciativa",
+        "nome": "Iniciativa",
+        "carga": false,
+        "treino": false
+    },
+    {
+        "id": "intimidacao",
+        "nome": "Intimidação",
+        "carga": false,
+        "treino": false
+    },
+    {
+        "id": "intuicao",
+        "nome": "Intuição",
+        "carga": false,
+        "treino": false
+    },
+    {
+        "id": "investigacao",
+        "nome": "Investigação",
+        "carga": false,
+        "treino": false
+    },
+    {
+        "id": "luta",
+        "nome": "Luta",
+        "carga": false,
+        "treino": false
+    },
+    {
+        "id": "medicina",
+        "nome": "Medicina",
+        "carga": false,
+        "treino": false
+    },
+    {
+        "id": "ocultismo",
+        "nome": "Ocultismo",
+        "carga": false,
+        "treino": true
+    },
+    {
+        "id": "percepcao",
+        "nome": "Percepção",
+        "carga": false,
+        "treino": false
+    },
+    {
+        "id": "pilotagem",
+        "nome": "Pilotagem",
+        "carga": false,
+        "treino": true
+    },
+    {
+        "id": "pontaria",
+        "nome": "Pontaria",
+        "carga": false,
+        "treino": false
+    },
+    {
+        "id": "profissao",
+        "nome": "Profissão",
+        "carga": false,
+        "treino": true
+    },
+    {
+        "id": "reflexos",
+        "nome": "Reflexos",
+        "carga": false,
+        "treino": false
+    },
+    {
+        "id": "religiao",
+        "nome": "Religião",
+        "carga": false,
+        "treino": true
+    },
+    {
+        "id": "sobrevivencia",
+        "nome": "Sobrevivência",
+        "carga": false,
+        "treino": false
+    },
+    {
+        "id": "tatica",
+        "nome": "Tática",
+        "carga": false,
+        "treino": true
+    },
+    {
+        "id": "tecnologia",
+        "nome": "Tecnologia",
+        "carga": false,
+        "treino": true
+    },
+    {
+        "id": "vontade",
+        "nome": "Vontade",
+        "carga": false,
+        "treino": false
+    }
+]
