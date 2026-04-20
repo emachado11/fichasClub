@@ -10,6 +10,7 @@
   </head>
 
   <body class="scroll">
+    <!-- HEADER -->
     <div id="header"></div>
 
     <main class="account-container">
@@ -19,7 +20,12 @@
           <img id="user-avatar" class="fotoDePerfil" src="" />
         </label>
 
-        <input type="file" id="file-input" class="hidden" accept="image/*" />
+        <input
+          type="file"
+          id="file-input"
+          class="hidden"
+          accept="image/*"
+        />
 
         <p class="change-avatar-tip">
           Clique na foto para alterá-la.
@@ -78,18 +84,31 @@
     <!-- 🔥 CROP MODAL -->
     <div id="crop-modal" class="crop-modal hidden">
       <div class="crop-box">
+
+        <!-- CANVAS -->
         <canvas id="crop-canvas"></canvas>
 
+        <!-- CONTROLES -->
         <div class="crop-controls">
-          <input type="range" id="zoom-slider" min="1" max="3" step="0.01" value="1">
+          <input
+            type="range"
+            id="zoom-slider"
+            min="1"
+            max="3"
+            step="0.01"
+            value="1"
+          />
+
           <button id="crop-save">Salvar</button>
           <button id="crop-cancel">Cancelar</button>
         </div>
+
       </div>
     </div>
 
-    <script type="module" src="../js/header.js" defer></script>
-    <script type="module" src="../js/auth-state.js" defer></script>
-    <script type="module" src="../js/account.js" defer></script>
+    <!-- SCRIPTS (ordem importante) -->
+    <script type="module" src="../js/header.js"></script>
+    <script type="module" src="../js/auth-state.js"></script>
+    <script type="module" src="../js/account.js"></script>
   </body>
 </html>
