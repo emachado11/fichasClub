@@ -18,7 +18,7 @@ form.addEventListener("submit", async (e) => {
 
   try {
     await createUserWithEmailAndPassword(auth, email, password);
-    window.location.href = "/html/index.html";
+    window.location.href = "./index.html";
   } catch (err) {
     alert(err.message);
   }
@@ -30,7 +30,7 @@ googleBtn.addEventListener("click", async () => {
 
   try {
     await signInWithPopup(auth, provider);
-    window.location.href = "/html/index.html";
+    window.location.href = "./index.html";
   } catch (err) {
     alert(err.message);
   }
