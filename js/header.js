@@ -1,69 +1,78 @@
-// IMPORTAÇÕES DEVEM SER FEITAS NO INÍCIO DO ARQUIVO
-import { auth } from "./firebase.js";
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { auth, db } from "./firebase.js";
+
+import {
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+import {
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("header.js foi carregado!");
 
-  // Seleciona o elemento onde o header será injetado
   const headerContainer = document.getElementById("header");
 
-  // Carrega o conteúdo do header.html
   fetch("./html/header.html")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Erro ao carregar o header: " + response.statusText);
-      }
-      return response.text();
+    .then((res) => {
+      if (!res.ok) throw new Error("Erro ao carregar header");
+      return res.text();
     })
     .then((html) => {
-      console.log("header.html carregado com sucesso!");
-      headerContainer.innerHTML = html;  // Injeta o HTML do header
+      headerContainer.innerHTML = html;
 
-      // Agora que o header foi carregado, configuramos o comportamento do dropdown
       const userBox = document.getElementById("avatar-wrapper");
       const dropdown = document.querySelector(".dropdown");
+      const loginBtn = document.getElementById("loginBtn");
+      const userPic = document.getElementById("userPic");
 
-      // Lógica para alternar o dropdown
+      // ===== DROPDOWN =====
       userBox.addEventListener("click", (e) => {
-        e.stopPropagation(); // Impede o clique de se propagar para o body
-        if (dropdown.style.display === "none" || dropdown.style.display === "") {
-          dropdown.style.display = "flex"; // Mostra o dropdown
-        } else {
-          dropdown.style.display = "none"; // Esconde o dropdown
-        }
+        e.stopPropagation();
+        dropdown.style.display =
+          dropdown.style.display === "flex" ? "none" : "flex";
       });
 
-      // Fechar o dropdown ao clicar fora do avatar
       document.addEventListener("click", (e) => {
         if (!userBox.contains(e.target)) {
-          dropdown.style.display = "none"; // Fecha o dropdown
+          dropdown.style.display = "none";
         }
       });
 
-      // Verifica se o usuário está logado
-      onAuthStateChanged(auth, (user) => {
-        const loginBtn = document.getElementById("loginBtn");
-        const userPic = document.getElementById("userPic");
-
+      // ===== AUTH =====
+      onAuthStateChanged(auth, async (user) => {
         if (user) {
-          loginBtn.style.display = "none"; // Esconde o botão de login
-          userBox.classList.remove("hidden"); // Exibe o avatar
-          userPic.src = user.photoURL || "../assets/default.png"; // Foto do Google ou padrão
+          loginBtn.style.display = "none";
+          userBox.classList.remove("hidden");
+
+          try {
+            const docRef = doc(db, "users", user.uid);
+            const snap = await getDoc(docRef);
+
+            if (snap.exists() && snap.data().avatar) {
+              userPic.src = snap.data().avatar;
+            } else {
+              userPic.src = "./assets/default-avatar.png";
+            }
+
+          } catch (err) {
+            console.error("Erro ao pegar avatar:", err);
+            userPic.src = "./assets/default-avatar.png";
+          }
+
         } else {
-          loginBtn.style.display = "block"; // Mostra o botão de login
-          userBox.classList.add("hidden"); // Esconde o avatar
+          loginBtn.style.display = "block";
+          userBox.classList.add("hidden");
         }
       });
 
-      // Logout
-      const logoutBtn = document.getElementById("logoutBtn");
-      logoutBtn?.addEventListener("click", async () => {
-        await signOut(auth); // Realiza o logout
-        window.location.href = "../login.html"; // Redireciona para a página de login
+      // ===== LOGOUT =====
+      document.getElementById("logoutBtn")?.addEventListener("click", async () => {
+        await signOut(auth);
+        window.location.href = "../login.html";
       });
     })
-    .catch((error) => {
-      console.error("Erro ao carregar o header:", error);
-    });
+    .catch((err) => console.error("Erro no header:", err));
 });
