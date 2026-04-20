@@ -1,4 +1,3 @@
-/* RESET */
 * {
   margin: 0;
   padding: 0;
@@ -6,9 +5,9 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   background: #0f0f17;
-  color: #fff;
+  color: white;
 }
 
 /* HEADER */
@@ -42,27 +41,29 @@ nav a {
 }
 
 nav a:hover {
-  color: #fff;
+  color: white;
 }
 
 .login-btn {
   background: #6c5ce7;
-  border: none;
   padding: 8px 18px;
   border-radius: 6px;
   color: white;
-  cursor: pointer;
+  text-decoration: none;
 }
 
-/* TEXTO TOPO CENTRALIZADO */
+/* MAIN */
+main {
+  padding: 60px;
+}
+
 .top-text {
   text-align: center;
-  margin-top: 60px;
+  margin-top: 40px;
   font-size: 1.5rem;
-  color: #ddd;
 }
 
-/* ÁREA CENTRAL */
+/* CENTRO */
 .center-area {
   height: calc(100vh - 200px);
   display: flex;
@@ -71,7 +72,6 @@ nav a:hover {
   gap: 80px;
 }
 
-/* OPÇÃO (card + texto embaixo) */
 .option {
   display: flex;
   flex-direction: column;
@@ -79,11 +79,9 @@ nav a:hover {
   gap: 15px;
 }
 
-/* QUADRO GRANDE */
 .box {
   width: 360px;
   height: 480px;
-  background: #1a1a26;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
@@ -96,13 +94,19 @@ nav a:hover {
   object-fit: cover;
 }
 
-/* TEXTO EMBAIXO */
 .option p {
   font-size: 1.2rem;
   color: #ccc;
 }
 
-/* HOVER LEVE */
 .box:hover {
   transform: scale(1.03);
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+body.scroll {
+  overflow: auto;
 }

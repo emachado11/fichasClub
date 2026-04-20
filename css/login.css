@@ -3,17 +3,20 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
 }
 
 body {
   background: #0f0f17;
-  color: #fff;
+  color: white;
+
+  /* 🔥 ISSO AQUI É O QUE REMOVE O SCROLL */
+  overflow: hidden;
 }
 
-/* CENTRALIZA TUDO */
-.login-container {
-  height: 100vh;
+/* ESPAÇO DO HEADER */
+main {
+  height: calc(100vh - 70px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,19 +31,17 @@ body {
   text-align: center;
 }
 
-/* LOGO */
-.logo {
+/* LOGO AGORA CONTROLADA */
+.login-box .logo {
   width: 120px;
+  height: auto;
   margin-bottom: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* TÍTULO */
-h1 {
-  margin-bottom: 25px;
-  font-size: 1.5rem;
-}
-
-/* INPUTS */
+/* FORM */
 form {
   display: flex;
   flex-direction: column;
@@ -52,11 +53,9 @@ input {
   border-radius: 6px;
   border: 1px solid #333;
   background: #0f0f17;
-  color: #fff;
-  outline: none;
+  color: white;
 }
 
-/* BOTÃO */
 button {
   padding: 12px;
   border: none;
@@ -64,14 +63,9 @@ button {
   background: #6c5ce7;
   color: white;
   cursor: pointer;
-  transition: 0.2s;
 }
 
-button:hover {
-  opacity: 0.85;
-}
-
-/* TEXTO INFERIOR */
+/* TEXTO */
 .small-text {
   margin-top: 15px;
   font-size: 0.85rem;
@@ -81,4 +75,20 @@ button:hover {
 .small-text a {
   color: #6c5ce7;
   text-decoration: none;
-} 
+}
+
+.google-btn {
+  margin-top: 12px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.google-btn:hover {
+  opacity: 0.85;
+}
