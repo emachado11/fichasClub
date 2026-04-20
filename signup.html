@@ -3,21 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>Criar Conta</title>
+
   <link rel="stylesheet" href="./css/styles.css">
   <link rel="stylesheet" href="./css/login.css">
 </head>
 
 <body class="no-scroll">
-  <div id="header"></div> <!-- O header será carregado aqui -->
 
-  <main class="login-container">
+  <div id="header"></div>
+
+  <main class="login-main">
     <div class="login-box">
       <img src="./assets/the-club-white.png" class="logo">
+
       <h1>Criar Conta</h1>
 
       <form id="signupForm">
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Senha" required>
+        <input type="email" placeholder="Email" required autocomplete="off">
+        <input type="password" placeholder="Senha" required autocomplete="new-password">
         <button type="submit">Criar conta</button>
       </form>
 
@@ -30,7 +33,8 @@
     </div>
   </main>
 
-  <script type="module" src="./js/auth-signup.js"></script>
   <script type="module" src="./js/header.js"></script>
+  <script type="module" src="./js/auth-signup.js"></script>
+
 </body>
 </html>

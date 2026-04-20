@@ -20,7 +20,7 @@ header {
   border-bottom: 1px solid #222;
 }
 
-.left-section {
+header .left-section {
   display: flex;
   align-items: center;
   gap: 40px;

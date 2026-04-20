@@ -4,7 +4,6 @@ import {
   onAuthStateChanged,
   updateProfile,
   updateEmail,
-  sendPasswordResetEmail,
   EmailAuthProvider,
   reauthenticateWithCredential,
   updatePassword
@@ -16,7 +15,7 @@ import {
   getDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// ELEMENTOS
+// ===== ELEMENTOS =====
 const userAvatar = document.getElementById("user-avatar");
 const fileInput = document.getElementById("file-input");
 const nickname = document.getElementById("user-nickname");
@@ -39,21 +38,28 @@ const savePasswordBtn = document.getElementById("save-password-btn");
 const logoutBtn = document.getElementById("logout-btn");
 const deleteBtn = document.getElementById("delete-account-btn");
 
-// ===== CROP =====
+// ===== CROP ELEMENTOS =====
 const cropModal = document.getElementById("crop-modal");
 const canvas = document.getElementById("crop-canvas");
 const ctx = canvas.getContext("2d");
 const zoomSlider = document.getElementById("zoom-slider");
 
+// ===== VARIÁVEIS =====
 let img = new Image();
-let baseScale = 1; // 🔥 escala inicial (fit)
+
+let baseScale = 1;
 let scale = 1;
+
 let posX = 0;
 let posY = 0;
-let dragging = false;
-let startX, startY;
 
-// ===== AUTH =====
+let dragging = false;
+let startX = 0;
+let startY = 0;
+
+// =========================
+// 🔐 AUTH
+// =========================
 onAuthStateChanged(auth, async (user) => {
   if (!user) return location.href = "../login.html";
 
@@ -67,20 +73,22 @@ onAuthStateChanged(auth, async (user) => {
     ? snap.data().avatar
     : "./assets/default-avatar.png";
 
-  // ===== ABRIR CROP =====
+  // ===== INPUT FOTO =====
   fileInput.addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
+
     reader.onload = () => {
       img.src = reader.result;
       cropModal.classList.remove("hidden");
     };
+
     reader.readAsDataURL(file);
   });
 
-  // ===== RESTO =====
+  // ===== PERFIL =====
   nickname.addEventListener("blur", async () => {
     await updateProfile(user, { displayName: nickname.value });
   });
@@ -93,8 +101,10 @@ onAuthStateChanged(auth, async (user) => {
       user.email,
       passwordForEmailInput.value
     );
+
     await reauthenticateWithCredential(user, cred);
     await updateEmail(user, newEmailInput.value);
+
     alert("Email atualizado!");
   };
 
@@ -103,8 +113,10 @@ onAuthStateChanged(auth, async (user) => {
       user.email,
       currentPasswordInput.value
     );
+
     await reauthenticateWithCredential(user, cred);
     await updatePassword(user, newPasswordInput.value);
+
     alert("Senha atualizada!");
   };
 
@@ -119,54 +131,52 @@ onAuthStateChanged(auth, async (user) => {
   };
 });
 
-// ===== CROP ENGINE =====
+// =========================
+// 🎯 CROP ENGINE
+// =========================
+
+// 🔥 quando imagem carrega
 img.onload = () => {
   canvas.width = 300;
   canvas.height = 300;
 
+  // escala inicial (FIT)
   const scaleX = canvas.width / img.width;
   const scaleY = canvas.height / img.height;
 
-  baseScale = Math.min(scaleX, scaleY);
-
+  baseScale = Math.max(scaleX, scaleY); // 🔥 cobre tudo (IMPORTANTE)
   scale = baseScale;
 
+  // centraliza
   posX = (canvas.width - img.width * scale) / 2;
   posY = (canvas.height - img.height * scale) / 2;
 
-  zoomSlider.value = 1; // 🔥 slider começa neutro
+  zoomSlider.value = 1;
 
   draw();
 };
 
+// 🔥 desenhar
 function draw() {
-  ctx.clearRect(0, 0, 300, 300);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(img, posX, posY, img.width * scale, img.height * scale);
 }
 
+// 🔥 impedir bordas pretas
 function clamp() {
   const minX = canvas.width - img.width * scale;
   const minY = canvas.height - img.height * scale;
 
-  // trava horizontal
-  if (img.width * scale > canvas.width) {
-    posX = Math.min(0, Math.max(minX, posX));
-  } else {
-    posX = (canvas.width - img.width * scale) / 2;
-  }
-
-  // trava vertical
-  if (img.height * scale > canvas.height) {
-    posY = Math.min(0, Math.max(minY, posY));
-  } else {
-    posY = (canvas.height - img.height * scale) / 2;
-  }
+  posX = Math.min(0, Math.max(minX, posX));
+  posY = Math.min(0, Math.max(minY, posY));
 }
 
+// =========================
+// 🔍 ZOOM
+// =========================
 zoomSlider.oninput = () => {
   const zoom = parseFloat(zoomSlider.value);
-
-  const newScale = baseScale * zoom; // 🔥 usa multiplicador
+  const newScale = baseScale * zoom;
 
   const centerX = canvas.width / 2;
   const centerY = canvas.height / 2;
@@ -180,7 +190,9 @@ zoomSlider.oninput = () => {
   draw();
 };
 
-// drag
+// =========================
+// 🖱️ DRAG
+// =========================
 canvas.onmousedown = (e) => {
   dragging = true;
   startX = e.offsetX - posX;
@@ -193,15 +205,16 @@ canvas.onmousemove = (e) => {
   posX = e.offsetX - startX;
   posY = e.offsetY - startY;
 
-  clamp(); // 🔥 trava aqui
-
+  clamp();
   draw();
 };
 
 canvas.onmouseup = () => dragging = false;
 canvas.onmouseleave = () => dragging = false;
 
-// salvar
+// =========================
+// 💾 SALVAR
+// =========================
 document.getElementById("crop-save").onclick = async () => {
   const final = document.createElement("canvas");
   final.width = 300;
@@ -209,6 +222,7 @@ document.getElementById("crop-save").onclick = async () => {
 
   const fctx = final.getContext("2d");
 
+  // máscara circular
   fctx.beginPath();
   fctx.arc(150, 150, 150, 0, Math.PI * 2);
   fctx.clip();
@@ -225,6 +239,7 @@ document.getElementById("crop-save").onclick = async () => {
   cropModal.classList.add("hidden");
 };
 
+// cancelar
 document.getElementById("crop-cancel").onclick = () => {
   cropModal.classList.add("hidden");
 };

@@ -11,11 +11,8 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("header.js foi carregado!");
-
   const headerContainer = document.getElementById("header");
 
-  // 🔥 CAMINHO ROBUSTO (funciona local + deploy)
   const headerUrl = new URL("../html/header.html", import.meta.url);
 
   fetch(headerUrl)
@@ -26,13 +23,36 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((html) => {
       headerContainer.innerHTML = html;
 
-      // ELEMENTOS (só existem depois do innerHTML)
+      // 🔥 DEFINE BASE PATH AUTOMÁTICO
+      const basePath = window.location.pathname.includes("fichasClub")
+        ? "/fichasClub"
+        : "";
+
+      // 🔥 CORRIGE TODOS LINKS DO HEADER
+      headerContainer.querySelectorAll("a").forEach((a) => {
+        const href = a.getAttribute("href");
+
+        if (href && href.startsWith("/")) {
+          a.href = basePath + href;
+        }
+      });
+
+      // 🔥 CORRIGE IMAGENS
+      headerContainer.querySelectorAll("img").forEach((img) => {
+        const src = img.getAttribute("src");
+
+        if (src && src.startsWith("/")) {
+          img.src = basePath + src;
+        }
+      });
+
+      // ELEMENTOS
       const userBox = document.getElementById("avatar-wrapper");
       const dropdown = document.querySelector(".dropdown");
       const loginBtn = document.getElementById("loginBtn");
       const userPic = document.getElementById("userPic");
 
-      // ===== DROPDOWN =====
+      // DROPDOWN
       userBox.addEventListener("click", (e) => {
         e.stopPropagation();
         dropdown.style.display =
@@ -45,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      // ===== AUTH =====
+      // AUTH
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           loginBtn.style.display = "none";
@@ -58,12 +78,11 @@ document.addEventListener("DOMContentLoaded", () => {
             if (snap.exists() && snap.data().avatar) {
               userPic.src = snap.data().avatar;
             } else {
-              userPic.src = "./assets/default-avatar.png";
+              userPic.src = basePath + "/assets/default-avatar.png";
             }
 
-          } catch (err) {
-            console.error("Erro ao pegar avatar:", err);
-            userPic.src = "./assets/default-avatar.png";
+          } catch {
+            userPic.src = basePath + "/assets/default-avatar.png";
           }
 
         } else {
@@ -72,13 +91,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      // ===== LOGOUT =====
-      document
-        .getElementById("logoutBtn")
-        ?.addEventListener("click", async () => {
-          await signOut(auth);
-          window.location.href = "./login.html";
-        });
+      // LOGOUT
+      document.getElementById("logoutBtn")?.addEventListener("click", async () => {
+        await signOut(auth);
+        window.location.href = basePath + "/login.html";
+      });
+
+      // 🔥 DISPARA EVENTO PRO RESTO DO SISTEMA
+      window.dispatchEvent(new Event("headerReady"));
     })
     .catch((err) => console.error("Erro no header:", err));
 });
