@@ -1,0 +1,125 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0f0f17;
+  color: white;
+  font-family: Arial;
+}
+
+/* CONTAINER */
+.account-container {
+  display: flex;
+  height: calc(100vh - 80px);
+  padding: 40px;
+  gap: 40px;
+}
+
+/* ESQUERDA */
+.account-left {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 40px;
+}
+
+.fotoDePerfil {
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #6c5ce7;
+  cursor: pointer;
+}
+
+.change-avatar-tip {
+  margin-top: 12px;
+  color: #aaa;
+}
+
+/* DIREITA */
+.account-right {
+  width: 65%;
+  overflow-y: auto;
+}
+
+.info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+h3 {
+  color: #aaa;
+}
+
+input {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px;
+  background: #0f0f17;
+  border: 1px solid #333;
+  color: white;
+  border-radius: 6px;
+}
+
+/* REMOVE AUTOFILL */
+input:-webkit-autofill {
+  transition: all 0s 9999s;
+}
+
+/* LINKS */
+.change-text {
+  color: #6c5ce7;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* BOTÕES ROXOS */
+#save-email-btn,
+#save-password-btn {
+  margin-top: 10px;
+  padding: 12px;
+  background: #6c5ce7;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+#save-email-btn:hover,
+#save-password-btn:hover {
+  background: #5a4cc7;
+}
+
+/* BOTÕES VERMELHOS */
+.settings-section {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+#logout-btn,
+#delete-account-btn {
+  width: 200px;
+  padding: 12px;
+  background: #e74c3c;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+#logout-btn:hover,
+#delete-account-btn:hover {
+  background: #c0392b;
+}
+
+.hidden {
+  display: none;
+}

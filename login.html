@@ -8,38 +8,29 @@
 </head>
 
 <body class="no-scroll">
-
-  <div id="header"></div>
+  <div id="header"></div> <!-- O header será carregado aqui -->
 
   <main class="login-container">
-
     <div class="login-box">
-
       <img src="./assets/the-club-white.png" class="logo">
-
       <h1>Entrar</h1>
 
-      <form>
+      <form id="loginForm">
         <input type="email" placeholder="Email" required>
         <input type="password" placeholder="Senha" required>
         <button type="submit">Login</button>
       </form>
 
-      <button id="google-login" class="google-btn">
-        Entrar com Google
-      </button>
+      <button id="google-login" class="google-btn">Entrar com Google</button>
 
       <p class="small-text">
         Não tem conta?
         <a href="./signup.html">Criar conta</a>
       </p>
-
     </div>
-
   </main>
 
-  <script src="./js/header.js"></script>
   <script type="module" src="./js/auth-login.js"></script>
-
+  <script type="module" src="./js/header.js"></script>
 </body>
 </html>

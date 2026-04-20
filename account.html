@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minha Conta</title>
+
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/account.css" />
+  </head>
+
+  <body class="scroll">
+    <div id="header"></div>
+
+    <main class="account-container">
+      <!-- ESQUERDA -->
+      <div class="account-left">
+        <label for="file-input">
+          <img id="user-avatar" class="fotoDePerfil" src="" />
+        </label>
+
+        <input type="file" id="file-input" class="hidden" accept="image/*" />
+
+        <p class="change-avatar-tip">
+          Clique na foto para alterá-la.
+        </p>
+      </div>
+
+      <!-- DIREITA -->
+      <div class="account-right">
+        <div class="info-section">
+
+          <div>
+            <h3>Apelido</h3>
+            <input id="user-nickname" autocomplete="off" />
+          </div>
+
+          <div>
+            <h3>Endereço de E-mail</h3>
+            <input id="user-email" disabled autocomplete="off" />
+
+            <span id="change-email-text" class="change-text">
+              Alterar e-mail
+            </span>
+
+            <div id="email-change-container" class="hidden">
+              <input id="new-email" placeholder="Novo e-mail" autocomplete="off" />
+              <input id="password-for-email" type="password" placeholder="Senha Atual" autocomplete="new-password" />
+              <button id="save-email-btn">Salvar Novo E-mail</button>
+            </div>
+          </div>
+
+          <div>
+            <h3>Senha</h3>
+            <input type="password" value="********" disabled />
+
+            <span id="change-password-text" class="change-text">
+              Alterar senha
+            </span>
+
+            <div id="password-change-container" class="hidden">
+              <input id="current-password" type="password" placeholder="Senha Atual" autocomplete="new-password" />
+              <input id="new-password" type="password" placeholder="Nova Senha" autocomplete="new-password" />
+              <button id="save-password-btn">Salvar Nova Senha</button>
+              <button id="forgot-password-btn">Esqueci minha senha</button>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <button id="logout-btn">Sair</button>
+            <button id="delete-account-btn">Apagar Conta</button>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="../js/header.js" defer></script>
+    <script type="module" src="../js/auth-state.js" defer></script>
+    <script type="module" src="../js/account.js" defer></script>
+  </body>
+</html>
