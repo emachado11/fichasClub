@@ -1,0 +1,84 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #0f0f17;
+  color: #fff;
+}
+
+/* CENTRALIZA TUDO */
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* BOX */
+.login-box {
+  width: 320px;
+  background: #151522;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+/* LOGO */
+.logo {
+  width: 120px;
+  margin-bottom: 20px;
+}
+
+/* TÍTULO */
+h1 {
+  margin-bottom: 25px;
+  font-size: 1.5rem;
+}
+
+/* INPUTS */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background: #0f0f17;
+  color: #fff;
+  outline: none;
+}
+
+/* BOTÃO */
+button {
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #6c5ce7;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+/* TEXTO INFERIOR */
+.small-text {
+  margin-top: 15px;
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.small-text a {
+  color: #6c5ce7;
+  text-decoration: none;
+} 

@@ -1,0 +1,108 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #0f0f17;
+  color: #fff;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 50px;
+  background: #12121c;
+  border-bottom: 1px solid #222;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.logo img {
+  height: 34px;
+}
+
+nav {
+  display: flex;
+  gap: 30px;
+}
+
+nav a {
+  color: #aaa;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: #fff;
+}
+
+.login-btn {
+  background: #6c5ce7;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+/* TEXTO TOPO CENTRALIZADO */
+.top-text {
+  text-align: center;
+  margin-top: 60px;
+  font-size: 1.5rem;
+  color: #ddd;
+}
+
+/* ÁREA CENTRAL */
+.center-area {
+  height: calc(100vh - 200px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+}
+
+/* OPÇÃO (card + texto embaixo) */
+.option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+/* QUADRO GRANDE */
+.box {
+  width: 360px;
+  height: 480px;
+  background: #1a1a26;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* TEXTO EMBAIXO */
+.option p {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+/* HOVER LEVE */
+.box:hover {
+  transform: scale(1.03);
+}
