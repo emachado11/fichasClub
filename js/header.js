@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const headerContainer = document.getElementById("header");
 
-  fetch("./html/header.html")
+  fetch("/html/header.html")
     .then((res) => {
       if (!res.ok) throw new Error("Erro ao carregar header");
       return res.text();
