@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // ===== LOGOUT =====
       document.getElementById("logoutBtn")?.addEventListener("click", async () => {
         await signOut(auth);
-        window.location.href = "../login.html";
+        window.location.href = "./login.html";
       });
     })
     .catch((err) => console.error("Erro no header:", err));
