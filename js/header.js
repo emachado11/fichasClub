@@ -15,7 +15,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const headerContainer = document.getElementById("header");
 
-  fetch("fichasClub/html/header.html")
+  // 🔥 CAMINHO ROBUSTO (funciona local + deploy)
+  const headerUrl = new URL("../html/header.html", import.meta.url);
+
+  fetch(headerUrl)
     .then((res) => {
       if (!res.ok) throw new Error("Erro ao carregar header");
       return res.text();
@@ -23,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((html) => {
       headerContainer.innerHTML = html;
 
+      // ELEMENTOS (só existem depois do innerHTML)
       const userBox = document.getElementById("avatar-wrapper");
       const dropdown = document.querySelector(".dropdown");
       const loginBtn = document.getElementById("loginBtn");
@@ -69,10 +73,12 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       // ===== LOGOUT =====
-      document.getElementById("logoutBtn")?.addEventListener("click", async () => {
-        await signOut(auth);
-        window.location.href = "./login.html";
-      });
+      document
+        .getElementById("logoutBtn")
+        ?.addEventListener("click", async () => {
+          await signOut(auth);
+          window.location.href = "./login.html";
+        });
     })
     .catch((err) => console.error("Erro no header:", err));
 });
