@@ -8,6 +8,7 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/header.css">
 </head>
 
 <body class="no-scroll">
@@ -16,25 +17,30 @@
   <div id="header"></div>
 
   <main>
-    <h1 class="top-text">
-      Olá, <span id="user-nickname">Anônimo</span>.<br>
-      Bem-vindo ao centro de criação do The Club
+    <div class="center-illustration">
+      <img src="./assets/club-pixel-art.png">
+    </div>
+    <h1 class="hero-title">
+      <span id="boot-prefix"></span>
+      <span id="user-nickname" class="glow-user"></span>
     </h1>
 
-    <div class="center-area">
-      <div class="option">
-        <div class="box">
-          <img src="./assets/ficha.jpg" alt="Criar Ficha">
-        </div>
-        <p>Criar Ficha</p>
-      </div>
+    <p class="hero-subtitle">
+      <span id="boot-subtitle"></span>
+    </p>
 
-      <div class="option">
-        <div class="box">
-          <img src="./assets/campanha.jpg" alt="Criar Campanha">
-        </div>
-        <p>Criar Campanha</p>
-      </div>
+    <div class="terminal-menu">
+
+      <a href="./criar-ficha.html" class="terminal-option active">
+        criar_ficha...
+      </a>
+
+      <a href="#" class="terminal-option">
+        criar_campanha...
+      </a>
+      <span id="terminal-cursor">›</span>
+
+
     </div>
   </main>
 

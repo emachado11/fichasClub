@@ -1,11 +1,3 @@
-body {
-  margin: 0;
-  font-family: Arial;
-  background: #0f0f14;
-  color: white;
-  overflow: hidden;
-}
-
 /* HEADER SPACE */
 #header {
   width: 100%;
@@ -78,7 +70,8 @@ body {
   align-items: center;
   justify-content: center;
 
-  z-index: 10; /* 👈 FIX PRINCIPAL DO BOTÃO */
+  z-index: 10;
+  /* 👈 FIX PRINCIPAL DO BOTÃO */
 }
 
 /* ================= CARD BASE ================= */
@@ -99,8 +92,8 @@ body {
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
 
   transition: transform 600ms cubic-bezier(.2, .9, .2, 1),
-              opacity 400ms ease,
-              filter 400ms ease;
+    opacity 400ms ease,
+    filter 400ms ease;
 
   will-change: transform, opacity;
 
@@ -158,7 +151,8 @@ body {
   transition: 0.2s;
 
   position: relative;
-  z-index: 50; /* 👈 acima de tudo */
+  z-index: 50;
+  /* 👈 acima de tudo */
 }
 
 .nav-btn:hover {
@@ -183,7 +177,8 @@ body {
 
   transition: 0.2s;
 
-  z-index: 9999; /* 👈 SEMPRE NO TOPO */
+  z-index: 9999;
+  /* 👈 SEMPRE NO TOPO */
   pointer-events: auto;
 }
 
@@ -269,7 +264,7 @@ body {
 /* separador entre colunas */
 .panel-divider {
   width: 1px;
-  background: rgba(255,255,255,0.12);
+  background: rgba(255, 255, 255, 0.12);
   height: auto;
   align-self: stretch;
 }
@@ -284,37 +279,15 @@ body {
   margin-top: 30px;
 }
 
+#attr-overlay {
+  position: absolute;
+}
+
 /* bloco do atributo */
 .attr {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-/* círculo estilo “core” */
-.attr-circle {
-  width: 90px;
-  height: 90px;
-
-  border-radius: 50%;
-  border: 2px solid #6c5ce7;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  position: relative;
-
-  background: rgba(108, 92, 231, 0.08);
-}
-
-/* label (FOR, AGI...) */
-.attr-label {
-  font-size: 12px;
-  opacity: 0.8;
-  position: absolute;
-  top: 10px;
 }
 
 /* input central */
@@ -323,7 +296,7 @@ body {
   height: 100%;
 
   text-align: center;
-  font-size: 22px;
+  font-size: 50px;
   font-weight: bold;
 
   background: transparent;
@@ -331,6 +304,11 @@ body {
   color: white;
 
   outline: none;
+  padding-bottom: 35px;
+
+  pointer-events: auto;
+  position: relative;
+  z-index: 20;
 }
 
 /* remove setinhas do input number */
@@ -344,52 +322,131 @@ body {
   position: relative;
 
   width: 100%;
-  height: 70vh;
+  height: 65vh;
 
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: scale(0.8);
 }
 
 /* IMAGEM CENTRAL GIGANTE */
 .attr-center-image {
-  position: absolute;
-
+  position: relative;
   width: 720px;
   height: 720px;
-
-  z-index: 0;
-
-  pointer-events: none;
 }
 
 .attr-center-image img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
 
-  filter: drop-shadow(0 0 30px rgba(108,92,231,0.4));
+/* camada de HUD em cima da imagem */
+.attr-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 /* UI por cima */
 .attr-ui {
-  position: relative;
-  z-index: 2;
+  position: absolute;
+  inset: 0;
 
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  
+  pointer-events: none;
+  z-index: 10;
 }
 
 /* pontos */
 .attr-points {
-  opacity: 0.8;
-  font-size: 14px;
+  opacity: 0.9;
+  font-size: 48px;
+  /* leve aumento */
+  letter-spacing: 0.5px;
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
 /* botões */
 .attr-buttons {
   display: flex;
   gap: 10px;
+}
+
+.attr-float {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.attr-top {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  margin-top: -115px;
+  /* ↓ desce um pouco do topo */
+  pointer-events: auto;
+}
+
+.attr-bottom {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 85px;
+  /* ↑ mais espaço entre botões */
+
+  margin-bottom: -155px;
+  /* ↓ joga mais pra baixo */
+  pointer-events: auto;
+}
+
+/* BOTÃO NORMAL já existe */
+.attr-bottom button {
+  background: #6c5ce7;
+  color: white;
+  padding: 13px 0;
+  width: 180px;
+  font-size: 1.05rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.25s ease;
+  text-align: center;
+}
+
+/* 🔴 ESTADO BLOQUEADO */
+.attr-bottom button:disabled {
+  background: transparent;
+  color: #ff4d4d;
+  border: 2px solid #ff4d4d;
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  filter: drop-shadow(0 0 6px rgba(255, 77, 77, 0.25));
+}
+
+/* hover só quando ativo */
+.attr-bottom button:not(:disabled):hover {
+  transform: scale(1.12);
+}
+
+.attr-bottom button:hover {
+  transform: scale(1.12);
+}
+
+.attr-top,
+.attr-bottom,
+.attr-points {
+  pointer-events: auto;
 }

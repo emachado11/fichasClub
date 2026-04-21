@@ -7,11 +7,19 @@ const state = {
     classIndex: 1,
     classe: null,
     origem: null,
-    pontosAtributos: 4,
+    pontosAtributos: null,
     atributos: { FOR: 1, AGI: 1, INT: 1, PRE: 1, VIG: 1 },
     baseAtributo: 1,
     limiteAtributo: 3,
     pericia: {}
+};
+
+const attrPositions = {
+    FOR: { top: 43.5, left: 19.3 },
+    AGI: { top: 21.3, left: 50.3 },
+    INT: { top: 43.5, left: 81.7 },
+    PRE: { top: 80.5, left: 29 },
+    VIG: { top: 80.5, left: 70.3 }
 };
 
 pericias.forEach(p => {
@@ -43,6 +51,7 @@ function getIndexes() {
 /* ================= RENDER PRINCIPAL ================= */
 
 function renderClasse() {
+    state.pontosAtributos = null;
     const { prev, cur, next } = getIndexes();
 
     const c = classes[cur];
@@ -199,6 +208,9 @@ document.getElementById("confirm-class").addEventListener("click", (e) => {
 
     state.classe = c;
 
+    // 🔥 AQUI ESTÁ O FIX
+    state.pontosAtributos = c.pontos_atributo;
+
     // reset seguro
     Object.keys(state.pericia).forEach(k => {
         if (state.pericia[k]) {
@@ -206,13 +218,13 @@ document.getElementById("confirm-class").addEventListener("click", (e) => {
         }
     });
 
-    // aplica bônus com proteção contra IDs inválidos
     (c.pericias || []).forEach(id => {
         if (state.pericia[id]) {
             state.pericia[id].classe = 5;
         }
     });
 
+    renderAtributos(); // 👈 importante pra atualizar UI
     renderPericias();
     go(1);
 });
@@ -229,7 +241,7 @@ function calcPoints() {
 }
 
 function renderAtributos() {
-    const el = document.getElementById("atributos");
+    const el = document.getElementById("attr-overlay");
     el.innerHTML = "";
 
     const pontos = calcPoints();
@@ -237,12 +249,21 @@ function renderAtributos() {
 
     Object.keys(state.atributos).forEach(k => {
 
-        const wrapper = document.createElement("div");
-        wrapper.className = "attr";
+        const d = document.createElement("div");
 
-        wrapper.innerHTML = `
+        // ================= POSIÇÃO NA TELA =================
+        d.style.position = "absolute";
+        d.style.top = attrPositions[k].top + "%";
+        d.style.left = attrPositions[k].left + "%";
+        d.style.transform = "translate(-50%, -50%)";
+        d.style.cursor = "grab";
+
+        d.dataset.key = k;
+        d.classList.add("attr");
+
+        // ================= CONTEÚDO =================
+        d.innerHTML = `
             <div class="attr-circle">
-                <div class="attr-label">${k}</div>
 
                 <input 
                     class="attr-input"
@@ -254,14 +275,14 @@ function renderAtributos() {
             </div>
         `;
 
-        const input = wrapper.querySelector("input");
+        // ================= INPUT LOGIC =================
+        const input = d.querySelector("input");
 
         input.addEventListener("input", (e) => {
             let val = Number(e.target.value);
 
             if (isNaN(val)) val = 0;
 
-            // clamp 0–3
             val = Math.max(0, Math.min(3, val));
 
             state.atributos[k] = val;
@@ -269,7 +290,7 @@ function renderAtributos() {
             renderAtributos();
         });
 
-        el.appendChild(wrapper);
+        el.appendChild(d);
     });
 
     document.getElementById("to-origem").disabled = pontos !== 0;

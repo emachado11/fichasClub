@@ -10,6 +10,8 @@ import {
   getDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+/* ================= INIT HEADER ================= */
+
 document.addEventListener("DOMContentLoaded", () => {
   const headerContainer = document.getElementById("header");
 
@@ -23,12 +25,12 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((html) => {
       headerContainer.innerHTML = html;
 
-      // 🔥 DEFINE BASE PATH AUTOMÁTICO
       const basePath = window.location.pathname.includes("fichasClub")
         ? "/fichasClub"
         : "";
 
-      // 🔥 CORRIGE TODOS LINKS DO HEADER
+      /* ================= FIX LINKS ================= */
+
       headerContainer.querySelectorAll("a").forEach((a) => {
         const href = a.getAttribute("href");
 
@@ -37,7 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      // 🔥 CORRIGE IMAGENS
       headerContainer.querySelectorAll("img").forEach((img) => {
         const src = img.getAttribute("src");
 
@@ -46,15 +47,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      // ELEMENTOS
+      /* ================= ELEMENTOS ================= */
+
       const userBox = document.getElementById("avatar-wrapper");
-      const dropdown = document.querySelector(".dropdown");
+      const dropdown = userBox.querySelector(".dropdown");
       const loginBtn = document.getElementById("loginBtn");
       const userPic = document.getElementById("userPic");
+      const bootText = document.getElementById("bootText");
 
-      // DROPDOWN
-      userBox.addEventListener("click", (e) => {
+      /* ================= DROPDOWN ================= */
+
+      userBox?.addEventListener("click", (e) => {
         e.stopPropagation();
+
         dropdown.style.display =
           dropdown.style.display === "flex" ? "none" : "flex";
       });
@@ -65,7 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      // AUTH
+      /* ================= AUTH ================= */
+
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           loginBtn.style.display = "none";
@@ -75,29 +81,40 @@ document.addEventListener("DOMContentLoaded", () => {
             const docRef = doc(db, "users", user.uid);
             const snap = await getDoc(docRef);
 
-            if (snap.exists() && snap.data().avatar) {
-              userPic.src = snap.data().avatar;
-            } else {
-              userPic.src = basePath + "/assets/default-avatar.png";
-            }
+            userPic.src =
+              snap.exists() && snap.data().avatar
+                ? snap.data().avatar
+                : basePath + "/assets/default-avatar.png";
 
           } catch {
             userPic.src = basePath + "/assets/default-avatar.png";
           }
+          userBox.style.pointerEvents = "auto";
 
         } else {
           loginBtn.style.display = "block";
+
+          // 🔥 reset completo do estado visual
           userBox.classList.add("hidden");
+
+          userPic.src = ""; // limpa imagem anterior
+
+          dropdown.style.display = "none";
+          dropdown.classList.remove("active");
+
+          // 🔥 garante que não sobra evento visual
+          userBox.style.pointerEvents = "none";
         }
       });
+      /* ================= LOGOUT ================= */
 
-      // LOGOUT
       document.getElementById("logoutBtn")?.addEventListener("click", async () => {
         await signOut(auth);
         window.location.href = basePath + "/login.html";
       });
 
-      // 🔥 DISPARA EVENTO PRO RESTO DO SISTEMA
+      /* ================= READY EVENT ================= */
+
       window.dispatchEvent(new Event("headerReady"));
     })
     .catch((err) => console.error("Erro no header:", err));

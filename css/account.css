@@ -4,12 +4,6 @@
   box-sizing: border-box;
 }
 
-body {
-  background: #0f0f17;
-  color: white;
-  font-family: Arial;
-}
-
 /* CONTAINER */
 .account-container {
   display: flex;
@@ -33,7 +27,7 @@ body {
   height: 340px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #6c5ce7;
+  border: 4px solid #0e7a00;
   cursor: pointer;
   transition: 0.2s;
 }

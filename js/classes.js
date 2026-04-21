@@ -19,7 +19,9 @@ export const classes = [
 
         pericias: ["Luta ou Pontaria (uma das duas) e Fortitude ou Reflexos (uma das duas), mais uma quantidade de perícias à sua escolha igual a 1 + Intelecto."],
 
-        proficiencias: ["Armas simples","Armas táticas","Proteções leves"]
+        proficiencias: ["Armas simples","Armas táticas","Proteções leves"],
+
+        pontos_atributo: 4
     },
 
     {
@@ -42,7 +44,9 @@ export const classes = [
 
         pericias: ["Uma quantidade de perícias à sua escolha igual a 7 + Intelecto."],
 
-        proficiencias: ["Armas simples","Proteções leves."]
+        proficiencias: ["Armas simples","Proteções leves."],
+
+        pontos_atributo: 4
     },
 
     {
@@ -65,7 +69,9 @@ export const classes = [
 
         pericias: ["ocultismo", "vontade", ", mais uma quantidade de perícias a sua escolha igual a 3 + Intelecto."],
 
-        proficiencias: ["Armaduras simples."]
+        proficiencias: ["Armaduras simples."],
+
+        pontos_atributo: 4
     },
 
     {
@@ -88,6 +94,8 @@ export const classes = [
 
         pericias: ["1 + Intelecto."],
 
-        proficiencias: ["Armaduras simples."]
+        proficiencias: ["Armaduras simples."],
+
+        pontos_atributo: 3
     },
 ];

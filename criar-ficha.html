@@ -8,6 +8,8 @@
 
     <link rel="stylesheet" href="./css/criar-ficha.css">
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/header.css">
+
 </head>
 
 <body class="no-scroll">
@@ -75,18 +77,25 @@
                 <!-- IMAGEM CENTRAL -->
                 <div class="attr-center-image">
                     <img src="./assets/atributos.png" alt="Atributos">
+
+                    <div class="attr-overlay" id="attr-overlay"></div>
                 </div>
 
                 <!-- CONTEÚDO -->
                 <div class="attr-ui">
 
-                    <p class="attr-points">
-                        Pontos: <span id="points-left"></span>
-                    </p>
+                    <!-- TOPO -->
+                    <div class="attr-top">
+                        <p class="attr-points">
+                            Pontos: <span id="points-left"></span>
+                        </p>
+                    </div>
 
+                    <!-- MEIO (imagem já existe fora disso) -->
                     <div id="atributos"></div>
 
-                    <div class="attr-buttons">
+                    <!-- BOTTOM -->
+                    <div class="attr-bottom">
                         <button id="back-to-class">Voltar</button>
                         <button id="to-origem">Continuar</button>
                     </div>
