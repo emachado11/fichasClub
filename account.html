@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,6 +9,7 @@
   <link rel="stylesheet" href="./css/account.css" />
   <link rel="stylesheet" href="./css/header.css">
 </head>
+
 <body class="no-scroll">
   <div id="header"></div>
   <main class="account-container">
@@ -27,22 +29,30 @@
     </div>
 
     <div class="account-position hidden">
-      <label for="file-input">
-        <img id="user-avatar" class="fotoDePerfil" src="" />
-      </label>
-      <input type="file" id="file-input" class="hidden" accept="image/*" />
-      <p class="change-avatar-tip"> Clique na foto para alterá-la. </p>
-    </div>
+      <!-- Foto atual -->
+      <img id="user-avatar" class="fotoDePerfil" src="" alt="Avatar de perfil" />
 
-    <!-- 🔥 CROP MODAL -->
-    <div id="crop-modal" class="crop-modal hidden">
-      <div class="crop-box">
-        <canvas id="crop-canvas"></canvas>
-        <div class="crop-controls">
-          <input type="range" id="zoom-slider" min="1" max="3" step="0.01" value="1" />
+      <!-- Input escondido para upload do PC -->
+      <input type="file" id="file-input" class="hidden" accept="image/*" />
+
+      <!-- Modal para o crop -->
+      <div id="crop-modal" class="hidden">
+        <div class="modal-content">
+          <canvas id="crop-canvas" width="300" height="300"></canvas>
+          <input type="range" id="zoom-slider" min="1" max="3" step="0.1" />
           <button id="crop-save">Salvar</button>
           <button id="crop-cancel">Cancelar</button>
         </div>
+      </div>
+
+      <!-- Grid de fotos padrão -->
+      <div class="default-avatar-grid">
+        <img class="default-avatar" src="./assets/default-avatar.png" />
+        <img class="default-avatar" src="./assets/default-avatar-1.png" />
+        <img class="default-avatar" src="./assets/default-avatar-2.png" />
+        <img class="default-avatar" src="./assets/default-avatar-3.png" />
+        <img class="default-avatar" src="./assets/default-avatar-4.png" />
+        <img class="default-avatar" src="./assets/default-avatar-5.png" />
       </div>
     </div>
   </main>
@@ -70,4 +80,5 @@
   <script type="module" src="./js/auth-state.js"></script>
   <script type="module" src="./js/account.js"></script>
 </body>
+
 </html>
