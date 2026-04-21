@@ -1,0 +1,15 @@
+{
+  "classe": null,
+  "origem": null,
+  "atributos": {
+    "FOR": 1,
+    "AGI": 1,
+    "INT": 1,
+    "PRE": 1,
+    "VIG": 1
+  },
+  "pericias_treinadas": {
+    "acrobacia": 0,
+    "investigacao": 0
+  }
+}

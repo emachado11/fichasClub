@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Ficha</title>
+
+    <link rel="stylesheet" href="./css/criar-ficha.css">
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body class="no-scroll">
+
+    <div id="header"></div>
+
+    <div class="progress-wrapper">
+        <div class="progress-steps">
+            <div class="step-label active">Classe</div>
+            <div class="step-label">Atributos</div>
+            <div class="step-label">Origem</div>
+            <div class="step-label">Finalização</div>
+        </div>
+
+        <div class="progress-bar">
+            <div id="progress"></div>
+        </div>
+    </div>
+
+    <main class="container">
+
+        <!-- ================= CLASSE ================= -->
+        <section class="step active" id="step-0">
+
+            <div class="class-layout">
+
+                <div class="class-card-area">
+
+                    <button id="prev-class" class="nav-btn left">‹</button>
+
+                    <div class="class-stage">
+
+                        <div id="card-prev" class="class-card card-left"></div>
+
+                        <div id="class-card" class="class-card card-center"></div>
+
+                        <div id="card-next" class="class-card card-right"></div>
+
+                    </div>
+
+                    <!-- botão AGORA fica em layer separado -->
+                    <button id="confirm-class" class="continue-btn">
+                        Continuar como <span id="continue-name"></span>
+                    </button>
+
+                    <button id="next-class" class="nav-btn right">›</button>
+
+                </div>
+
+                <div class="class-panel" id="class-panel">
+                    <h2 id="panel-title"></h2>
+                    <p id="panel-desc"></p>
+                    <div id="panel-stats"></div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ATRIBUTOS -->
+        <section class="step" id="step-1">
+
+            <div class="attr-layout">
+
+                <!-- IMAGEM CENTRAL -->
+                <div class="attr-center-image">
+                    <img src="./assets/atributos.png" alt="Atributos">
+                </div>
+
+                <!-- CONTEÚDO -->
+                <div class="attr-ui">
+
+                    <p class="attr-points">
+                        Pontos: <span id="points-left"></span>
+                    </p>
+
+                    <div id="atributos"></div>
+
+                    <div class="attr-buttons">
+                        <button id="back-to-class">Voltar</button>
+                        <button id="to-origem">Continuar</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ORIGEM -->
+        <section class="step" id="step-2">
+
+            <div class="split">
+
+                <div class="col">
+                    <h2>Origens</h2>
+                    <div id="origens"></div>
+                </div>
+
+                <div class="col">
+                    <h2>Perícias</h2>
+                    <div id="pericias"></div>
+                </div>
+
+            </div>
+
+            <button id="back-to-atributos">Voltar</button>
+            <button id="finish">Finalizar</button>
+
+        </section>
+
+    </main>
+
+    <script type="module" src="./js/header.js"></script>
+    <script type="module" src="./js/criar-ficha.js"></script>
+
+</body>
+
+</html>

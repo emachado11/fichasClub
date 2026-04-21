@@ -1,0 +1,395 @@
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0f0f14;
+  color: white;
+  overflow: hidden;
+}
+
+/* HEADER SPACE */
+#header {
+  width: 100%;
+}
+
+/* PROGRESS */
+.progress-wrapper {
+  padding: 10px 20px;
+}
+
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.step-label.active {
+  color: #6c5ce7;
+  opacity: 1;
+}
+
+.progress-bar {
+  height: 6px;
+  background: #222;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+
+#progress {
+  height: 100%;
+  width: 0%;
+  background: #6c5ce7;
+}
+
+/* STEP */
+.step {
+  display: none;
+}
+
+.step.active {
+  display: block;
+}
+
+/* ================= CLASS LAYOUT ================= */
+
+.class-layout {
+  display: flex;
+  height: 65vh;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+}
+
+/* CARROSSEL AREA */
+.class-card-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  perspective: 1400px;
+}
+
+/* STAGE (PROTEGE LAYERS) */
+.class-stage {
+  position: relative;
+  width: 520px;
+  height: 720px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 10; /* 👈 FIX PRINCIPAL DO BOTÃO */
+}
+
+/* ================= CARD BASE ================= */
+
+.class-card {
+  position: absolute;
+  width: 520px;
+  height: 650px;
+
+  background: #1a1a25;
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px;
+
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+
+  transition: transform 600ms cubic-bezier(.2, .9, .2, 1),
+              opacity 400ms ease,
+              filter 400ms ease;
+
+  will-change: transform, opacity;
+
+  z-index: 1;
+  pointer-events: auto;
+}
+
+/* CENTRO */
+.card-center {
+  transform: translateX(0) scale(1);
+  opacity: 1;
+  z-index: 3;
+  filter: blur(0px);
+}
+
+/* ESQUERDA */
+.card-left {
+  transform: translateX(-320px) scale(0.86) rotateY(18deg);
+  opacity: 0.55;
+  z-index: 2;
+  filter: blur(1px);
+}
+
+/* DIREITA */
+.card-right {
+  transform: translateX(320px) scale(0.86) rotateY(-18deg);
+  opacity: 0.55;
+  z-index: 2;
+  filter: blur(1px);
+}
+
+/* 🚫 impede clique nos laterais */
+.card-left,
+.card-right {
+  pointer-events: none;
+}
+
+/* ================= TEXTO ================= */
+
+.class-name {
+  font-size: 24px;
+  text-align: center;
+  width: 100%;
+}
+
+/* ================= SETAS ================= */
+
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 70px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: 0.2s;
+
+  position: relative;
+  z-index: 50; /* 👈 acima de tudo */
+}
+
+.nav-btn:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+/* ================= CONTINUE BUTTON ================= */
+
+.continue-btn {
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: #6c5ce7;
+  color: white;
+
+  padding: 12px 18px;
+  border: none;
+  border-radius: 6px;
+
+  transition: 0.2s;
+
+  z-index: 9999; /* 👈 SEMPRE NO TOPO */
+  pointer-events: auto;
+}
+
+.continue-btn:hover {
+  transform: translateX(-50%) scale(1.15);
+}
+
+/* ================= PANEL ================= */
+
+.class-panel {
+  width: 0;
+  opacity: 0;
+  overflow: hidden;
+
+  background: #15151d;
+  padding: 0;
+
+  transition: 0.35s ease;
+  border-left: 1px solid #222;
+}
+
+.class-panel.open {
+  width: 360px;
+  opacity: 1;
+  padding: 20px;
+  z-index: 2;
+}
+
+.panel-grid {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+/* colunas */
+.panel-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* quote no topo */
+.panel-quote {
+  font-style: italic;
+  opacity: 0.75;
+  margin-bottom: 10px;
+  border-left: 2px solid #6c5ce7;
+  padding-left: 8px;
+}
+
+.panel-quote-top {
+  font-style: italic;
+  opacity: 0.75;
+
+  margin: 6px 0 12px 0;
+
+  border-left: 2px solid #6c5ce7;
+  padding-left: 8px;
+
+  line-height: 1.3;
+}
+
+/* títulos mais próximos do conteúdo */
+.panel-title {
+  font-weight: bold;
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+
+/* texto itálico sem sublinhado */
+.panel-text i {
+  font-style: italic;
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+/* aproxima conteúdo do título */
+.panel-text.tight {
+  margin-top: -2px;
+}
+
+/* separador entre colunas */
+.panel-divider {
+  width: 1px;
+  background: rgba(255,255,255,0.12);
+  height: auto;
+  align-self: stretch;
+}
+
+/* ================= ATRIBUTOS ================= */
+
+#atributos {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+/* bloco do atributo */
+.attr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* círculo estilo “core” */
+.attr-circle {
+  width: 90px;
+  height: 90px;
+
+  border-radius: 50%;
+  border: 2px solid #6c5ce7;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  background: rgba(108, 92, 231, 0.08);
+}
+
+/* label (FOR, AGI...) */
+.attr-label {
+  font-size: 12px;
+  opacity: 0.8;
+  position: absolute;
+  top: 10px;
+}
+
+/* input central */
+.attr-input {
+  width: 100%;
+  height: 100%;
+
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+
+  background: transparent;
+  border: none;
+  color: white;
+
+  outline: none;
+}
+
+/* remove setinhas do input number */
+.attr-input::-webkit-outer-spin-button,
+.attr-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.attr-layout {
+  position: relative;
+
+  width: 100%;
+  height: 70vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* IMAGEM CENTRAL GIGANTE */
+.attr-center-image {
+  position: absolute;
+
+  width: 720px;
+  height: 720px;
+
+  z-index: 0;
+
+  pointer-events: none;
+}
+
+.attr-center-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+
+  filter: drop-shadow(0 0 30px rgba(108,92,231,0.4));
+}
+
+/* UI por cima */
+.attr-ui {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* pontos */
+.attr-points {
+  opacity: 0.8;
+  font-size: 14px;
+}
+
+/* botões */
+.attr-buttons {
+  display: flex;
+  gap: 10px;
+}
