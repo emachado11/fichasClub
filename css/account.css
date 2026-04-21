@@ -75,10 +75,10 @@ body {
 .fotoDePerfil {
   width: 400px;
   height: 400px;
-  border-radius: 50%;
   object-fit: cover;
   cursor: pointer;
   transition: 0.2s;
+  border: 2px solid transparent;
 }
 
 .default-avatar-grid {
@@ -102,7 +102,10 @@ body {
   border-color: #fff;
   transform: scale(1.05);
 }
-.fotoDePerfil:hover { transform: scale(1.03); }
+.fotoDePerfil:hover { 
+  border-color: #fff;
+  transform: scale(1.03); 
+}
 .change-avatar-tip { margin-top: 12px; color: #aaa; }
 
 /* CROP MODAL */

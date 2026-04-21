@@ -6,7 +6,9 @@ import {
   EmailAuthProvider,
   reauthenticateWithCredential,
   updatePassword,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  deleteUser,
+  signOut
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -289,8 +291,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const flows = {
       1: flowRename,
       3: flowEmail,
-      4: flowPassword
+      4: flowPassword,
+      5: flowDeleteAccount
     };
+
+    if (i === 6) {
+      handleLogout();
+      return;
+    }
 
     if (flows[i]) openCMD(flows[i]);
   }
@@ -411,6 +419,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     renderInput();
+  }
+
+  async function handleLogout() {
+    await signOut(auth);
+    window.location.href = "./index.html";
   }
 
   /* ================= ASK ENGINE ================= */
@@ -587,6 +600,74 @@ document.addEventListener("DOMContentLoaded", () => {
 
     return finish("> Operação cancelada.");
   }
+
+  async function flowDeleteAccount() {
+    await typeLine("> Você tem certeza de que quer apagar sua conta?");
+    await typeLine("> Seus dados não poderão ser recuperados depois. S/N");
+
+    const confirm = await ask({
+      uppercase: true,
+      validate: (v) => ["S", "N"].includes(v),
+      error: "> Entrada inválida."
+    });
+
+    if (confirm === "N") {
+      return finish("> Operação cancelada.");
+    }
+
+    await typeLine("> Digite APAGAR para confirmar.");
+
+    const finalConfirm = await ask({
+      uppercase: true,
+      validate: (v) => v === "APAGAR",
+      error: "> Texto incorreto."
+    });
+
+    try {
+      await deleteUser(auth.currentUser);
+
+      await typeLine("> Conta apagada com sucesso.");
+
+      setTimeout(() => {
+        window.location.href = "./index.html";
+      }, 1000);
+
+    } catch (err) {
+      if (err.code === "auth/requires-recent-login") {
+
+        await typeLine("> Confirmação necessária.");
+        await typeLine("> Insira sua senha:");
+
+        const password = await ask({
+          uppercase: false,
+          validate: (v) => v.length > 0,
+          error: "> Senha inválida."
+        });
+
+        try {
+          const cred = EmailAuthProvider.credential(user.email, password);
+
+          await reauthenticateWithCredential(auth.currentUser, cred);
+          await deleteUser(auth.currentUser);
+
+          await typeLine("> Conta apagada com sucesso.");
+
+          setTimeout(() => {
+            window.location.href = "./index.html";
+          }, 1000);
+
+        } catch (e) {
+          console.log(e);
+          finish("> Falha na autenticação.");
+        }
+
+      } else {
+        console.log(err);
+        finish("> Erro ao apagar conta.");
+      }
+    }
+  }
+
 
   /* ================= HELPERS ================= */
   function maskEmail(email) {
