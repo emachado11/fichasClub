@@ -1,139 +1,83 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+body {
+  background-color: rgb(0, 0, 46);
+  color: #fff;
+  font-family: "VT323", monospace;
+  font-size: 35px;
+  overflow: hidden;
 }
 
-/* CONTAINER */
 .account-container {
   display: flex;
-  height: calc(100vh - 80px);
-  padding: 40px;
-  gap: 40px;
+  height: 100vh;
+  padding: 60px;
 }
 
-/* ESQUERDA */
-.account-left {
-  width: 35%;
+/* MENU */
+.account-menu { width: 100%; max-width: 700px; }
+.title { margin-bottom: 40px; }
+
+/* LISTA */
+.menu-list { display: flex; flex-direction: column; gap: 18px; }
+
+/* ITEM BIOS */
+.menu-item {
+  cursor: pointer;
+  padding: 6px 10px;
+  transition: 0.15s;
+  opacity: 0.6;
+}
+.menu-item:hover { opacity: 1; transform: translateX(4px); }
+.menu-item.active { opacity: 1; color: #ffffff; }
+
+#terminal-panel { margin-top: 30px; }
+.hidden { display: none; }
+
+/* ================= CMD OVERLAY ================= */
+#cmd-window {
+  position: fixed;
+  top: 80px;
+  right: 80px;
+  width: 520px;
+  height: 320px;
+  background: rgba(20, 20, 20, 0.92);
+  border: 1px solid rgba(255,255,255,0.25);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 20px; /* subiu a foto */
+  font-family: "VT323", monospace;
+  font-size: 20px;
+  color: white;
+  z-index: 9999;
+  resize: none;
+  transform: scale(0.8);
+  opacity: 0;
+  transition: all 0.18s ease;
 }
+#cmd-window.show { transform: scale(1); opacity: 1; }
+.cmd-titlebar { height: 32px; display: flex; justify-content: space-between; align-items: center; padding: 0 10px; border-bottom: 1px solid rgba(255,255,255,0.15); }
+.cmd-title { font-size: 18px; }
+.no-function { margin-left: 10px; cursor: pointer; opacity: 0.7; }
+.no-function:hover { opacity: 1; background: #ffffff3a; }
+.cmd-close { cursor: pointer; transition: 0.15s; user-select: none; }
+.cmd-close:hover { background: #ff4d4d; }
+#cmd-log { flex: 1; padding: 10px; overflow-y: auto; }
+.cmd-input-line { display: flex; padding: 10px; gap: 6px; }
+.cmd-cursor { animation: blink 0.9s infinite; }
+@keyframes blink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
 
+/* Foto de perfil */
 .fotoDePerfil {
-  width: 340px; /* aumentei um pouco */
+  width: 340px;
   height: 340px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #0e7a00;
   cursor: pointer;
   transition: 0.2s;
 }
+.fotoDePerfil:hover { transform: scale(1.03); }
+.change-avatar-tip { margin-top: 12px; color: #aaa; }
 
-.fotoDePerfil:hover {
-  transform: scale(1.03);
-}
-
-.change-avatar-tip {
-  margin-top: 12px;
-  color: #aaa;
-}
-
-/* DIREITA */
-.account-right {
-  width: 65%;
-  overflow-y: auto;
-  padding-right: 10px;
-}
-
-.info-section {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-}
-
-h3 {
-  color: #aaa;
-}
-
-/* INPUTS */
-input {
-  width: 100%;
-  max-width: 500px;
-  padding: 12px;
-  background: #0f0f17;
-  border: 1px solid #333;
-  color: white;
-  border-radius: 6px;
-}
-
-/* REMOVE AUTOFILL */
-input:-webkit-autofill {
-  transition: all 0s 9999s;
-}
-
-/* LINKS */
-.change-text {
-  color: #6c5ce7;
-  cursor: pointer;
-  font-size: 0.9rem;
-  display: inline-block;
-  margin-top: 6px;
-}
-
-/* BOTÕES ROXOS */
-#save-email-btn,
-#save-password-btn {
-  margin-top: 10px;
-  padding: 12px;
-  background: #6c5ce7;
-  border: none;
-  border-radius: 8px;
-  color: white;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-#save-email-btn:hover,
-#save-password-btn:hover {
-  background: #5a4cc7;
-}
-
-/* BOTÕES VERMELHOS */
-.settings-section {
-  display: flex;
-  gap: 15px;
-  margin-top: 30px;
-}
-
-#logout-btn,
-#delete-account-btn {
-  width: 200px;
-  padding: 12px;
-  background: #e74c3c;
-  border: none;
-  border-radius: 8px;
-  color: white;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-#logout-btn:hover,
-#delete-account-btn:hover {
-  background: #c0392b;
-}
-
-/* HIDDEN */
-.hidden {
-  display: none;
-}
-
-/* ========================= */
-/* 🔥 CROP MODAL */
-/* ========================= */
-
+/* CROP MODAL */
 .crop-modal {
   position: fixed;
   inset: 0;
@@ -143,7 +87,6 @@ input:-webkit-autofill {
   align-items: center;
   z-index: 999;
 }
-
 .crop-box {
   background: #151522;
   padding: 25px;
@@ -153,8 +96,6 @@ input:-webkit-autofill {
   align-items: center;
   gap: 20px;
 }
-
-/* Canvas circular */
 #crop-canvas {
   width: 320px;
   height: 320px;
@@ -163,25 +104,9 @@ input:-webkit-autofill {
   cursor: grab;
   border: 3px solid #6c5ce7;
 }
-
-#crop-canvas:active {
-  cursor: grabbing;
-}
-
-/* CONTROLES */
-.crop-controls {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-/* Slider */
-#zoom-slider {
-  width: 140px;
-  accent-color: #6c5ce7;
-}
-
-/* Botões do crop */
+#crop-canvas:active { cursor: grabbing; }
+.crop-controls { display: flex; align-items: center; gap: 12px; }
+#zoom-slider { width: 140px; accent-color: #6c5ce7; }
 .crop-controls button {
   background: #6c5ce7;
   border: none;
@@ -191,16 +116,6 @@ input:-webkit-autofill {
   cursor: pointer;
   transition: 0.2s;
 }
-
-.crop-controls button:hover {
-  background: #5a4cc7;
-}
-
-/* Botão cancelar diferente */
-#crop-cancel {
-  background: #e74c3c;
-}
-
-#crop-cancel:hover {
-  background: #c0392b;
-}
+.crop-controls button:hover { background: #5a4cc7; }
+#crop-cancel { background: #e74c3c; }
+#crop-cancel:hover { background: #c0392b; }
