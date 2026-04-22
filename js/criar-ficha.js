@@ -1,7 +1,27 @@
+import { db } from "./firebase.js"; // Importa o db do firebase.js
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// Função para salvar a ficha no Firestore
+async function saveFichaToFirebase(ficha) {
+    try {
+        const docRef = doc(db, "fichas", ficha.nome);  // Usa o nome como ID do documento
+        await setDoc(docRef, ficha);  // Salva os dados da ficha no Firestore
+        console.log("Ficha salva com sucesso:", ficha);
+        return true;  // Retorna true se tudo der certo
+    } catch (error) {
+        console.error("Erro ao salvar a ficha: ", error);
+        return false;  // Retorna false em caso de erro
+    }
+}
+
 import { classes } from "./classes.js";
 import { origens } from "./origens.js";
 import { pericias } from "./pericias.js";
 import { habilidades } from "./habilidades.js";
+
+function getHabilidade(id) {
+    return habilidades.find(h => h.id === id);
+}
 
 const state = {
     classIndex: 1,
@@ -248,10 +268,9 @@ function renderAtributos() {
     document.getElementById("points-left").textContent = pontos;
 
     Object.keys(state.atributos).forEach(k => {
-
         const d = document.createElement("div");
 
-        // ================= POSIÇÃO NA TELA =================
+        // Posição na tela
         d.style.position = "absolute";
         d.style.top = attrPositions[k].top + "%";
         d.style.left = attrPositions[k].left + "%";
@@ -261,10 +280,8 @@ function renderAtributos() {
         d.dataset.key = k;
         d.classList.add("attr");
 
-        // ================= CONTEÚDO =================
         d.innerHTML = `
             <div class="attr-circle">
-
                 <input 
                     class="attr-input"
                     type="number"
@@ -275,9 +292,9 @@ function renderAtributos() {
             </div>
         `;
 
-        // ================= INPUT LOGIC =================
         const input = d.querySelector("input");
 
+        // Input para alterar o valor
         input.addEventListener("input", (e) => {
             let val = Number(e.target.value);
 
@@ -293,6 +310,7 @@ function renderAtributos() {
         el.appendChild(d);
     });
 
+    // Desabilita o botão de origem se os pontos não forem zero
     document.getElementById("to-origem").disabled = pontos !== 0;
 }
 
@@ -330,7 +348,7 @@ function treinoLabel(v) {
 
 function renderPericias() {
     const el = document.getElementById("pericias");
-    el.innerHTML = "";
+    el.innerHTML = ""; // Limpa a lista de perícias para atualizar
 
     pericias.forEach(p => {
         const s = state.pericia[p.id];
@@ -339,19 +357,39 @@ function renderPericias() {
         const d = document.createElement("div");
         d.className = "pericia";
 
+        // Cor do texto baseada no treino
+        let textColor = "white"; // Cor padrão (sem treino)
+
+        if (t > 15) {
+            textColor = "red";  // Vermelho para perícias acima de Expert
+        } else if (t >= 15) {
+            textColor = "yellow";  // Amarelo para Expert
+        } else if (t >= 10) {
+            textColor = "blue";  // Azul para Veterano
+        } else if (t >= 5) {
+            textColor = "green";  // Verde para Treinado
+        }
+
+        // Aplica a cor no texto
+        d.style.color = textColor;
+
         d.innerHTML = `
-        <div>${p.nome} (${p.atributo})</div>
-        <div>${t}</div>
-        <div>${treinoLabel(t)}</div>
+            <div class="pericia-name">${p.nome} (${p.atributo})</div>
 
-        <select>
-            <option value="0">0</option>
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-        </select>
+            <div class="pericia-info">
+                <div class="treino">${treinoLabel(t)}</div>
+                <div class="valor">${t}</div>
+            </div>
 
-        <input type="number" value="${s.bonus}">
+            <div class="pericia-controls">
+                <select>
+                    <option value="0">0</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                </select>
+                <input type="number" value="${s.bonus}">
+            </div>
         `;
 
         el.appendChild(d);
@@ -375,12 +413,27 @@ function renderPericias() {
 
 // ================= ORIGENS =================
 function aplicarOrigem(o) {
+    // Verifica se a origem é válida antes de tentar acessar as propriedades
+    if (!o || !o.pericias) {
+        console.warn("Origem ou pericias não encontradas.");
+        return;  // Se não encontrar, interrompe a execução
+    }
+
+    // Limpa as pericias da origem anterior
     Object.keys(state.pericia).forEach(k => {
-        state.pericia[k].origem = 0;
+        if (state.pericia[k]) {
+            state.pericia[k].origem = 0; // Reseta a origem
+        }
     });
 
+    // Aplica origem
     o.pericias.forEach(id => {
-        state.pericia[id].origem = 5;
+        if (!state.pericia[id]) {
+            console.warn("Perícia não encontrada:", id);
+            return;
+        }
+
+        state.pericia[id].origem = 5; // Aplica a origem nas perícias
     });
 }
 
@@ -392,44 +445,58 @@ function renderOrigens() {
         const card = document.createElement("div");
         card.className = "origem";
 
+        // Verifica se a origem está selecionada
         const selected = state.origem && state.origem.id === o.id;
         const habilidade = getHabilidade(o.habilidadeId);
 
+        // Cria a estrutura do card com o botão
         card.innerHTML = `
-        <div class="origem-top">
-            <span>▼</span>
-            <div>${o.nome}</div>
-            <button>${selected ? "Selecionado" : "Selecionar"}</button>
-        </div>
+            <div class="origem-top">
+                <span>V</span>  <!-- V em vez de seta -->
+                <div>${o.nome}</div>
+                <button class="${selected ? 'open' : ''}"></button> <!-- botão de energia -->
+            </div>
 
-        <div class="desc" style="display:none">
-            <p>${o.descricao}</p>
-            <p><b>Perícias:</b> ${o.pericias.join(", ")}</p>
-            <p><b>Habilidade:</b> ${habilidade ? habilidade.nome : "—"}</p>
-            <p>${habilidade ? habilidade.descricao : ""}</p>
-        </div>
+            <div class="desc ${selected ? 'open' : ''}">
+                <p>${o.descricao}</p>
+                <p><b>Perícias:</b> ${o.pericias.join(", ")}</p>
+                <p><b>Habilidade:</b> ${habilidade ? habilidade.nome : "—"}</p>
+                <p>${habilidade ? habilidade.descricao : ""}</p>
+            </div>
         `;
 
+        // Evento de clique para abrir e fechar
         card.addEventListener("click", (e) => {
-            if (e.target.tagName === "BUTTON") return;
+            if (e.target.tagName !== "BUTTON") {
+                // Fecha todas as origens abertas, exceto a atual
+                document.querySelectorAll(".origem.open").forEach(item => {
+                    if (item !== card) item.classList.remove("open");
+                });
 
-            const desc = card.querySelector(".desc");
-            desc.style.display = desc.style.display === "block" ? "none" : "block";
+                card.classList.toggle("open");
+            }
         });
 
         const btn = card.querySelector("button");
 
+        // Alteração no evento de clique do botão
         btn.addEventListener("click", (e) => {
-            e.stopPropagation();
+            e.stopPropagation(); // Impede a propagação do clique
 
-            state.origem = o;
-            aplicarOrigem(o);
+            if (card.classList.contains("selected")) {
+                card.classList.remove("selected");
+                state.origem = null;  // Desmarcar a origem
+            } else {
+                // Marca a origem como selecionada
+                document.querySelectorAll(".origem").forEach(o => o.classList.remove("selected")); // Remove seleção de todas as origens
+                card.classList.add("selected");
+                state.origem = o; // Marca a origem no estado
+            }
 
-            document.querySelectorAll("#origens button")
-                .forEach(b => b.textContent = "Selecionar");
+            // Aplica as pericias da origem
+            aplicarOrigem(state.origem);
 
-            btn.textContent = "Selecionado";
-
+            // Re-renderiza as perícias após a mudança
             renderPericias();
         });
 
@@ -448,10 +515,228 @@ document.getElementById("to-origem").onclick = () => {
 document.getElementById("back-to-class").onclick = () => go(0);
 document.getElementById("back-to-atributos").onclick = () => go(1);
 
+// Função para finalizar e salvar a ficha após coletar as informações
 document.getElementById("finish").onclick = () => {
-    console.log("FICHA FINAL:", state);
+    openCMD(async () => {
+        await typeLine("Finalizando personagem...");
+        await typeLine("(Essas informações podem ser alteradas depois)");
+
+        // Coleta os dados do jogador
+        await typeLine("Nome do Personagem.");
+        const charName = await ask({
+            uppercase: false,
+            validate: (v) => v.length > 0,
+            error: "> Nome inválido."
+        });
+
+        await typeLine("Aparência.");
+        const charAppearance = await ask({
+            uppercase: false,
+        });
+
+        await typeLine("Personalidade.");
+        const charPersonality = await ask({
+            uppercase: false,
+        });
+
+        await typeLine("Histórico.");
+        const charHistory = await ask({
+            uppercase: false,
+        });
+
+        await typeLine("Objetivo.");
+        const charObjective = await ask({
+            uppercase: false,
+        });
+
+        // Pergunta para finalizar ou revisar
+        await typeLine("Finalizar? S/N");
+        const ans = await ask({ uppercase: true });
+
+        if (ans !== "S") {
+            // Se escolher revisar, permitir a edição
+            return openCMD(async () => {
+                await typeLine("> Qual informação você quer alterar?");
+                await typeLine("> 1 - Nome.");
+                await typeLine("> 2 - Aparência.");
+                await typeLine("> 3 - Personalidade.");
+                await typeLine("> 4 - Histórico.");
+                await typeLine("> 5 - Objetivo.");
+                await typeLine("> 6 - Finalizar.");
+
+                const choice = await ask({
+                    validate: (input) => !isNaN(input) && input >= 1 && input <= 6,
+                    error: "Escolha uma opção válida entre 1 e 5.",
+                });
+
+                // Lógica para alterar a ficha com base na escolha
+                if (choice === "1") {
+                    return handleEdit("Nome", charName);
+                } else if (choice === "2") {
+                    return handleEdit("Aparência", charAppearance);
+                } else if (choice === "3") {
+                    return handleEdit("Personalidade", charPersonality);
+                } else if (choice === "4") {
+                    return handleEdit("Histórico", charHistory);
+                } else if (choice === "5") {
+                    return handleEdit("Objetivo", charObjective);
+                } else if (choice === "6") {
+                    // Se finalizar, salva a ficha
+                    const ficha = {
+                        nome: charName,
+                        aparencia: charAppearance,
+                        historico: charHistory,
+                        objetivo: charObjective,
+                        personalidade: charPersonality,
+                        
+                    };
+
+                    // Salva a ficha no Firestore
+                    const saved = await saveFichaToFirebase(ficha);
+                    if (saved) {
+                        await typeLine("> Ficha criada com sucesso!");
+                        closeCMD();
+                    } else {
+                        await typeLine("> Algo deu errado. Tente novamente.");
+                    }
+                }
+            });
+        } else {
+            // Se já for "S", finaliza sem revisão
+            const ficha = {
+                nome: charName,
+                aparencia: charAppearance,
+                historico: charHistory,
+                objetivo: charObjective,
+            };
+
+            // Salva a ficha no Firestore
+            const saved = await saveFichaToFirebase(ficha);
+            if (saved) {
+                await typeLine("> Ficha criada com sucesso!");
+                closeCMD();
+            } else {
+                await typeLine("> Algo deu errado. Tente novamente.");
+            }
+        }
+    });
 };
 
 // INIT
 renderAtributos();
 renderPericias();
+
+/* ================= CMD STATE ================= */
+let cmdActive = false;
+let buffer = "";
+let forceUppercase = false;
+let currentStep = null;
+
+const overlay = document.getElementById("cmd-window");
+const log = document.getElementById("cmd-log");
+const inputEl = document.getElementById("cmd-input");
+const cursor = document.querySelector(".cmd-cursor");
+const closeBtn = document.querySelector(".cmd-controls span:last-child");
+
+/* ===================== CMD CORE ====================== */
+function openCMD(flow) {
+    cmdActive = true;
+    overlay.classList.remove("hidden");
+    requestAnimationFrame(() => overlay.classList.add("show"));
+    resetCMD();
+    bindInput();
+    flow();
+}
+
+function closeCMD() {
+    cmdActive = false;
+    overlay.classList.remove("show");
+    setTimeout(() => {
+        overlay.classList.add("hidden");
+        resetCMD();
+    }, 150);
+}
+
+function resetCMD() {
+    log.innerHTML = "";
+    inputEl.textContent = "";
+    buffer = "";
+    forceUppercase = false;
+    currentStep = null;
+}
+
+/* ================= INPUT ================= */
+function bindInput() {
+    document.onkeydown = (e) => {
+        if (!cmdActive || !currentStep) return;
+        currentStep(e);
+    };
+}
+
+function setStep(fn) {
+    currentStep = fn;
+}
+
+/* ================= OUTPUT ================= */
+function typeLine(text, speed = 15) {
+    return new Promise((res) => {
+        const line = document.createElement("div");
+        log.appendChild(line);
+
+        let i = 0;
+
+        const tick = () => {
+            if (i < text.length) {
+                line.textContent += text[i++];
+                log.scrollTop = log.scrollHeight;
+                setTimeout(tick, speed);
+            } else res();
+        };
+
+        tick();
+    });
+}
+
+function renderInput() {
+    inputEl.textContent = buffer;
+    inputEl.appendChild(cursor);
+}
+
+function createPrompt() {
+    const line = document.createElement("div");
+    line.innerHTML = "> <span></span>";
+    log.appendChild(line);
+
+    buffer = "";
+    renderInput();
+}
+
+/* ================= INPUT ================= */
+function handleTyping(e) {
+    if (e.key === "Backspace") buffer = buffer.slice(0, -1);
+    if (e.key.length === 1) {
+        buffer += forceUppercase ? e.key.toUpperCase() : e.key;
+    }
+    renderInput();
+}
+
+/* ================= CMD ACTIONS ================= */
+function ask({ uppercase = false, validate = () => true, error = "> Entrada inválida." } = {}) {
+    return new Promise((resolve) => {
+        forceUppercase = uppercase;
+        createPrompt();
+        setStep(async (e) => {
+            if (e.key !== "Enter") return handleTyping(e);
+            const value = buffer.trim();
+            if (!validate(value)) {
+                await typeLine(error);
+                createPrompt();
+                return;
+            }
+            resolve(value);
+        });
+    });
+}
+
+/* ===================== CLOSE ================= */
+closeBtn.onclick = closeCMD;

@@ -362,7 +362,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  
+
   pointer-events: none;
   z-index: 10;
 }
@@ -408,10 +408,9 @@
 
   margin-bottom: -155px;
   /* ↓ joga mais pra baixo */
-  pointer-events: auto;
 }
 
-/* BOTÃO NORMAL já existe */
+/* ================= BOTÃO NORMAL já existe */
 .attr-bottom button {
   background: #6c5ce7;
   color: white;
@@ -449,4 +448,445 @@
 .attr-bottom,
 .attr-points {
   pointer-events: auto;
+}
+
+/* ================= LAYOUT ORIGENS + PERÍCIAS ================= */
+
+.col {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.origem-pericia-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+
+  height: 65vh;
+  padding: 20px 40px;
+}
+
+/* colunas */
+.origem-col,
+.pericia-col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* títulos */
+.origem-col h2,
+.pericia-col h2 {
+  margin-bottom: 15px;
+  font-size: 22px;
+  opacity: 0.9;
+}
+
+
+/* ================= ORIGENS (ACCORDION REAL) ================= */
+
+.origem {
+  background: #1a1a25;
+  border: 1px solid #2a2a3a;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: 0.25s;
+}
+
+.origem-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  cursor: pointer;
+}
+
+/* Alteração da seta para V */
+.origem-top span {
+  font-size: 20px;
+  transition: transform 0.3s ease;
+  display: inline-block;
+  transform: rotate(0deg);
+}
+
+.origem.open .origem-top span {
+  transform: rotate(180deg);
+  /* Vira o "V" para cima quando aberto */
+}
+
+/* Botão de energia para selecionar a origem */
+.origem-top button {
+  background: transparent;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  padding: 8px;
+  transition: 0.3s ease;
+}
+
+.origem-top button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  background-color: #6c5ce7;
+  /* Cor inicial (apagado) */
+  border-radius: 50%;
+  transition: 0.3s ease;
+  transform: translate(-50%, -50%);
+}
+
+/* Quando a origem estiver selecionada (LED aceso) */
+/* Alteração do botão LED para origem selecionada */
+.origem.selected button::before {
+  background-color: #28a745;
+  /* Verde quando selecionado */
+}
+
+/* Efeito de luz verde ao passar o mouse */
+.origem button:hover::before {
+  box-shadow: 0 0 8px rgba(0, 255, 0, 0.7);
+}
+
+/* Fechar as outras origens quando abrir uma nova */
+.origem.open~.origem .desc {
+  display: none;
+}
+
+/* Descrição inicial com height 0 */
+.desc {
+  height: 0;
+  /* Esconde a descrição */
+  overflow: hidden;
+  padding: 0 14px;
+  opacity: 0;
+  transition: height 0.3s ease, opacity 0.3s ease;
+  /* Transição de height e opacity */
+}
+
+/* Quando aberto, a altura será maior */
+.origem.open .desc {
+  height: 200px;
+  /* Ajuste a altura conforme o tamanho da sua descrição */
+  opacity: 1;
+  padding: 10px 14px 14px;
+}
+
+/* Animação da seta */
+.origem.open .origem-top span {
+  transform: rotate(180deg);
+}
+
+/* Nome da origem */
+.origem-top div {
+  flex: 1;
+  font-size: 15px;
+}
+
+/* ================= LAYOUT FIXO ================= */
+
+.origem-pericia-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+
+  height: 65vh;
+  padding: 20px 40px;
+}
+
+/* colunas com scroll interno */
+.origem-col,
+.pericia-col {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+#origens,
+#pericias {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ================= PERÍCIAS HEADER ================= */
+
+/* Estilo para o cabeçalho */
+.pericia-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* 3 colunas de largura igual */
+  gap: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #ccc;
+  /* Linha de separação */
+  font-weight: bold;
+  text-align: left;
+  font-size: 16px;
+  color: #fff;
+}
+
+.header-col {
+  padding: 5px 10px;
+}
+
+/* Estilo das colunas da perícia */
+.pericia {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* 3 colunas: nome, treino, bônus */
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+  border: 1px solid #333;
+  padding: 10px;
+  background-color: #222;
+  color: white;
+}
+
+.pericia-name {
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.pericia-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.treino {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.valor {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.pericia-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pericia-controls select,
+.pericia-controls input {
+  background-color: #1a1a1a;
+  color: white;
+  border: 1px solid white;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 14px;
+  width: 60px;
+  outline: none;
+}
+
+.pericia-controls select:hover {
+  background-color: #333;
+  /* Escurece quando passa o mouse */
+}
+
+.pericia-controls input {
+  background-color: #1a1a1a;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 14px;
+  width: 60px;
+  outline: none;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.pericia-controls input:focus {
+  background-color: #333;
+  /* Escurece quando o input é focado */
+}
+
+
+.pericia:hover {
+  border-color: #6c5ce7;
+}
+
+/* NOME */
+.pericia div:nth-child(1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* VALOR */
+.pericia div:nth-child(2) {
+  text-align: center;
+  font-weight: bold;
+}
+
+/* TEXTO */
+.pericia div:nth-child(3) {
+  text-align: center;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.pericia select,
+.pericia input {
+  margin-top: 5px;
+  width: 60%;
+}
+
+/* ================= BOTÕES ================= */
+
+.step-actions {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.step-actions button {
+  background: #6c5ce7;
+  border: none;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+
+/* ================= SCROLL MAIS BONITINHO ================= */
+
+/* Para Firefox */
+.pericia-container {
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  /* Scroll mais fino */
+  scrollbar-color: #6c5ce7 transparent;
+  /* Cor do thumb e fundo */
+}
+
+/* Para Chrome, Safari, e Edge */
+.pericia-container::-webkit-scrollbar {
+  width: 8px;
+  /* Tamanho do scroll */
+}
+
+.pericia-container::-webkit-scrollbar-track {
+  background: #222;
+  /* Cor de fundo do track */
+  border-radius: 10px;
+  /* Bordas arredondadas */
+}
+
+.pericia-container::-webkit-scrollbar-thumb {
+  background: #6c5ce7;
+  /* Cor do thumb (a parte que você arrasta) */
+  border-radius: 10px;
+  /* Bordas arredondadas no thumb */
+  border: 2px solid #222;
+  /* Bordas do thumb */
+}
+
+.pericia-container::-webkit-scrollbar-thumb:hover {
+  background: #5a4ac7;
+  /* Cor do thumb quando o mouse passa por cima */
+}
+
+
+/* ================= CMD OVERLAY ================= */
+#cmd-window {
+  position: fixed;
+  top: 80px;
+  right: 80px;
+  width: 520px;
+  height: 320px;
+  background: rgba(20, 20, 20, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  font-family: "VT323", monospace;
+  font-size: 20px;
+  color: white;
+  z-index: 9999;
+  resize: none;
+  transform: scale(0.8);
+  opacity: 0;
+  transition: all 0.18s ease;
+}
+
+#cmd-window.show {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.cmd-titlebar {
+  height: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.cmd-title {
+  font-size: 18px;
+}
+
+.no-function {
+  margin-left: 10px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.no-function:hover {
+  opacity: 1;
+  background: #ffffff3a;
+}
+
+.cmd-close {
+  cursor: pointer;
+  transition: 0.15s;
+  user-select: none;
+}
+
+.cmd-close:hover {
+  background: #ff4d4d;
+}
+
+#cmd-log {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.cmd-input-line {
+  display: flex;
+  padding: 10px;
+  gap: 6px;
+}
+
+.cmd-cursor {
+  animation: blink 0.9s infinite;
+}
+
+@keyframes blink {
+
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
 }

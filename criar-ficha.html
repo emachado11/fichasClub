@@ -50,7 +50,6 @@
 
                     </div>
 
-                    <!-- botão AGORA fica em layer separado -->
                     <button id="confirm-class" class="continue-btn">
                         Continuar como <span id="continue-name"></span>
                     </button>
@@ -74,27 +73,20 @@
 
             <div class="attr-layout">
 
-                <!-- IMAGEM CENTRAL -->
                 <div class="attr-center-image">
                     <img src="./assets/atributos.png" alt="Atributos">
-
                     <div class="attr-overlay" id="attr-overlay"></div>
                 </div>
 
-                <!-- CONTEÚDO -->
                 <div class="attr-ui">
-
-                    <!-- TOPO -->
                     <div class="attr-top">
                         <p class="attr-points">
                             Pontos: <span id="points-left"></span>
                         </p>
                     </div>
 
-                    <!-- MEIO (imagem já existe fora disso) -->
                     <div id="atributos"></div>
 
-                    <!-- BOTTOM -->
                     <div class="attr-bottom">
                         <button id="back-to-class">Voltar</button>
                         <button id="to-origem">Continuar</button>
@@ -109,25 +101,54 @@
         <!-- ORIGEM -->
         <section class="step" id="step-2">
 
-            <div class="split">
+            <div class="origem-pericia-layout">
 
-                <div class="col">
+                <!-- ORIGENS -->
+                <div class="origem-col">
                     <h2>Origens</h2>
                     <div id="origens"></div>
                 </div>
 
-                <div class="col">
+                <!-- PERÍCIAS -->
+                <div class="pericia-col">
                     <h2>Perícias</h2>
+
+                    <!-- HEADER -->
+                    <div class="pericia-header">
+                        <div>Perícia</div>
+                        <div>Treino</div>
+                        <div>Bônus</div>
+                    </div>
+
                     <div id="pericias"></div>
                 </div>
 
             </div>
 
-            <button id="back-to-atributos">Voltar</button>
-            <button id="finish">Finalizar</button>
+            <div class="step-actions">
+                <button id="back-to-atributos">Voltar</button>
+                <button id="finish">Finalizar</button>
+            </div>
 
         </section>
 
+        <!-- ================= CMD OVERLAY ================= -->
+        <div id="cmd-window" class="hidden">
+            <div class="cmd-titlebar">
+                <div class="cmd-title">Controle de Perfil</div>
+                <div class="cmd-controls">
+                    <span class="no-function">—</span>
+                    <span class="no-function">□</span>
+                    <span class="cmd-close">×</span>
+                </div>
+            </div>
+            <div id="cmd-log"></div>
+            <div class="cmd-input-line">
+                <span>&gt; </span>
+                <span id="cmd-input"></span>
+                <span class="cmd-cursor">█</span>
+            </div>
+        </div>
     </main>
 
     <script type="module" src="./js/header.js"></script>

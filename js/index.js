@@ -84,31 +84,14 @@ onAuthStateChanged(auth, (user) => {
 /* ================= TERMINAL MENU ================= */
 
 const options = [...document.querySelectorAll(".terminal-option")];
-const cursor = document.getElementById("terminal-cursor");
 
 let index = 0;
-
-/* move cursor corretamente */
-function moveCursor() {
-  const el = options[index];
-  if (!el || !cursor) return;
-
-  const rect = el.getBoundingClientRect();
-  const parent = el.parentElement.getBoundingClientRect();
-
-  const top = rect.top - parent.top + el.parentElement.scrollTop;
-
-  cursor.style.top = `${top + rect.height / 2}px`;
-  cursor.style.transform = "translateY(-50%)";
-}
 
 /* atualiza estado visual */
 function updateMenu() {
   options.forEach((el, i) => {
     el.classList.toggle("active", i === index);
   });
-
-  moveCursor();
 }
 
 /* ================= TECLADO ================= */

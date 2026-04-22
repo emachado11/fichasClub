@@ -182,3 +182,60 @@ nav a:hover::before {
     display: none !important;
     pointer-events: none;
 }
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+
+  header {
+    padding: 10px 20px;
+  }
+
+  nav {
+    gap: 28px;
+  }
+
+  .logo img {
+    height: 52px;
+  }
+
+  nav a {
+    letter-spacing: 4px;
+    font-size: 0.9em;
+  }
+
+  .avatar {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .left-section {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  nav {
+    width: 100%;
+    justify-content: space-around;
+    gap: 0;
+  }
+
+  nav a {
+    font-size: 0.85em;
+    letter-spacing: 2px;
+  }
+
+  .user-area {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
