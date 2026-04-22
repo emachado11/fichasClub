@@ -60,7 +60,7 @@ nav a::before {
     content: "›";
 
     position: absolute;
-    left: -14px;
+    left: -30px;
 
     color: #ffffff;
 

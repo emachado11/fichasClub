@@ -1,10 +1,36 @@
-export const isMobile = () => window.innerWidth <= 768;
+/* ================= DEVICE DETECTOR ================= */
 
-function applyDeviceMode() {
-  document.body.classList.toggle("mobile", window.innerWidth <= 768);
+function getDeviceType(width) {
+  if (width <= 480) return "mobile";
+  if (width <= 768) return "tablet";
+  return "desktop";
 }
 
-window.addEventListener("resize", applyDeviceMode);
-window.addEventListener("load", applyDeviceMode);
+function applyDeviceClass() {
+  const width = window.innerWidth;
+  const device = getDeviceType(width);
 
-applyDeviceMode();
+  const body = document.body;
+
+  // remove classes antigas
+  body.classList.remove("mobile", "tablet", "desktop");
+
+  // aplica nova
+  body.classList.add(device);
+}
+
+/* ================= INIT ================= */
+
+applyDeviceClass();
+
+/* ================= UPDATE ON RESIZE ================= */
+
+let resizeTimeout;
+
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimeout);
+
+  resizeTimeout = setTimeout(() => {
+    applyDeviceClass();
+  }, 100);
+});
