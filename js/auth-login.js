@@ -258,3 +258,17 @@ function handleTyping(e) {
 /* ================= START ================= */
 
 startMenu();
+
+function isMobile() {
+  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
+if (isMobile()) {
+  const terminal = document.querySelector(".terminal");
+
+  window.addEventListener("resize", () => {
+    const vh = window.innerHeight;
+
+    terminal.style.height = `${vh * 0.65}px`;
+  });
+}
