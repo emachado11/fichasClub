@@ -26,6 +26,27 @@ Object.assign(consoleBox.style, {
 main.innerHTML = "";
 main.appendChild(consoleBox);
 
+/* ================= MOBILE INPUT REAL ================= */
+
+const hiddenInput = document.createElement("input");
+
+Object.assign(hiddenInput.style, {
+  position: "fixed",
+  opacity: 0,
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  fontSize: "16px"
+});
+
+document.body.appendChild(hiddenInput);
+
+function focusMobileInput() {
+  if (window.__DEVICE__?.isMobile()) {
+    hiddenInput.focus();
+  }
+}
+
 /* ================= CURSOR ================= */
 
 const cursor = document.createElement("span");
@@ -136,6 +157,8 @@ async function startMenu() {
 function menuInput() {
   mode = "menu";
   createPrompt();
+
+  focusMobileInput();
 
   document.onkeydown = async (e) => {
     if (mode !== "menu") return;
@@ -272,3 +295,15 @@ if (isMobile()) {
     terminal.style.height = `${vh * 0.65}px`;
   });
 }
+
+hiddenInput.addEventListener("input", (e) => {
+  buffer = hiddenInput.value;
+  renderInput();
+});
+
+hiddenInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    document.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+    hiddenInput.value = "";
+  }
+});

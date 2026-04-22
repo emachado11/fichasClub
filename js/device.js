@@ -34,3 +34,18 @@ window.addEventListener("resize", () => {
     applyDeviceClass();
   }, 100);
 });
+
+/* ================= MOBILE FLAG GLOBAL ================= */
+
+function isMobile() {
+  return window.innerWidth <= 768;
+}
+
+window.__DEVICE__ = {
+  isMobile,
+  type: () => {
+    if (window.innerWidth <= 480) return "mobile";
+    if (window.innerWidth <= 768) return "tablet";
+    return "desktop";
+  }
+};

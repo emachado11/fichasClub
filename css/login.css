@@ -116,16 +116,12 @@ body {
 }
 
 @media (max-width: 768px) {
-
-  .login-main {
-    justify-content: center;
-    align-items: flex-start;
-    padding-top: 20px;
+  body {
+    font-size: 20px;
   }
 
   .terminal {
-    height: 65vh;
-    width: 95vw;
+    font-size: 18px;
   }
 
   #log {
@@ -135,4 +131,40 @@ body {
   .input-line {
     font-size: 18px;
   }
+
+  .prompt {
+    font-size: 18px;
+  }
+}
+
+#mobile-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+  width: 0;
+}
+
+/* ================= MOBILE LOGIN ================= */
+
+body.mobile .login-main {
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 20px;
+}
+
+body.mobile .terminal {
+  height: 100vh;
+  max-width: 100%;
+  border: none;
+  padding: 16px;
+}
+
+/* fonte maior no mobile */
+body.mobile {
+  font-size: 30px;
+}
+
+body.mobile #console {
+  font-size: 28px;
 }
