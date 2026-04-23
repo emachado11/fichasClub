@@ -61,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById('crop-save').addEventListener('click', function () {
     // Aqui você pode adicionar a lógica para salvar a imagem cortada e fechar o modal
     document.getElementById('crop-modal').classList.remove('show');
+    document.getElementById('crop-modal').classList.add('hidden');
   });
 
   defaultAvatars.forEach((avatar) => {
@@ -127,14 +128,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const reader = new FileReader();
     reader.onload = () => {
       img.src = reader.result;  // Carregar a imagem no objeto Image
-      cropModal.classList.add("show");  // Exibir o modal de crop
+      cropModal.classList.remove("hidden");
+      cropModal.classList.add("show");
     };
     reader.readAsDataURL(file);  // Ler o arquivo como DataURL
   }
 
   // Cancelar o modal
   document.getElementById("crop-cancel").onclick = () => {
-    cropModal.classList.remove("show");  // Fechar o modal
+    cropModal.classList.remove("show");
+    cropModal.classList.add("hidden");
   };
 
   // Evento de upload do arquivo
@@ -147,11 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
     final.height = 300;
 
     const fctx = final.getContext("2d");
-
-    // Máscara circular
-    fctx.beginPath();
-    fctx.arc(150, 150, 150, 0, Math.PI * 2);
-    fctx.clip();
 
     fctx.drawImage(img, posX, posY, img.width * scale, img.height * scale);
 
@@ -242,45 +240,23 @@ document.addEventListener("DOMContentLoaded", () => {
   canvas.onmouseup = () => dragging = false;
   canvas.onmouseleave = () => dragging = false;
 
-  // =========================
-  // SALVAR
-  // =========================
-  document.getElementById("crop-save").onclick = async () => {
-    const final = document.createElement("canvas");
-    final.width = 300;
-    final.height = 300;
-
-    const fctx = final.getContext("2d");
-
-    // Máscara circular
-    fctx.beginPath();
-    fctx.arc(150, 150, 150, 0, Math.PI * 2);
-    fctx.clip();
-
-    fctx.drawImage(img, posX, posY, img.width * scale, img.height * scale);
-
-    const base64 = final.toDataURL("image/jpeg", 0.7);
-
-    // Salvar no Firebase
-    await setDoc(doc(db, "users", auth.currentUser.uid), { avatar: base64 }, { merge: true });
-
-    userAvatar.src = base64;
-    cropModal.classList.add("hidden");
-  };
-
   // Cancelar
   document.getElementById("crop-cancel").onclick = () => cropModal.classList.add("hidden");
 
   /* ================= MENU ================= */
   let index = 1;
   const items = document.querySelectorAll(".menu-item");
+  document.getElementById("0").addEventListener("click", goHome);
 
   function updateMenu() {
     items.forEach((el, i) => el.classList.toggle("active", i === index));
   }
 
   items.forEach((el, i) => {
-    el.onclick = () => handleSelect(i);
+    el.onclick = () => {
+      if (cmdActive) return; // 🚫 bloqueia clique com CMD aberto
+      handleSelect(i);
+    };
   });
 
   function handleSelect(i) {
@@ -330,11 +306,43 @@ document.addEventListener("DOMContentLoaded", () => {
   const cursor = document.querySelector(".cmd-cursor");
   const closeBtn = document.querySelector(".cmd-controls span:last-child");
 
+  const hiddenInput = document.getElementById("cmd-hidden-input");
+
+  overlay.addEventListener("click", () => {
+    if (!cmdActive) return;
+    hiddenInput.focus();
+  });
+
+  hiddenInput.addEventListener("input", () => {
+    if (!cmdActive) return;
+
+    buffer = hiddenInput.value;
+    renderInput();
+  });
+
+  hiddenInput.addEventListener("keydown", (e) => {
+    if (!cmdActive || !currentStep) return;
+
+    if (e.key === "Enter") {
+      e.preventDefault();
+      currentStep({ key: "Enter" });
+      hiddenInput.value = "";
+      buffer = "";
+      return;
+    }
+
+    if (e.key === "Backspace") {
+      buffer = hiddenInput.value;
+      renderInput();
+    }
+  });
+
   /* ===================== CMD CORE ====================== */
   function openCMD(flow) {
     if (!user) return;
 
     cmdActive = true;
+    document.body.classList.add("cmd-lock");
 
     overlay.classList.remove("hidden");
     requestAnimationFrame(() => overlay.classList.add("show"));
@@ -343,10 +351,22 @@ document.addEventListener("DOMContentLoaded", () => {
     bindInput();
 
     flow();
+
+    if (window.innerWidth <= 768) {
+      overlay.style.top = "50%";
+      overlay.style.left = "50%";
+      overlay.style.right = "auto";
+      overlay.style.transform = "translate(-50%, -50%) scale(1)";
+    }
+
+    setTimeout(() => {
+      hiddenInput.focus();
+    }, 50);
   }
 
   function closeCMD() {
     cmdActive = false;
+    document.body.classList.remove("cmd-lock");
 
     overlay.classList.remove("show");
 
@@ -366,19 +386,61 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ================= INPUT ================= */
   function bindInput() {
+    // desktop
     document.onkeydown = (e) => {
       if (!cmdActive || !currentStep) return;
+
+      if (document.activeElement === hiddenInput) return;
+
+      e.preventDefault(); // 🔥 IMPORTANTE
+
       currentStep(e);
+    };
+
+    // mobile
+    hiddenInput.onkeydown = (e) => {
+      if (!cmdActive || !currentStep) return;
+
+      if (e.key === "Enter") {
+        e.preventDefault();
+        currentStep({ key: "Enter" });
+        hiddenInput.value = "";
+        buffer = "";
+        return;
+      }
+
+      if (e.key === "Backspace") {
+        buffer = hiddenInput.value;
+        renderInput();
+        return;
+      }
+    };
+
+    hiddenInput.oninput = () => {
+      if (!cmdActive) return;
+
+      let value = hiddenInput.value;
+
+      if (forceUppercase) {
+        value = value.toUpperCase();
+        hiddenInput.value = value;
+      }
+
+      buffer = value;
+      renderInput();
     };
   }
 
   function setStep(fn) {
+    currentStep = null; // 💥 mata o anterior
     currentStep = fn;
   }
 
   /* ================= OUTPUT ================= */
   function typeLine(text, speed = 15) {
     return new Promise((res) => {
+      if (!text || text.trim() === "") return res(); //
+
       const line = document.createElement("div");
       log.appendChild(line);
 
@@ -399,11 +461,16 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderInput() {
     inputEl.textContent = buffer;
     inputEl.appendChild(cursor);
+
+    if (hiddenInput && document.activeElement === hiddenInput) {
+      hiddenInput.value = buffer;
+    }
   }
 
   function createPrompt() {
     const line = document.createElement("div");
-    line.innerHTML = "> <span></span>";
+    line.textContent = "> ";
+
     log.appendChild(line);
 
     buffer = "";
@@ -430,21 +497,33 @@ document.addEventListener("DOMContentLoaded", () => {
   function ask({ uppercase = false, validate = () => true, error = "> Entrada inválida." } = {}) {
     return new Promise((resolve) => {
       forceUppercase = uppercase;
+
       createPrompt();
 
-      setStep(async (e) => {
+      const step = async (e) => {
         if (e.key !== "Enter") return handleTyping(e);
 
         const value = buffer.trim();
 
+        // ❌ inválido
         if (!validate(value)) {
-          await typeLine(error);
-          createPrompt();
+          // escreve erro SEM criar nova linha fantasma
+          const err = document.createElement("div");
+          err.textContent = error;
+          log.appendChild(err);
+
+          buffer = "";
+          renderInput();
           return;
         }
 
+        // ✅ válido → trava o step antes de continuar
+        setStep(null);
+
         resolve(value);
-      });
+      };
+
+      setStep(step);
     });
   }
 
@@ -696,20 +775,4 @@ document.addEventListener("DOMContentLoaded", () => {
   userAvatar.addEventListener("click", () => {
     fileInput.click();  // Acionar o input de arquivo
   });
-
-  // Função para lidar com o upload do arquivo
-  function handleFileUpload(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      img.src = reader.result;  // Carregar a imagem no objeto Image
-      cropModal.classList.remove("hidden");  // Exibir o modal de crop
-    };
-    reader.readAsDataURL(file);  // Ler o arquivo como DataURL
-  }
-
-  // Adicionando o evento de upload para o input de arquivo
-  fileInput.addEventListener("change", (e) => handleFileUpload(e));
 });

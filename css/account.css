@@ -1,3 +1,8 @@
+html, body {
+  overflow: hidden;
+  height: 100%;
+}
+
 /* Body */
 body {
   background-color: rgb(0, 18, 184);
@@ -10,7 +15,7 @@ body {
 /* Container principal */
 .account-container {
   display: flex;
-  height: 100vh;
+  height: calc(100vh - 80px);
   padding: 60px;
 }
 
@@ -185,4 +190,118 @@ body {
 
 #crop-cancel:hover {
   background-color: #e41e1e;
+}
+
+#cmd-hidden-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.cmd-lock {
+  pointer-events: none;
+}
+
+#cmd-window {
+  pointer-events: all;
+}
+
+.cmd-lock {
+  pointer-events: none;
+}
+
+.cmd-lock #cmd-window {
+  pointer-events: all;
+}
+
+@media (max-width: 768px) {
+
+  /* evita qualquer overflow na tela */
+  html, body {
+    overflow: hidden !important;
+  }
+
+  /* fonte geral bem menor no mobile */
+  body {
+    font-size: 16px !important;
+    text-align: left;
+  }
+
+  /* container mais compacto */
+  .account-container {
+    padding: 15px !important;
+    height: 100vh !important;
+    flex-direction: column;
+  }
+
+  /* menu ocupando menos espaço */
+  .account-menu {
+    max-width: 100% !important;
+  }
+
+  .title {
+    margin-bottom: 15px !important;
+    font-size: 20px !important;
+  }
+
+  .menu-list {
+    gap: 10px !important;
+  }
+
+  .menu-item {
+    font-size: 16px !important;
+    padding: 4px 6px !important;
+    text-align: left;
+  }
+
+  /* posição da foto ajustada sem scroll */
+  .account-position {
+    margin-top: 20px !important;
+    margin-left: 0 !important;
+  }
+
+  .fotoDePerfil {
+    width: 180px !important;
+    height: 180px !important;
+  }
+
+  .default-avatar-grid {
+    grid-template-columns: repeat(3, 90px) !important;
+    margin-left: 0 !important;
+  }
+
+  .default-avatar {
+    width: 90px !important;
+    height: 70px !important;
+  }
+
+  /* CMD menor mas mantendo posição central */
+  #cmd-window {
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+
+    width: 92vw !important;
+    height: 45vh !important; /* aqui reduz a altura */
+    font-size: 14px !important;
+  }
+
+  .cmd-title {
+    font-size: 14px !important;
+  }
+
+  #cmd-log {
+    padding: 6px !important;
+    font-size: 14px !important;
+  }
+
+  .cmd-input-line {
+    padding: 6px !important;
+  }
+
+  /* garante que nada “vaze” */
+  #terminal-panel {
+    margin-top: 10px !important;
+  }
 }

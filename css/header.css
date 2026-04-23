@@ -22,7 +22,7 @@ header {
 .left-section {
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 75px;
 }
 
 /* logo */
@@ -34,7 +34,7 @@ header {
 /* nav */
 nav {
     display: flex;
-    gap: 58px;
+    gap: 80px;
 }
 
 /* ================= LINKS ================= */
@@ -194,11 +194,11 @@ nav a:hover::before {
   }
 
   nav {
-    gap: 28px;
+    gap: 8px;
   }
 
   .logo img {
-    height: 52px;
+    height: 32px;
   }
 
   nav a {
