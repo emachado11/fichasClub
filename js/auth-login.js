@@ -6,75 +6,40 @@ import {
   GoogleAuthProvider
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-/* ================= CONSOLE ================= */
+/* ================= ELEMENTOS ================= */
 
-const main = document.querySelector("main");
+const log = document.getElementById("log");
+const inputSpan = document.getElementById("input");
+const mobileInput = document.getElementById("mobile-input");
+const terminal = document.querySelector(".terminal");
 
-const consoleBox = document.createElement("div");
-consoleBox.id = "console";
+/* ================= DEVICE ================= */
 
-Object.assign(consoleBox.style, {
-  fontFamily: "VT323, monospace",
-  fontSize: "22px",
-  color: "#fff",
-  whiteSpace: "pre-wrap",
-  lineHeight: "1.6",
-  maxHeight: "90vh",
-  overflowY: "auto",
-});
-
-main.innerHTML = "";
-main.appendChild(consoleBox);
-
-/* ================= MOBILE INPUT REAL ================= */
-
-const hiddenInput = document.createElement("input");
-
-Object.assign(hiddenInput.style, {
-  position: "fixed",
-  opacity: 0,
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  fontSize: "16px"
-});
-
-document.body.appendChild(hiddenInput);
-
-function focusMobileInput() {
-  if (window.__DEVICE__?.isMobile()) {
-    hiddenInput.focus();
-  }
+function isMobile() {
+  return window.__DEVICE__?.isMobile?.() ?? false;
 }
+
+/* 🔥 clique abre teclado */
+terminal.addEventListener("click", () => {
+  if (isMobile()) mobileInput.focus();
+});
 
 /* ================= CURSOR ================= */
 
-const cursor = document.createElement("span");
-cursor.textContent = "▌";
-
-cursor.style.display = "inline-block";
-cursor.style.animation = "blink 0.9s infinite";
-cursor.style.marginLeft = "2px";
-
-const style = document.createElement("style");
-style.textContent = `
-@keyframes blink {
-  0%,49% { opacity: 1; }
-  50%,100% { opacity: 0; }
-}`;
-document.head.appendChild(style);
+const cursor = document.querySelector(".cursor");
 
 /* ================= STATE ================= */
 
 let mode = "menu";
 let buffer = "";
 let email = "";
-let activeInput = null;
 
 /* ================= SCROLL ================= */
 
 function scrollDown() {
-  consoleBox.scrollTop = consoleBox.scrollHeight;
+  requestAnimationFrame(() => {
+    log.scrollTop = log.scrollHeight;
+  });
 }
 
 /* ================= RESET ================= */
@@ -83,9 +48,9 @@ function resetFlow() {
   mode = "menu";
   buffer = "";
   email = "";
-  activeInput = null;
-
-  consoleBox.innerHTML = "";
+  log.innerHTML = "";
+  inputSpan.textContent = "";
+  mobileInput.value = "";
   startMenu();
 }
 
@@ -94,7 +59,7 @@ function resetFlow() {
 function typeLine(text, speed = 18) {
   return new Promise((resolve) => {
     const line = document.createElement("div");
-    consoleBox.appendChild(line);
+    log.appendChild(line);
 
     let i = 0;
 
@@ -110,36 +75,11 @@ function typeLine(text, speed = 18) {
   });
 }
 
-/* ================= PROMPT ================= */
-
-function createPrompt() {
-  const line = document.createElement("div");
-
-  const prefix = document.createElement("span");
-  prefix.textContent = "> ";
-
-  const input = document.createElement("span");
-
-  line.appendChild(prefix);
-  line.appendChild(input);
-  consoleBox.appendChild(line);
-
-  activeInput = input;
-  buffer = "";
-
-  renderInput();
-  scrollDown();
-
-  return input;
-}
-
 /* ================= INPUT ================= */
 
 function renderInput() {
-  if (!activeInput) return;
-
-  activeInput.textContent = buffer;
-  activeInput.appendChild(cursor);
+  inputSpan.textContent = buffer;
+  inputSpan.appendChild(cursor);
   scrollDown();
 }
 
@@ -156,33 +96,10 @@ async function startMenu() {
 
 function menuInput() {
   mode = "menu";
-  createPrompt();
+  buffer = "";
+  renderInput();
 
-  focusMobileInput();
-
-  document.onkeydown = async (e) => {
-    if (mode !== "menu") return;
-
-    if (e.key === "Enter") {
-      const val = buffer.trim();
-
-      if (!["1", "2", "3"].includes(val)) {
-        await typeLine("> Entrada inválida. Use 1, 2 ou 3");
-        createPrompt();
-        return;
-      }
-
-      if (val === "1") return emailFlow();
-      if (val === "2") return googleLogin();
-
-      if (val === "3") {
-        await typeLine("> Redirecionando usuário...");
-        window.location.href = "./signup.html";
-      }
-    }
-
-    handleTyping(e);
-  };
+  if (isMobile()) mobileInput.focus();
 }
 
 /* ================= EMAIL ================= */
@@ -191,25 +108,8 @@ async function emailFlow() {
   mode = "email";
 
   await typeLine("> Insira seu endereço de e-mail.");
-  createPrompt();
-
-  document.onkeydown = async (e) => {
-    if (mode !== "email") return;
-
-    if (e.key === "Enter") {
-      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(buffer);
-
-      if (!valid) {
-        await typeLine("> Entrada inválida.");
-        return resetFlow();
-      }
-
-      email = buffer;
-      return passwordFlow();
-    }
-
-    handleTyping(e);
-  };
+  buffer = "";
+  renderInput();
 }
 
 /* ================= PASSWORD ================= */
@@ -218,31 +118,8 @@ async function passwordFlow() {
   mode = "password";
 
   await typeLine("> Insira sua senha.");
-  createPrompt();
-
-  document.onkeydown = async (e) => {
-    if (mode !== "password") return;
-
-    if (e.key === "Enter") {
-      if (!buffer.length) {
-        await typeLine("> Entrada inválida.");
-        return resetFlow();
-      }
-
-      try {
-        await signInWithEmailAndPassword(auth, email, buffer);
-
-        await typeLine("> Login realizado com sucesso.");
-        window.location.href = "./index.html";
-
-      } catch {
-        await typeLine("> E-mail ou senha incorretos.");
-        return resetFlow();
-      }
-    }
-
-    handleTyping(e);
-  };
+  buffer = "";
+  renderInput();
 }
 
 /* ================= GOOGLE ================= */
@@ -266,44 +143,149 @@ async function googleLogin() {
 
 /* ================= INPUT HANDLER ================= */
 
-function handleTyping(e) {
-  if (e.key === "Backspace") {
+async function handleEnter() {
+  const val = buffer.trim();
+
+  if (mode === "menu") {
+    if (!["1", "2", "3"].includes(val)) {
+      await typeLine("> Entrada inválida.");
+      buffer = "";
+      return renderInput();
+    }
+
+    if (val === "1") return emailFlow();
+    if (val === "2") return googleLogin();
+    if (val === "3") {
+      window.location.href = "./signup.html";
+    }
+  }
+
+  if (mode === "email") {
+    email = val;
+    return passwordFlow();
+  }
+
+  if (mode === "password") {
+    try {
+      await signInWithEmailAndPassword(auth, email, val);
+      await typeLine("> Login realizado com sucesso.");
+      window.location.href = "./index.html";
+    } catch {
+      await typeLine("> E-mail ou senha incorretos.");
+      resetFlow();
+    }
+  }
+
+  buffer = "";
+}
+
+/* ================= DESKTOP INPUT ================= */
+
+document.addEventListener("keydown", async (e) => {
+
+  // 🔥 ESSENCIAL: bloqueia no mobile
+  if (isMobile()) return;
+
+  if (e.key === "Enter") return handleEnter();
+
+  if (e.key === "Backspace") buffer = buffer.slice(0, -1);
+  else if (e.key.length === 1) buffer += e.key;
+
+  mobileInput.value = buffer;
+  renderInput();
+});
+
+/* ================= MOBILE INPUT (CORRETO DE VERDADE) ================= */
+
+let isComposing = false;
+
+/* detecta composição (teclado inteligente / autocorrect) */
+mobileInput.addEventListener("compositionstart", () => {
+  isComposing = true;
+});
+
+mobileInput.addEventListener("compositionend", () => {
+  isComposing = false;
+  buffer = mobileInput.value;
+  renderInput();
+});
+
+/* captura input REAL */
+mobileInput.addEventListener("beforeinput", (e) => {
+
+  // 🔥 ignora enquanto está compondo (corrige texto invertido)
+  if (isComposing) return;
+
+  // 🔥 delete
+  if (e.inputType === "deleteContentBackward") {
     buffer = buffer.slice(0, -1);
   }
 
-  if (e.key.length === 1) {
-    buffer += e.key;
+  // 🔥 texto normal
+  else if (e.data) {
+    buffer += e.data;
   }
 
   renderInput();
-}
+
+  // 🔥 impede o navegador de bagunçar o valor
+  e.preventDefault();
+});
+
+/* ENTER separado */
+mobileInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    handleEnter();
+    mobileInput.value = "";
+    buffer = "";
+  }
+});
 
 /* ================= START ================= */
 
 startMenu();
 
-function isMobile() {
-  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-}
+/* ================= SCROLL LOCK ================= */
 
-if (isMobile()) {
-  const terminal = document.querySelector(".terminal");
-
-  window.addEventListener("resize", () => {
-    const vh = window.innerHeight;
-
-    terminal.style.height = `${vh * 0.65}px`;
-  });
-}
-
-hiddenInput.addEventListener("input", (e) => {
-  buffer = hiddenInput.value;
-  renderInput();
-});
-
-hiddenInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    document.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
-    hiddenInput.value = "";
+document.body.addEventListener("touchmove", (e) => {
+  if (!e.target.closest("#log")) {
+    e.preventDefault();
   }
+}, { passive: false });
+
+/* ================= VIEWPORT FIX ================= */
+
+function fixViewportOnKeyboard() {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+window.addEventListener('resize', () => {
+  fixViewportOnKeyboard();
+  handleViewportResize();
 });
+
+fixViewportOnKeyboard();
+
+/* ================= KEYBOARD DETECT ================= */
+
+mobileInput.addEventListener("focus", () => {
+  window.scrollTo(0, 0);
+});
+
+let lastHeight = window.innerHeight;
+
+function handleViewportResize() {
+  const currentHeight = window.innerHeight;
+
+  const keyboardOpen = currentHeight < lastHeight - 100;
+
+  if (keyboardOpen) {
+    document.body.classList.add("keyboard-open");
+  } else {
+    document.body.classList.remove("keyboard-open");
+  }
+
+  lastHeight = currentHeight;
+}

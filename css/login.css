@@ -1,12 +1,6 @@
-/* ================= RESET ================= */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* ================= BODY ================= */
+/* ================= BASE ================= */
 
 body {
   font-family: "VT323", monospace;
@@ -14,16 +8,25 @@ body {
   color: #fff;
 
   height: 100vh;
-  overflow: hidden;
 
-  position: fixed;
-  width: 100%;
+  overflow: hidden;
+  /* desktop continua travado */
+  overscroll-behavior: none;
+}
+
+/* ================= HEADER ================= */
+
+#header {
+  position: relative;
+  z-index: 10;
 }
 
 /* ================= MAIN ================= */
 
 .login-main {
-  height: 100vh;
+  height: calc(100vh - 80px);
+  /* 🔥 respeita header */
+  margin-top: 80px;
 
   display: flex;
   justify-content: flex-start;
@@ -32,47 +35,40 @@ body {
   padding: 40px;
 }
 
-/* ================= TERMINAL (JANELA FIXA) ================= */
+/* ================= TERMINAL ================= */
 
 .terminal {
-  width: min(800px, 92vw);
-  height: min(600px, 75vh);
+  width: 100%;
+  height: 40dvh;
 
   display: flex;
   flex-direction: column;
 
-  border: 1px solid rgba(255,255,255,0.08);
-
+  border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 20px;
 
-  background: rgba(0,0,0,0.4);
-  z-index: 1;
+  background: rgba(0, 0, 0, 0.4);
+
+  overflow: hidden;
 }
 
 /* ================= LOG ================= */
 
 #log {
   flex: 1;
+  overflow-y: auto;
 
   display: flex;
   flex-direction: column;
   gap: 6px;
 
-  overflow-y: auto;
+  padding-bottom: 120px;
 
-  padding-right: 10px;
-  padding-bottom: 10px;
-
-  scroll-behavior: smooth;
+  scrollbar-width: none;
 }
 
-/* esconder scrollbar */
 #log::-webkit-scrollbar {
   width: 0;
-}
-
-#log {
-  scrollbar-width: none;
 }
 
 /* ================= INPUT ================= */
@@ -82,17 +78,9 @@ body {
   align-items: center;
   gap: 6px;
 
-  flex-shrink: 0;
-
   margin-top: 10px;
 }
 
-/* prompt */
-.prompt {
-  color: #fff;
-}
-
-/* input */
 #input {
   min-width: 8px;
   white-space: pre;
@@ -101,70 +89,79 @@ body {
 /* ================= CURSOR ================= */
 
 .cursor {
-  display: inline-block;
   animation: blink 1s infinite;
-  transform: translateY(-1px);
 }
 
 @keyframes blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
 
-.header {
-  z-index: 999;
-}
-
-@media (max-width: 768px) {
-  body {
-    font-size: 20px;
+  0%,
+  49% {
+    opacity: 1;
   }
 
-  .terminal {
-    font-size: 18px;
-  }
-
-  #log {
-    font-size: 18px;
-  }
-
-  .input-line {
-    font-size: 18px;
-  }
-
-  .prompt {
-    font-size: 18px;
+  50%,
+  100% {
+    opacity: 0;
   }
 }
+
+/* ================= MOBILE INPUT ================= */
 
 #mobile-input {
   position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 1px;
+  height: 1px;
+
   opacity: 0;
   pointer-events: none;
-  height: 0;
-  width: 0;
 }
 
-/* ================= MOBILE LOGIN ================= */
+/* ================= MOBILE ================= */
 
-body.mobile .login-main {
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 20px;
-}
+@media (max-width: 768px) {
 
-body.mobile .terminal {
-  height: 100vh;
-  max-width: 100%;
-  border: none;
-  padding: 16px;
-}
+  body {
+    overflow-y: auto;
+    height: auto;
+  }
 
-/* fonte maior no mobile */
-body.mobile {
-  font-size: 30px;
-}
+  .login-main {
+    min-height: calc(100vh - 80px);
+    margin-top: 80px;
 
-body.mobile #console {
-  font-size: 28px;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  .terminal {
+    width: 100%;
+    height: 45vh;
+
+    border: none;
+    padding: 16px;
+  }
+
+  #log {
+    flex: 1;
+    overflow-y: auto;
+
+    font-size: 28px;
+
+    padding-bottom: 120px;
+  }
+
+  .input-line {
+    position: sticky;
+    bottom: 0;
+
+    background: #000;
+    padding-top: 10px;
+
+    font-size: 28px;
+  }
 }
