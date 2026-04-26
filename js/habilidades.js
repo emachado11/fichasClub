@@ -24,7 +24,7 @@ export const habilidades = [
   },
 
   {
-    id: "110",
+    id: "centoedez",
     nome: "110%",
     descricao: "Quando faz um teste de perícia usando Força ou Agilidade (exceto Luta e Pontaria) você pode gastar 2 PE para receber +5 nesse teste."
   },

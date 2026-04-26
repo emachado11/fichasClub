@@ -1,892 +1,384 @@
-/* HEADER SPACE */
-#header {
-  width: 100%;
+/* =========================
+   BASE
+========================= */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
-/* PROGRESS */
-.progress-wrapper {
-  padding: 10px 20px;
+/* =========================
+   MAIN
+========================= */
+
+main.create-page {
+    width: 100%;
+    min-height: 100vh;
+    padding: clamp(20px, 4vw, 60px);
+    box-sizing: border-box;
 }
 
-.progress-steps {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  opacity: 0.7;
+.create-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    opacity: 0.9;
 }
 
-.step-label.active {
-  color: #6c5ce7;
-  opacity: 1;
+/* =========================
+   LAYOUT
+========================= */
+
+.create-container {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.progress-bar {
-  height: 6px;
-  background: #222;
-  border-radius: 10px;
-  margin-top: 5px;
+.create-left,
+.create-right {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-#progress {
-  height: 100%;
-  width: 0%;
-  background: #6c5ce7;
+.section-title {
+    font-size: 25px;
+    opacity: 0.9;
 }
 
-/* STEP */
-.step {
-  display: none;
+/* =========================
+   INPUTS
+========================= */
+
+input,
+textarea,
+select {
+    width: 100%;
+    background: #111;
+    border: 1px solid #202020;
+    padding: 12px;
+    color: white;
+    font-size: 12px;
+    box-sizing: border-box;
 }
 
-.step.active {
-  display: block;
+textarea {
+    min-height: 140px;
+    resize: none;
 }
 
-/* ================= CLASS LAYOUT ================= */
+/* =========================
+   GRID
+========================= */
 
-.class-layout {
-  display: flex;
-  height: 65vh;
-  align-items: center;
-  justify-content: center;
-  gap: 60px;
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
-/* CARROSSEL AREA */
-.class-card-area {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
-  perspective: 1400px;
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-/* STAGE (PROTEGE LAYERS) */
-.class-stage {
-  position: relative;
-  width: 520px;
-  height: 720px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* =========================
+   SELECT + INFO
+========================= */
 
-  z-index: 10;
-  /* 👈 FIX PRINCIPAL DO BOTÃO */
+.select-with-info {
+    display: flex;
+    gap: 6px;
 }
 
-/* ================= CARD BASE ================= */
-
-.class-card {
-  position: absolute;
-  width: 520px;
-  height: 650px;
-
-  background: #1a1a25;
-  border-radius: 10px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 30px;
-
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
-
-  transition: transform 600ms cubic-bezier(.2, .9, .2, 1),
-    opacity 400ms ease,
-    filter 400ms ease;
-
-  will-change: transform, opacity;
-
-  z-index: 1;
-  pointer-events: auto;
+.info-btn {
+    width: 40px;
+    border: 1px solid #202020;
+    background: #111;
+    color: white;
+    cursor: pointer;
 }
 
-/* CENTRO */
-.card-center {
-  transform: translateX(0) scale(1);
-  opacity: 1;
-  z-index: 3;
-  filter: blur(0px);
+/* =========================
+   NEX
+========================= */
+
+.nex-box {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
-/* ESQUERDA */
-.card-left {
-  transform: translateX(-320px) scale(0.86) rotateY(18deg);
-  opacity: 0.55;
-  z-index: 2;
-  filter: blur(1px);
+/* =========================
+   CHECKBOX CRT
+========================= */
+
+.determinacao-toggle,
+.nex-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    font-size: 18px;
 }
 
-/* DIREITA */
-.card-right {
-  transform: translateX(320px) scale(0.86) rotateY(-18deg);
-  opacity: 0.55;
-  z-index: 2;
-  filter: blur(1px);
+/* REMOVE ESTILO NATIVO */
+input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid white;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
 }
 
-/* 🚫 impede clique nos laterais */
-.card-left,
-.card-right {
-  pointer-events: none;
+/* CHECK */
+input[type="checkbox"]:checked::after {
+    content: "✔";
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    font-size: 14px;
+    color: white;
 }
 
-/* ================= TEXTO ================= */
+/* =========================
+   ATRIBUTOS
+========================= */
 
-.class-name {
-  font-size: 24px;
-  text-align: center;
-  width: 100%;
+.attr-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
-/* ================= SETAS ================= */
-
-.nav-btn {
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 70px;
-  cursor: pointer;
-  opacity: 0.6;
-  transition: 0.2s;
-
-  position: relative;
-  z-index: 50;
-  /* 👈 acima de tudo */
+.attr-graphic {
+    width: 100%;
+    max-width: 380px;
+    position: relative;
 }
 
-.nav-btn:hover {
-  opacity: 1;
-  transform: scale(1.15);
+.attr-graphic img {
+    width: 100%;
 }
 
-/* ================= CONTINUE BUTTON ================= */
-
-.continue-btn {
-  position: absolute;
-  bottom: -25px;
-  left: 50%;
-  transform: translateX(-50%);
-
-  background: #6c5ce7;
-  color: white;
-
-  padding: 12px 18px;
-  border: none;
-  border-radius: 6px;
-
-  transition: 0.2s;
-
-  z-index: 9999;
-  /* 👈 SEMPRE NO TOPO */
-  pointer-events: auto;
-}
-
-.continue-btn:hover {
-  transform: translateX(-50%) scale(1.15);
-}
-
-/* ================= PANEL ================= */
-
-.class-panel {
-  width: 0;
-  opacity: 0;
-  overflow: hidden;
-
-  background: #15151d;
-  padding: 0;
-
-  transition: 0.35s ease;
-  border-left: 1px solid #222;
-}
-
-.class-panel.open {
-  width: 360px;
-  opacity: 1;
-  padding: 20px;
-  z-index: 2;
-}
-
-.panel-grid {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-}
-
-/* colunas */
-.panel-col {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-/* quote no topo */
-.panel-quote {
-  font-style: italic;
-  opacity: 0.75;
-  margin-bottom: 10px;
-  border-left: 2px solid #6c5ce7;
-  padding-left: 8px;
-}
-
-.panel-quote-top {
-  font-style: italic;
-  opacity: 0.75;
-
-  margin: 6px 0 12px 0;
-
-  border-left: 2px solid #6c5ce7;
-  padding-left: 8px;
-
-  line-height: 1.3;
-}
-
-/* títulos mais próximos do conteúdo */
-.panel-title {
-  font-weight: bold;
-  font-size: 13px;
-  margin-bottom: 2px;
-}
-
-/* texto itálico sem sublinhado */
-.panel-text i {
-  font-style: italic;
-  text-decoration: none;
-  opacity: 0.85;
-}
-
-/* aproxima conteúdo do título */
-.panel-text.tight {
-  margin-top: -2px;
-}
-
-/* separador entre colunas */
-.panel-divider {
-  width: 1px;
-  background: rgba(255, 255, 255, 0.12);
-  height: auto;
-  align-self: stretch;
-}
-
-/* ================= ATRIBUTOS ================= */
-
-#atributos {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30px;
-}
-
-#attr-overlay {
-  position: absolute;
-}
-
-/* bloco do atributo */
-.attr {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* input central */
-.attr-input {
-  width: 100%;
-  height: 100%;
-
-  text-align: center;
-  font-size: 50px;
-  font-weight: bold;
-
-  background: transparent;
-  border: none;
-  color: white;
-
-  outline: none;
-  padding-bottom: 35px;
-
-  pointer-events: auto;
-  position: relative;
-  z-index: 20;
-}
-
-/* remove setinhas do input number */
-.attr-input::-webkit-outer-spin-button,
-.attr-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.attr-layout {
-  position: relative;
-
-  width: 100%;
-  height: 65vh;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: scale(0.8);
-}
-
-/* IMAGEM CENTRAL GIGANTE */
-.attr-center-image {
-  position: relative;
-  width: 720px;
-  height: 720px;
-}
-
-.attr-center-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-/* camada de HUD em cima da imagem */
+/* overlay */
 .attr-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+    position: absolute;
+    inset: 0;
 }
 
-/* UI por cima */
-.attr-ui {
-  position: absolute;
-  inset: 0;
+/* bolinhas */
+.attr {
+    position: absolute;
+    width: 52px;
+    height: 52px;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  pointer-events: none;
-  z-index: 10;
+    cursor: pointer;
+    user-select: none;
+
+    font-size: 52px;
+}
+
+/* hover leve (sem glow) */
+.attr:hover {
+    transform: scale(1.08);
+}
+
+/* posições (mantidas) */
+.attr[data-attr="agilidade"] {
+    top: 11%;
+    left: 44%;
+}
+
+.attr[data-attr="intelecto"] {
+    top: 33%;
+    left: 75.4%;
+}
+
+.attr[data-attr="vigor"] {
+    top: 70%;
+    left: 64.5%;
+}
+
+.attr[data-attr="presenca"] {
+    top: 70%;
+    left: 23%;
+}
+
+.attr[data-attr="forca"] {
+    top: 33%;
+    left: 13%;
+}
+
+.attr-hint {
+    font-size: 20px;
+    color: #c2c2c2;
 }
 
 /* pontos */
 .attr-points {
-  opacity: 0.9;
-  font-size: 48px;
-  /* leve aumento */
-  letter-spacing: 0.5px;
-  user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
+    font-size: 30px;
 }
 
-/* botões */
-.attr-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.attr-float {
-  position: absolute;
-  transform: translate(-50%, -50%);
-}
-
-.attr-top {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-
-  margin-top: -115px;
-  /* ↓ desce um pouco do topo */
-  pointer-events: auto;
-}
-
-.attr-bottom {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 85px;
-  /* ↑ mais espaço entre botões */
-
-  margin-bottom: -155px;
-  /* ↓ joga mais pra baixo */
-}
-
-/* ================= BOTÃO NORMAL já existe */
-.attr-bottom button {
-  background: #6c5ce7;
-  color: white;
-  padding: 13px 0;
-  width: 180px;
-  font-size: 1.05rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.25s ease;
-  text-align: center;
-}
-
-/* 🔴 ESTADO BLOQUEADO */
-.attr-bottom button:disabled {
-  background: transparent;
-  color: #ff4d4d;
-  border: 2px solid #ff4d4d;
-  opacity: 0.65;
-  cursor: not-allowed;
-  transform: none;
-  filter: drop-shadow(0 0 6px rgba(255, 77, 77, 0.25));
-}
-
-/* hover só quando ativo */
-.attr-bottom button:not(:disabled):hover {
-  transform: scale(1.12);
-}
-
-.attr-bottom button:hover {
-  transform: scale(1.12);
-}
-
-.attr-top,
-.attr-bottom,
-.attr-points {
-  pointer-events: auto;
-}
-
-/* ================= LAYOUT ORIGENS + PERÍCIAS ================= */
-
-.col {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-}
-
-.origem-pericia-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-
-  height: 65vh;
-  padding: 20px 40px;
-}
-
-/* colunas */
-.origem-col,
-.pericia-col {
-  display: flex;
-  flex-direction: column;
-}
-
-/* títulos */
-.origem-col h2,
-.pericia-col h2 {
-  margin-bottom: 15px;
-  font-size: 22px;
-  opacity: 0.9;
-}
-
-
-/* ================= ORIGENS (ACCORDION REAL) ================= */
-
-.origem {
-  background: #1a1a25;
-  border: 1px solid #2a2a3a;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  overflow: hidden;
-  transition: 0.25s;
-}
-
-.origem-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 14px;
-  cursor: pointer;
-}
-
-/* Alteração da seta para V */
-.origem-top span {
-  font-size: 20px;
-  transition: transform 0.3s ease;
-  display: inline-block;
-  transform: rotate(0deg);
-}
-
-.origem.open .origem-top span {
-  transform: rotate(180deg);
-  /* Vira o "V" para cima quando aberto */
-}
-
-/* Botão de energia para selecionar a origem */
-.origem-top button {
-  background: transparent;
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  position: relative;
-  cursor: pointer;
-  padding: 8px;
-  transition: 0.3s ease;
-}
-
-.origem-top button::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 14px;
-  height: 14px;
-  background-color: #6c5ce7;
-  /* Cor inicial (apagado) */
-  border-radius: 50%;
-  transition: 0.3s ease;
-  transform: translate(-50%, -50%);
-}
-
-/* Quando a origem estiver selecionada (LED aceso) */
-/* Alteração do botão LED para origem selecionada */
-.origem.selected button::before {
-  background-color: #28a745;
-  /* Verde quando selecionado */
-}
-
-/* Efeito de luz verde ao passar o mouse */
-.origem button:hover::before {
-  box-shadow: 0 0 8px rgba(0, 255, 0, 0.7);
-}
-
-/* Fechar as outras origens quando abrir uma nova */
-.origem.open~.origem .desc {
-  display: none;
-}
-
-/* Descrição inicial com height 0 */
-.desc {
-  height: 0;
-  /* Esconde a descrição */
-  overflow: hidden;
-  padding: 0 14px;
-  opacity: 0;
-  transition: height 0.3s ease, opacity 0.3s ease;
-  /* Transição de height e opacity */
-}
-
-/* Quando aberto, a altura será maior */
-.origem.open .desc {
-  height: 200px;
-  /* Ajuste a altura conforme o tamanho da sua descrição */
-  opacity: 1;
-  padding: 10px 14px 14px;
-}
-
-/* Animação da seta */
-.origem.open .origem-top span {
-  transform: rotate(180deg);
-}
+/* =========================
+   SAÚDE
+========================= */
 
-/* Nome da origem */
-.origem-top div {
-  flex: 1;
-  font-size: 15px;
+.health-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-/* ================= LAYOUT FIXO ================= */
-
-.origem-pericia-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-
-  height: 65vh;
-  padding: 20px 40px;
-}
-
-/* colunas com scroll interno */
-.origem-col,
-.pericia-col {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-}
-
-#origens,
-#pericias {
-  flex: 1;
-  overflow-y: auto;
-}
-
-/* ================= PERÍCIAS HEADER ================= */
-
-/* Estilo para o cabeçalho */
-.pericia-header {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  /* 3 colunas de largura igual */
-  gap: 10px;
-  margin-bottom: 10px;
-  padding-bottom: 5px;
-  border-bottom: 2px solid #ccc;
-  /* Linha de separação */
-  font-weight: bold;
-  text-align: left;
-  font-size: 16px;
-  color: #fff;
-}
-
-.header-col {
-  padding: 5px 10px;
-}
-
-/* Estilo das colunas da perícia */
-.pericia {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  /* 3 colunas: nome, treino, bônus */
-  gap: 10px;
-  margin-bottom: 10px;
-  align-items: center;
-  border: 1px solid #333;
-  padding: 10px;
-  background-color: #222;
-  color: white;
-}
-
-.pericia-name {
-  font-size: 24px;
-  font-weight: normal;
-}
-
-.pericia-info {
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-}
-
-.treino {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.valor {
-  font-size: 14px;
-  color: #ccc;
-}
-
-.pericia-controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.pericia-controls select,
-.pericia-controls input {
-  background-color: #1a1a1a;
-  color: white;
-  border: 1px solid white;
-  border-radius: 4px;
-  padding: 5px;
-  font-size: 14px;
-  width: 60px;
-  outline: none;
-}
-
-.pericia-controls select:hover {
-  background-color: #333;
-  /* Escurece quando passa o mouse */
-}
-
-.pericia-controls input {
-  background-color: #1a1a1a;
-  color: #fff;
-  border: 1px solid #fff;
-  border-radius: 4px;
-  padding: 5px;
-  font-size: 14px;
-  width: 60px;
-  outline: none;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.pericia-controls input:focus {
-  background-color: #333;
-  /* Escurece quando o input é focado */
-}
-
-
-.pericia:hover {
-  border-color: #6c5ce7;
-}
-
-/* NOME */
-.pericia div:nth-child(1) {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* VALOR */
-.pericia div:nth-child(2) {
-  text-align: center;
-  font-weight: bold;
-}
-
-/* TEXTO */
-.pericia div:nth-child(3) {
-  text-align: center;
-  font-size: 14px;
-  opacity: 0.7;
-}
-
-.pericia select,
-.pericia input {
-  margin-top: 5px;
-  width: 60%;
-}
-
-/* ================= BOTÕES ================= */
-
-.step-actions {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  margin-top: 20px;
+.health-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.step-actions button {
-  background: #6c5ce7;
-  border: none;
-  color: white;
-  padding: 12px 20px;
-  border-radius: 6px;
-  cursor: pointer;
+.health-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
 }
-
 
-/* ================= SCROLL MAIS BONITINHO ================= */
+/* =========================
+   BOTÃO (ESTILO HEADER)
+========================= */
 
-/* Para Firefox */
-.pericia-container {
-  overflow-y: scroll;
-  scrollbar-width: thin;
-  /* Scroll mais fino */
-  scrollbar-color: #6c5ce7 transparent;
-  /* Cor do thumb e fundo */
+.create-footer {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
 }
 
-/* Para Chrome, Safari, e Edge */
-.pericia-container::-webkit-scrollbar {
-  width: 8px;
-  /* Tamanho do scroll */
-}
+.create-footer button {
+    background: transparent;
+    border: 1px solid rgba(124, 255, 178, 0.4);
 
-.pericia-container::-webkit-scrollbar-track {
-  background: #222;
-  /* Cor de fundo do track */
-  border-radius: 10px;
-  /* Bordas arredondadas */
-}
+    padding: 10px 20px;
 
-.pericia-container::-webkit-scrollbar-thumb {
-  background: #6c5ce7;
-  /* Cor do thumb (a parte que você arrasta) */
-  border-radius: 10px;
-  /* Bordas arredondadas no thumb */
-  border: 2px solid #222;
-  /* Bordas do thumb */
+    color: #b6ffd6;
+    cursor: pointer;
 }
 
-.pericia-container::-webkit-scrollbar-thumb:hover {
-  background: #5a4ac7;
-  /* Cor do thumb quando o mouse passa por cima */
+/* hover igual header */
+.create-footer button:hover {
+    background: rgba(124, 255, 178, 0.1);
 }
 
+/* =========================
+   MODAL (LIMPO)
+========================= */
 
-/* ================= CMD OVERLAY ================= */
-#cmd-window {
-  position: fixed;
-  top: 80px;
-  right: 80px;
-  width: 520px;
-  height: 320px;
-  background: rgba(20, 20, 20, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-  display: flex;
-  flex-direction: column;
-  font-family: "VT323", monospace;
-  font-size: 20px;
-  color: white;
-  z-index: 9999;
-  resize: none;
-  transform: scale(0.8);
-  opacity: 0;
-  transition: all 0.18s ease;
-}
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
 
-#cmd-window.show {
-  transform: scale(1);
-  opacity: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.cmd-titlebar {
-  height: 32px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+.modal.hidden {
+    display: none;
 }
 
-.cmd-title {
-  font-size: 18px;
-}
+.modal-content {
+    background: #0f0f14;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 
-.no-function {
-  margin-left: 10px;
-  cursor: pointer;
-  opacity: 0.7;
+    padding: 20px;
+    width: 90%;
+    max-width: 420px;
 }
 
-.no-function:hover {
-  opacity: 1;
-  background: #ffffff3a;
+.modal-content h2 {
+    margin-top: 0;
 }
 
-.cmd-close {
-  cursor: pointer;
-  transition: 0.15s;
-  user-select: none;
-}
+.modal-content button {
+    margin-top: 15px;
 
-.cmd-close:hover {
-  background: #ff4d4d;
-}
+    background: transparent;
+    border: 1px solid rgba(124, 255, 178, 0.4);
 
-#cmd-log {
-  flex: 1;
-  padding: 10px;
-  overflow-y: auto;
+    color: #b6ffd6;
+    padding: 6px 12px;
+    cursor: pointer;
 }
 
-.cmd-input-line {
-  display: flex;
-  padding: 10px;
-  gap: 6px;
-}
+/* =========================
+   UTIL
+========================= */
 
-.cmd-cursor {
-  animation: blink 0.9s infinite;
+.hidden {
+    display: none;
 }
-
-@keyframes blink {
-
-  0%,
-  49% {
-    opacity: 1;
-  }
 
-  50%,
-  100% {
-    opacity: 0;
-  }
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+    .create-container {
+        grid-template-columns: 1fr;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .health-grid {
+        grid-template-columns: 1fr;
+    }
+
+    input,
+    textarea,
+    select {
+        font-size: 16px;
+        padding: 14px;
+    }
+
+    .attr-graphic {
+        max-width: 300px;
+    }
+
+    .attr {
+        width: 60px;
+        height: 60px;
+        font-size: 22px;
+    }
+
+    .create-footer button {
+        width: 100%;
+    }
+}
+
+@media (min-width: 769px) {
+
+    html,
+    body {
+        overflow: hidden;
+        height: 100%;
+    }
+
+    main.create-page {
+        overflow: hidden;
+        height: 100vh;
+    }
 }

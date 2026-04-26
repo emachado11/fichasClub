@@ -4,152 +4,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar Ficha</title>
+    <title>Criar Personagem</title>
 
-    <link rel="stylesheet" href="./css/criar-ficha.css">
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="./css/header.css">
-
+    <link rel="stylesheet" href="./css/criar-ficha.css">
 </head>
 
-<body class="no-scroll">
+<body>
 
     <div id="header"></div>
 
-    <div class="progress-wrapper">
-        <div class="progress-steps">
-            <div class="step-label active">Classe</div>
-            <div class="step-label">Atributos</div>
-            <div class="step-label">Origem</div>
-            <div class="step-label">Finalização</div>
+    <main class="create-page">
+
+        <div class="create-title">
+            Criar um Novo Personagem
         </div>
 
-        <div class="progress-bar">
-            <div id="progress"></div>
+        <div class="create-container">
+
+            <!-- ESQUERDA -->
+            <section class="create-left">
+
+                <div class="section-title">Detalhes Principais</div>
+
+                <div class="details-grid">
+
+                    <!-- COLUNA 1 -->
+                    <div class="col">
+
+                        <input id="nome-input" placeholder="Nome do Personagem">
+
+                        <!-- CLASSE -->
+                        <div class="select-with-info">
+                            <select id="classe-select" required></select>
+                            <button type="button" class="info-btn" data-type="classe">?</button>
+                        </div>
+
+                        <!-- ORIGEM -->
+                        <div class="select-with-info">
+                            <select id="origem-select" required></select>
+                            <button type="button" class="info-btn" data-type="origem">?</button>
+                        </div>
+
+                        <!-- NEX -->
+                        <div class="nex-box">
+                            <input type="number" id="nex-input" placeholder="NEX (%)" min="0" max="99">
+
+                            <label class="nex-toggle">
+                                <input type="checkbox" id="enable-level">
+                                Usar Nível
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <!-- COLUNA 2 -->
+                    <div class="col">
+
+                        <!-- TRILHA -->
+                        <div class="select-with-info">
+                            <select id="trilha-select" required></select>
+                            <button type="button" class="info-btn" data-type="trilha">?</button>
+                        </div>
+
+                        <!-- NÍVEL (só aparece quando checkbox ativa) -->
+                        <div class="level-box hidden" id="level-box">
+                            <select id="nivel-select"></select>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <textarea id="historia-input" placeholder="Resumo da história..."></textarea>
+
+            </section>
+
+            <!-- DIREITA -->
+            <section class="create-right">
+
+                <div class="section-title">Atributos</div>
+
+                <div class="attr-box">
+
+                    <div class="attr-graphic">
+
+                        <img src="./assets/atributos.png">
+
+                        <div class="attr-overlay">
+                            <div class="attr" data-attr="forca">1</div>
+                            <div class="attr" data-attr="agilidade">1</div>
+                            <div class="attr" data-attr="vigor">1</div>
+                            <div class="attr" data-attr="presenca">1</div>
+                            <div class="attr" data-attr="intelecto">1</div>
+                        </div>
+
+                    </div>
+
+                    <div class="attr-hint">
+                        Clique para aumentar • Clique direito para diminuir
+                    </div>
+
+                    <div class="attr-points">
+                        Pontos restantes: <span id="attr-restantes">0</span>
+                    </div>
+
+                </div>
+
+                <!-- SAÚDE -->
+                <div class="health-box">
+
+                    <div class="health-title">
+                        Saúde
+
+                        <label class="determinacao-toggle">
+                            <input type="checkbox" id="enable-determinacao">
+                            Determinação
+                        </label>
+                    </div>
+
+                    <div class="health-grid">
+
+                        <input id="vida-input" placeholder="Vida Máxima" disabled>
+                        <input id="sanidade-input" placeholder="Sanidade Máxima" disabled>
+                        <input id="esforco-input" placeholder="Pontos de Esforço" disabled>
+                        <input id="determinacao-input" class="hidden" placeholder="Determinação" disabled>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+        <div class="create-footer">
+            <button type="button" id="submit-btn">
+                Criar Personagem
+            </button>
+        </div>
+
+    </main>
+
+    <!-- MODAL -->
+    <div id="info-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="modal-title"></h2>
+            <div id="modal-desc"></div>
+            <button type="button" id="close-modal">Fechar</button>
         </div>
     </div>
-
-    <main class="container">
-
-        <!-- ================= CLASSE ================= -->
-        <section class="step active" id="step-0">
-
-            <div class="class-layout">
-
-                <div class="class-card-area">
-
-                    <button id="prev-class" class="nav-btn left">‹</button>
-
-                    <div class="class-stage">
-
-                        <div id="card-prev" class="class-card card-left"></div>
-
-                        <div id="class-card" class="class-card card-center"></div>
-
-                        <div id="card-next" class="class-card card-right"></div>
-
-                    </div>
-
-                    <button id="confirm-class" class="continue-btn">
-                        Continuar como <span id="continue-name"></span>
-                    </button>
-
-                    <button id="next-class" class="nav-btn right">›</button>
-
-                </div>
-
-                <div class="class-panel" id="class-panel">
-                    <h2 id="panel-title"></h2>
-                    <p id="panel-desc"></p>
-                    <div id="panel-stats"></div>
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- ATRIBUTOS -->
-        <section class="step" id="step-1">
-
-            <div class="attr-layout">
-
-                <div class="attr-center-image">
-                    <img src="./assets/atributos.png" alt="Atributos">
-                    <div class="attr-overlay" id="attr-overlay"></div>
-                </div>
-
-                <div class="attr-ui">
-                    <div class="attr-top">
-                        <p class="attr-points">
-                            Pontos: <span id="points-left"></span>
-                        </p>
-                    </div>
-
-                    <div id="atributos"></div>
-
-                    <div class="attr-bottom">
-                        <button id="back-to-class">Voltar</button>
-                        <button id="to-origem">Continuar</button>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- ORIGEM -->
-        <section class="step" id="step-2">
-
-            <div class="origem-pericia-layout">
-
-                <!-- ORIGENS -->
-                <div class="origem-col">
-                    <h2>Origens</h2>
-                    <div id="origens"></div>
-                </div>
-
-                <!-- PERÍCIAS -->
-                <div class="pericia-col">
-                    <h2>Perícias</h2>
-
-                    <!-- HEADER -->
-                    <div class="pericia-header">
-                        <div>Perícia</div>
-                        <div>Treino</div>
-                        <div>Bônus</div>
-                    </div>
-
-                    <div id="pericias"></div>
-                </div>
-
-            </div>
-
-            <div class="step-actions">
-                <button id="back-to-atributos">Voltar</button>
-                <button id="finish">Finalizar</button>
-            </div>
-
-        </section>
-
-        <!-- ================= CMD OVERLAY ================= -->
-        <div id="cmd-window" class="hidden">
-            <div class="cmd-titlebar">
-                <div class="cmd-title">Controle de Perfil</div>
-                <div class="cmd-controls">
-                    <span class="no-function">—</span>
-                    <span class="no-function">□</span>
-                    <span class="cmd-close">×</span>
-                </div>
-            </div>
-            <div id="cmd-log"></div>
-            <div class="cmd-input-line">
-                <span>&gt; </span>
-                <span id="cmd-input"></span>
-                <span class="cmd-cursor">█</span>
-            </div>
-        </div>
-    </main>
 
     <script type="module" src="./js/header.js"></script>
     <script type="module" src="./js/criar-ficha.js"></script>

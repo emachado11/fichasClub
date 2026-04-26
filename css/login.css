@@ -1,9 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-
 /* ================= BASE ================= */
 
 body {
-  font-family: "VT323", monospace;
   font-size: 25px;
   color: #fff;
 
