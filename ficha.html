@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ficha - The Club</title>
+
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/ficha.css">
+</head>
+
+<body>
+
+  <!-- HEADER GLOBAL (FIXO DO SITE) -->
+  <div id="header"></div>
+
+  <main class="ficha-page">
+
+    <!-- =========================
+         HEADER DA FICHA (INTERNO)
+    ========================== -->
+    <section class="ficha-header">
+
+      <div class="ficha-top">
+        <h1 class="ficha-nome">Nome do Agente</h1>
+      </div>
+
+      <div class="ficha-meta">
+        <div class="meta-item">
+          <span class="meta-label">Origem</span>
+          <span class="meta-value">—</span>
+        </div>
+
+        <div class="meta-item">
+          <span class="meta-label">Classe</span>
+          <span class="meta-value">—</span>
+        </div>
+
+        <div class="meta-item">
+          <span class="meta-label">Trilha</span>
+          <span class="meta-value">—</span>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         GRID PRINCIPAL
+    ========================== -->
+    <section class="ficha-grid">
+
+      <!-- COLUNA 1 -->
+      <div class="col col-atributos">
+
+        <h2>Atributos</h2>
+
+        <div class="attr-box">
+          <div class="attr-graphic">
+            <img src="./assets/atributos.png">
+
+            <div class="attr-overlay">
+              <div class="attr" data-attr="forca">1</div>
+              <div class="attr" data-attr="agilidade">1</div>
+              <div class="attr" data-attr="vigor">1</div>
+              <div class="attr" data-attr="presenca">1</div>
+              <div class="attr" data-attr="intelecto">1</div>
+            </div>
+          </div>
+
+          <div class="attr-hint">
+            Clique para aumentar • Clique direito para diminuir
+          </div>
+
+          <div class="attr-points">
+            Pontos restantes: <span id="attr-restantes">0</span>
+          </div>
+
+          <div class="nex-card">
+
+            <div class="nex-line">
+
+              <!-- ESQUERDA -->
+              <div class="nex-box">
+                <label>NEX</label>
+                <input type="number" id="nex" value="0">
+              </div>
+
+              <!-- MEIO -->
+              <div class="nivel-toggle">
+                <div class="toggle-box">
+                  <input type="checkbox" id="toggle-nivel">
+                </div>
+                <label>Usar nível</label>
+              </div>
+
+              <!-- DIREITA -->
+              <div class="nivel-box">
+                <label>NÍVEL</label>
+                <select id="nivel" disabled>
+                  <!-- JS -->
+                </select>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="card" id="status-card">
+
+          <div class="pd-toggle">
+            <label class="checkbox-line">
+              <input type="checkbox" id="toggle-pd">
+              Jogar sem Sanidade - PD.
+            </label>
+          </div>
+
+          <!-- PV -->
+          <div class="stat pv">
+            <span>PV</span>
+
+            <div class="bar">
+              <div class="fill" id="pv-fill"></div>
+            </div>
+
+            <div class="controls">
+              <button data-target="pv" data-action="dec">‹</button>
+              <input id="pv-current" type="number">
+              <span>/</span>
+              <input id="pv-max" type="number">
+              <button data-target="pv" data-action="inc">›</button>
+            </div>
+          </div>
+
+          <!-- SAN -->
+          <div class="stat san">
+            <span>SAN</span>
+
+            <div class="bar">
+              <div class="fill" id="san-fill"></div>
+            </div>
+
+            <div class="controls">
+              <button data-target="san" data-action="dec">‹</button>
+              <input id="san-current" type="number">
+              <span>/</span>
+              <input id="san-max" type="number">
+              <button data-target="san" data-action="inc">›</button>
+            </div>
+          </div>
+
+          <!-- PE -->
+          <div class="stat pe">
+            <span>PE</span>
+
+            <div class="bar">
+              <div class="fill" id="pe-fill"></div>
+            </div>
+
+            <div class="controls">
+              <button data-target="pe" data-action="dec">‹</button>
+              <input id="pe-current" type="number">
+              <span>/</span>
+              <input id="pe-max" type="number">
+              <button data-target="pe" data-action="inc">›</button>
+            </div>
+          </div>
+
+          <!-- PD -->
+          <div class="stat pd hidden">
+            <span>PD</span>
+
+            <div class="bar">
+              <div class="fill" id="pd-fill"></div>
+            </div>
+
+            <div class="controls">
+              <button data-target="pd" data-action="dec">‹</button>
+              <input id="pd-current" type="number">
+              <span>/</span>
+              <input id="pd-max" type="number">
+              <button data-target="pd" data-action="inc">›</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="card info-card">
+
+          <h2>Informações</h2>
+          <!-- ================= DEFESA ================= -->
+          <div class="info-line defesa">
+
+            <div class="defesa-icon">
+              <span id="def-total">11</span>
+            </div>
+
+            <div class="defesa-calc">
+
+              <div class="defesa-equacao">
+                <span>10 + AGI +</span>
+
+                <div class="stack">
+                  <input type="number" id="def-equip" value="0">
+                  <span class="label">Equip.</span>
+                </div>
+
+                <span>+</span>
+
+                <div class="stack">
+                  <input type="number" id="def-outros" value="0">
+                  <span class="label">Outros</span>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- ================= BLOQUEIO / ESQUIVA ================= -->
+          <div class="info-line stats-row">
+
+            <div class="stat-box">
+              <span>Bloqueio</span>
+              <input type="number" id="bloqueio">
+            </div>
+
+            <div class="stat-box">
+              <span>Esquiva</span>
+              <input type="number" id="esquiva">
+            </div>
+
+          </div>
+
+          <!-- ================= PROTEÇÃO ================= -->
+          <div class="info-row underline">
+            <span>Proteção</span>
+            <input type="text" id="protecao">
+          </div>
+
+          <!-- ================= RESISTÊNCIAS ================= -->
+          <div class="info-row underline">
+            <span>Resistências</span>
+            <input type="text" id="resistencias">
+          </div>
+
+          <!-- ================= PROFICIÊNCIAS ================= -->
+          <div class="info-row underline">
+            <span>Proficiências</span>
+            <input type="text" id="proficiencias">
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- COLUNA 2 -->
+      <div class="col col-pericias">
+
+        <div class="card">
+
+          <h2>Perícias</h2>
+
+          <div class="pericias-table">
+
+            <div class="pericia-header">
+              <span>Perícia</span>
+              <span>Atributo</span>
+              <span>Valor</span>
+              <span>Treino</span>
+              <span>Bônus</span>
+            </div>
+
+            <div id="pericias-list"></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- COLUNA 3 -->
+      <div class="col col-tabs">
+
+        <div class="tabs">
+
+          <div class="tab-buttons">
+            <button class="tab-btn active" data-tab="combate">Combate</button>
+            <button class="tab-btn" data-tab="habilidades">Habilidades</button>
+            <button class="tab-btn" data-tab="rituais">Rituais</button>
+            <button class="tab-btn" data-tab="inventario">Inventário</button>
+            <button class="tab-btn" data-tab="descricao">Descrição</button>
+          </div>
+
+          <div class="tab-content">
+
+            <div class="tab-panel active" id="combate">
+              <!-- vazio por enquanto -->
+            </div>
+
+            <div class="tab-panel" id="habilidades">
+              <div class="modal-actions">
+                <button class="add-btn" id="add-habilidade">+ Adicionar</button>
+                <button class="add-btn" id="criar-habilidade">+ Criar</button>
+              </div>
+              <div class="modal-separator"></div>
+              <div class="list-container" id="habilidades-container"></div>
+            </div>
+
+            <div class="tab-panel" id="rituais">
+              <button class="add-btn" id="add-ritual">+ Adicionar ritual</button>
+              <div class="list-container" id="rituais-container"></div>
+            </div>
+
+            <div class="tab-panel" id="inventario">
+              <button class="add-btn" id="add-item">+ Adicionar item</button>
+              <div class="list-container" id="inventario-container"></div>
+            </div>
+
+            <div class="tab-panel" id="descricao">
+
+              <div class="desc-grid">
+
+                <textarea placeholder="Anotações"></textarea>
+                <textarea placeholder="Aparência"></textarea>
+                <textarea placeholder="Personalidade"></textarea>
+                <textarea placeholder="Histórico"></textarea>
+                <textarea placeholder="Objetivo"></textarea>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <div id="modal" class="modal hidden">
+
+    <div class="modal-box">
+
+      <input type="text" id="modal-search" placeholder="Pesquisar...">
+
+      <div id="modal-list"></div>
+
+      <button id="modal-close">Fechar</button>
+
+    </div>
+
+  </div>
+
+  <script type="module" src="./js/header.js"></script>
+  <script type="module" src="./js/ficha.js"></script>
+
+</body>
+
+</html>

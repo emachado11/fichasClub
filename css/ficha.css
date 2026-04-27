@@ -1,0 +1,788 @@
+/* =========================
+   BASE
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+.hidden {
+    display: none !important;
+}
+
+body {
+    font-size: 22px;
+    color: white;
+}
+
+/* =========================
+   PAGE
+========================= */
+
+.ficha-page {
+    padding: 32px;
+}
+
+/* =========================
+   HEADER (MENOS “GROSSO”)
+========================= */
+
+.ficha-header {
+    margin: 20px 0;
+    padding: 14px 18px;
+
+    background: #14141b;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ficha-nome {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.ficha-meta {
+    display: flex;
+    gap: 18px;
+    margin-top: 10px;
+    opacity: 0.75;
+}
+
+.meta-item {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+
+/* =========================
+   GRID PRINCIPAL
+========================= */
+
+.ficha-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 18px;
+
+    align-items: start;
+}
+
+/* =========================
+   COLUNAS
+========================= */
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    min-height: 0;
+    /* 🔥 IMPORTANTE pro scroll funcionar */
+}
+
+/* =========================
+   CARD BASE
+========================= */
+
+.card {
+    padding: 18px;
+}
+
+/* =========================
+   LISTAS
+========================= */
+
+.card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.card li {
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* =========================
+   ATRIBUTOS
+========================= */
+
+.attr-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.attr-graphic {
+    width: 100%;
+    max-width: 380px;
+    position: relative;
+}
+
+.attr-graphic img {
+    width: 100%;
+}
+
+.attr-overlay {
+    position: absolute;
+    inset: 0;
+}
+
+.attr {
+    position: absolute;
+    width: 54px;
+    height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 54px;
+    cursor: pointer;
+    user-select: none;
+
+    transition: transform 0.12s ease;
+}
+
+.attr:hover {
+    transform: scale(1.08);
+}
+
+/* posições */
+.attr[data-attr="agilidade"] {
+    top: 11%;
+    left: 44%;
+}
+
+.attr[data-attr="intelecto"] {
+    top: 33%;
+    left: 75.4%;
+}
+
+.attr[data-attr="vigor"] {
+    top: 70%;
+    left: 64.5%;
+}
+
+.attr[data-attr="presenca"] {
+    top: 70%;
+    left: 23%;
+}
+
+.attr[data-attr="forca"] {
+    top: 33%;
+    left: 13%;
+}
+
+.attr-hint {
+    font-size: 14px;
+    opacity: 0.6;
+}
+
+.attr-points {
+    font-size: 18px;
+}
+
+/* =========================
+   BARRAS
+========================= */
+
+.bar {
+    width: 100%;
+    height: 34px;
+    background: #1c1c1c;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 6px 0;
+}
+
+.fill {
+    height: 100%;
+    width: 0%;
+    transition: width .2s ease;
+}
+
+.pv .fill {
+    background: #ff3b3b;
+}
+
+.san .fill {
+    background: #3b8bff;
+}
+
+.pe .fill {
+    background: #ffd23b;
+}
+
+.pd .fill {
+    background: #3bff7a;
+}
+
+/* =========================
+   CONTROLS
+========================= */
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.controls input {
+    width: 60px;
+    background: transparent;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+}
+
+.controls input:focus {
+    outline: none;
+}
+
+.controls button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* remove setinhas */
+.controls input[type=number]::-webkit-outer-spin-button,
+.controls input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.controls input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* =========================
+   INFO CARD
+========================= */
+
+.info-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    color: white;
+    font-size: 16px;
+    padding: 4px 2px;
+}
+
+select {
+    background: #14141b;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    color: white;
+    font-size: 16px;
+    padding: 4px 6px;
+}
+
+select option {
+    background: #14141b;
+    color: white;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-bottom: 1px solid white;
+}
+
+/* =========================
+   NEX / NÍVEL
+========================= */
+
+.nex-box,
+.nivel-toggle,
+.nivel-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 120px;
+}
+
+.nex-line {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 40px;
+}
+
+.nex-box input {
+    width: 70px;
+    text-align: center;
+}
+
+/* =========================
+   CHECKBOX LIMPO
+========================= */
+
+input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+
+    border: 2px solid white;
+    background: transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    position: relative;
+}
+
+input[type="checkbox"]:checked::after {
+    content: "✔";
+    font-size: 12px;
+    color: white;
+}
+
+/* =========================
+   DEFESA
+========================= */
+
+.defesa-icon {
+    width: 90px;
+    height: 90px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid white;
+    font-size: 28px;
+}
+
+.defesa-equacao {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stack input {
+    width: 70px;
+    text-align: center;
+}
+
+/* =========================
+   UTIL
+========================= */
+
+.stats-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.underline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.underline input {
+    flex: 1;
+    margin-left: 10px;
+}
+
+/* =========================
+   PERÍCIAS
+========================= */
+
+.pericias-table {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.pericia-header,
+.pericia-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 0.8fr 1fr 0.8fr;
+    align-items: center;
+    gap: 8px;
+}
+
+.pericia-header {
+    background: #0c0c11;
+    padding: 10px 8px;
+    margin-bottom: 6px;
+
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+
+    color: rgba(255, 255, 255, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pericia-row span,
+.pericia-header span {
+    display: flex;
+    align-items: center;
+}
+
+.pericia-row select,
+.pericia-row input {
+    width: 100%;
+    max-width: 60px;
+    text-align: center;
+}
+
+.pericia-row input[readonly] {
+    border: none;
+    background: transparent;
+    color: white;
+
+    text-align: center;
+    pointer-events: none;
+    user-select: none;
+}
+
+
+
+.col-tabs {
+    display: flex;
+    flex-direction: column;
+
+    height: 100vh;
+    /* dá referência REAL de scroll */
+    max-height: 900px;
+    /* evita coluna gigante em telas grandes */
+    padding: 0;
+
+    border: none;
+
+    overflow: hidden;
+}
+
+/* container interno */
+.tabs {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+
+    background: #14141b;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* botões */
+.tab-buttons {
+    display: flex;
+    gap: 4px;
+    padding: 8px;
+
+    background: #101015;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* =========================
+   BOTÕES (HOVER + ACTIVE)
+========================= */
+
+.tab-btn {
+    flex: 1;
+    padding: 8px;
+
+    background: transparent;
+    border: 1px solid transparent;
+
+    color: white;
+    cursor: pointer;
+
+    transition: 0.15s ease;
+}
+
+.tab-btn:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.tab-btn.active {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* =========================
+   SCROLL REAL DA TAB
+========================= */
+
+.tab-content {
+    flex: 1;
+    min-height: 0;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding: 10px;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+
+    z-index: 9999;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.modal-actions .add-btn {
+    flex: 1;
+}
+
+/* separator que tava faltando de verdade */
+.modal-separator {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    margin: 10px 0;
+}
+
+.modal-box {
+    width: 520px;
+    max-height: 80vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #14141b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    overflow: hidden;
+}
+
+#modal-search {
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: #101015;
+    color: white;
+}
+
+/* lista */
+#modal-list {
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* item */
+.modal-item {
+    padding: 10px;
+    cursor: pointer;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+    transition: 0.15s;
+}
+
+.modal-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* =========================
+   COLUNA TABS (FIX DEFINITIVO)
+========================= */
+
+.col-tabs {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    min-height: 0;
+
+    padding: 12px;
+
+    overflow: hidden;
+    /* impede scroll errado na coluna */
+}
+
+/* estrutura das tabs */
+.tabs {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+/* botões ficam fixos */
+.tab-buttons {
+    flex-shrink: 0;
+}
+
+/* 🔥 AQUI É O SCROLL REAL */
+.tab-content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background: #0f0f14;
+}
+
+/* panels */
+.tab-panel {
+    display: none;
+    height: 100%;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+/* =========================
+   ACCORDION ITEM
+========================= */
+
+.acc {
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+/* header */
+.acc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px;
+    cursor: pointer;
+
+    background: #14141b;
+
+    transition: 0.15s ease;
+}
+
+.acc-header:hover {
+    background: #1a1a23;
+}
+
+/* ações direita */
+.acc-actions {
+    display: flex;
+    gap: 6px;
+}
+
+/* botão delete */
+.acc-delete {
+    background: transparent;
+    border: none;
+    color: #ff4d4d;
+
+    cursor: pointer;
+    font-size: 16px;
+
+    opacity: 0.7;
+    transition: 0.15s;
+}
+
+.acc-delete:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* conteúdo */
+.acc-content {
+    max-height: 0;
+    overflow: hidden;
+
+    background: #0f0f14;
+    padding: 0 10px;
+
+    transition: max-height 0.25s ease, padding 0.25s ease;
+}
+
+/* aberto */
+.acc.open .acc-content {
+    max-height: 200px;
+    padding: 10px;
+}
+
+.add-btn {
+    width: 100%;
+    padding: 10px 12px;
+
+    background: #14141b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    color: white;
+    cursor: pointer;
+
+    font-size: 14px;
+    letter-spacing: 0.5px;
+
+    transition: 0.15s ease;
+}
+
+.add-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.add-btn:active {
+    transform: translateY(0px);
+}
+
+.desc-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.desc-grid textarea {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 90px;
+
+    background: #0f0f14;
+    border: 1px solid rgba(255,255,255,0.08);
+
+    color: white;
+    padding: 10px;
+}
+
+.desc-grid textarea:focus {
+    outline: none;
+    border-color: rgba(255,255,255,0.25);
+}

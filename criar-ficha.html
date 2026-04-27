@@ -126,10 +126,25 @@
 
                     <div class="health-grid">
 
-                        <input id="vida-input" placeholder="Vida Máxima" disabled>
-                        <input id="sanidade-input" placeholder="Sanidade Máxima" disabled>
-                        <input id="esforco-input" placeholder="Pontos de Esforço" disabled>
-                        <input id="determinacao-input" class="hidden" placeholder="Determinação" disabled>
+                        <div class="health-item">
+                            <span>PV</span>
+                            <input id="vida-input" disabled>
+                        </div>
+
+                        <div class="health-item san-pe">
+                            <span>SAN</span>
+                            <input id="sanidade-input" disabled>
+                        </div>
+
+                        <div class="health-item san-pe">
+                            <span>PE</span>
+                            <input id="esforco-input" disabled>
+                        </div>
+
+                        <div class="health-item hidden" id="det-wrapper">
+                            <span>PD</span>
+                            <input id="determinacao-input" disabled>
+                        </div>
 
                     </div>
 
@@ -139,20 +154,30 @@
 
         </div>
 
-        <div class="create-footer">
-            <button type="button" id="submit-btn">
-                Criar Personagem
-            </button>
-        </div>
+        <div class="left-wrapper">
 
+            <section class="create-left">
+            </section>
+
+            <div class="create-footer">
+                <button type="button" id="submit-btn">
+                    Criar Personagem
+                </button>
+            </div>
+
+        </div>
     </main>
 
     <!-- MODAL -->
     <div id="info-modal" class="modal hidden">
         <div class="modal-content">
+
             <h2 id="modal-title"></h2>
-            <div id="modal-desc"></div>
+
+            <div class="modal-body" id="modal-body"></div>
+
             <button type="button" id="close-modal">Fechar</button>
+
         </div>
     </div>
 

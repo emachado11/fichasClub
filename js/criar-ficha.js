@@ -7,202 +7,160 @@ document.addEventListener("DOMContentLoaded", () => {
         import("./origens.js").then(({ origens }) => {
             import("./trilhas.js").then(({ trilhas }) => {
                 import("./habilidades.js").then(({ habilidades }) => {
+                    import("./pericias.js").then(({ pericias }) => {
 
-                    // ===============================
-                    // ELEMENTOS
-                    // ===============================
+                        // ===============================
+                        // ELEMENTOS
+                        // ===============================
 
-                    const classeSelect = document.getElementById("classe-select");
-                    const origemSelect = document.getElementById("origem-select");
-                    const trilhaSelect = document.getElementById("trilha-select");
-                    const nivelSelect = document.getElementById("nivel-select");
-                    const nexInput = document.getElementById("nex-input");
+                        const nomeInput = document.getElementById("nome-input");
 
-                    const checkboxNivel = document.getElementById("enable-level");
-                    const levelBox = document.getElementById("level-box");
+                        const classeSelect = document.getElementById("classe-select");
+                        const origemSelect = document.getElementById("origem-select");
+                        const trilhaSelect = document.getElementById("trilha-select");
 
-                    const sanidadeInput = document.getElementById("sanidade-input");
-                    const esforcoInput = document.getElementById("esforco-input");
-                    const determinacaoInput = document.getElementById("determinacao-input");
-                    const determinacaoCheckbox = document.getElementById("enable-determinacao");
-                    const vidaInput = document.getElementById("vida-input");
+                        const nivelSelect = document.getElementById("nivel-select");
+                        const nexInput = document.getElementById("nex-input");
 
-                    const attrElements = document.querySelectorAll(".attr");
-                    const pontosRestantesEl = document.getElementById("attr-restantes");
-                    const attrHint = document.querySelector(".attr-hint");
+                        const checkboxNivel = document.getElementById("enable-level");
+                        const levelBox = document.getElementById("level-box");
 
-                    const modal = document.getElementById("info-modal");
-                    const modalTitle = document.getElementById("modal-title");
-                    const modalDesc = document.getElementById("modal-desc");
-                    const closeModal = document.getElementById("close-modal");
+                        const determinacaoCheckbox = document.getElementById("enable-determinacao");
 
-                    // ===============================
-                    // BLOQUEIO INPUTS
-                    // ===============================
+                        const sanidadeInput = document.getElementById("sanidade-input");
+                        const esforcoInput = document.getElementById("esforco-input");
+                        const determinacaoInput = document.getElementById("determinacao-input");
+                        const vidaInput = document.getElementById("vida-input");
 
-                    [vidaInput, sanidadeInput, esforcoInput, determinacaoInput].forEach(i => {
-                        if (i) i.disabled = true;
-                    });
+                        const historiaInput = document.getElementById("historia-input");
 
-                    // ===============================
-                    // UTIL
-                    // ===============================
+                        const submitBtn = document.getElementById("submit-btn");
 
-                    const getValue = (item) => item.id || item.nome;
-                    const getName = (item) => item.nome || "Sem nome";
-                    const getDesc = (item) => item.descricao || "Sem descrição.";
+                        const attrElements = document.querySelectorAll(".attr");
+                        const pontosRestantesEl = document.getElementById("attr-restantes");
 
-                    const findItem = (list, value) =>
-                        list.find(item => getValue(item) == value);
+                        const modal = document.getElementById("info-modal");
+                        const modalTitle = document.getElementById("modal-title");
+                        const modalBody = document.getElementById("modal-body");
 
-                    const findHabilidade = (id) =>
-                        habilidades.find(h => h.id === id);
+                        const infoBtns = document.querySelectorAll(".info-btn");
 
-                    // ===============================
-                    // ATRIBUTOS
-                    // ===============================
+                        // ===============================
+                        // ATRIBUTOS
+                        // ===============================
 
-                    let pontosRestantes = 0;
-                    const limite = 3;
+                        let pontosRestantes = 0;
+                        const limite = 3;
 
-                    const atributos = {
-                        forca: 1,
-                        agilidade: 1,
-                        vigor: 1,
-                        presenca: 1,
-                        intelecto: 1
-                    };
+                        const atributos = {
+                            forca: 1,
+                            agilidade: 1,
+                            vigor: 1,
+                            presenca: 1,
+                            intelecto: 1
+                        };
 
-                    function renderAtributos() {
-                        attrElements.forEach(el => {
-                            const key = el.dataset.attr;
-                            el.textContent = atributos[key];
-                            el.style.opacity = atributos[key] >= limite ? "0.4" : "1";
-                        });
+                        function renderAtributos() {
+                            attrElements.forEach(el => {
+                                const key = el.dataset.attr;
+                                el.textContent = atributos[key];
+                            });
 
-                        pontosRestantesEl.textContent = pontosRestantes;
-                    }
-
-                    function updatePontosClasse(classeId) {
-                        const classe = classes.find(c => c.id == classeId);
-                        if (!classe) return;
-
-                        pontosRestantes = classe.pontos_atributo || 0;
-                        Object.keys(atributos).forEach(k => atributos[k] = 1);
-
-                        renderAtributos();
-                        atualizarStatusBase();
-                    }
-
-                    // ===============================
-                    // NEX NORMALIZADO
-                    // ===============================
-
-                    function getNexFinal(classe) {
-
-                        let nex = parseInt(nexInput.value) || 0;
-
-                        // mundano travado
-                        if (classe.id === "mundano") {
-                            nexInput.value = 0;
-                            nexInput.disabled = true;
-                            return 0;
-                        }
-                        else {
-                            nexInput.value = 5;
+                            pontosRestantesEl.textContent = pontosRestantes;
+                            validarFormulario();
                         }
 
-                        nexInput.disabled = false;
+                        function updatePontosClasse(classeId) {
+                            const classe = classes.find(c => c.id == classeId);
+                            if (!classe) return;
 
-                        // outras classes mínimo 5
-                        if (nex < 5) nex = 5;
+                            pontosRestantes = classe.pontos_atributo || 0;
 
-                        return nex;
-                    }
+                            Object.keys(atributos).forEach(k => atributos[k] = 1);
 
-                    // converte NEX (0,5,10,15...) → escala 0,1,2,3...
-                    function nexScale(nex) {
-                        return Math.floor(nex / 5);
-                    }
+                            renderAtributos();
+                            atualizarStatusBase();
+                        }
 
-                    // ===============================
-                    // STATUS (CORRIGIDO)
-                    // ===============================
+                        // ===============================
+                        // NEX
+                        // ===============================
 
-                    function atualizarStatusBase() {
+                        function getNexFinal(classe) {
 
-                        const classe = classes.find(c => c.id == classeSelect.value);
-                        if (!classe) return;
+                            let nex = parseInt(nexInput.value) || 0;
+                            const usarNivel = checkboxNivel.checked;
 
-                        const nex = getNexFinal(classe);
-                        const nivel = nexScale(nex);
+                            // mundano só trava se NÃO estiver usando nível
+                            if (classe.id === "mundano" && !usarNivel) {
+                                nexInput.value = 0;
+                                nexInput.disabled = true;
+                                return 0;
+                            }
 
-                        const vida =
-                            Math.floor(
+                            nexInput.disabled = false;
+
+                            if (classe.id !== "mundano" && nex < 5) {
+                                nex = 5;
+                                nexInput.value = 5;
+                            }
+
+                            return nex;
+                        }
+
+                        function nexScale(nex) {
+                            return Math.floor(nex / 5);
+                        }
+
+                        // ===============================
+                        // STATUS
+                        // ===============================
+
+                        function atualizarStatusBase() {
+
+                            const classe = classes.find(c => c.id == classeSelect.value);
+                            if (!classe) return;
+
+                            const usarNivel = checkboxNivel.checked;
+
+                            let nivel;
+
+                            if (usarNivel) {
+                                nivel = parseInt(nivelSelect.value) || 0;
+                            } else {
+                                const nex = getNexFinal(classe);
+                                nivel = nexScale(nex);
+                            }
+
+                            vidaInput.value =
                                 (classe.vida_inicial || 0) +
                                 atributos.vigor +
-                                ((classe.vida_por_nivel || 0) * nivel)
-                            );
+                                ((classe.vida_por_nivel || 0) * nivel);
 
-                        const esforco =
-                            Math.floor(
+                            esforcoInput.value =
                                 (classe.esforco_inicial || 0) +
                                 atributos.presenca +
-                                ((classe.esforco_por_nivel || 0) * nivel)
-                            );
+                                ((classe.esforco_por_nivel || 0) * nivel);
 
-                        const sanidade =
-                            Math.floor(
+                            sanidadeInput.value =
                                 (classe.sanidade_inicial || 0) +
-                                ((classe.sanidade_por_nivel || 0) * nivel)
-                            );
+                                ((classe.sanidade_por_nivel || 0) * nivel);
 
-                        const determinacao =
-                            Math.floor(
+                            determinacaoInput.value =
                                 (classe.determinacao_inicial || 0) +
                                 atributos.presenca +
-                                ((classe.determinacao_por_nivel || 0) * nivel)
-                            );
+                                ((classe.determinacao_por_nivel || 0) * nivel);
+                        }
 
-                        vidaInput.value = vida;
-                        esforcoInput.value = esforco;
-                        sanidadeInput.value = sanidade;
-                        determinacaoInput.value = determinacao;
-                    }
+                        // ===============================
+                        // ATRIBUTO CLICK
+                        // ===============================
 
-                    // ===============================
-                    // INTERAÇÃO ATRIBUTOS
-                    // ===============================
+                        attrElements.forEach(el => {
 
-                    attrElements.forEach(el => {
+                            const key = el.dataset.attr;
 
-                        const key = el.dataset.attr;
-
-                        let pressTimer;
-                        let isLong = false;
-                        let isTouch = false;
-
-                        el.addEventListener("touchstart", () => {
-                            isTouch = true;
-                            isLong = false;
-
-                            pressTimer = setTimeout(() => {
-                                isLong = true;
-
-                                if (atributos[key] <= 0) return;
-
-                                atributos[key]--;
-                                pontosRestantes++;
-
-                                renderAtributos();
-                                atualizarStatusBase();
-                            }, 500);
-                        });
-
-                        el.addEventListener("touchend", () => {
-                            clearTimeout(pressTimer);
-
-                            if (!isLong) {
+                            el.addEventListener("click", () => {
                                 if (pontosRestantes <= 0) return;
                                 if (atributos[key] >= limite) return;
 
@@ -211,236 +169,387 @@ document.addEventListener("DOMContentLoaded", () => {
 
                                 renderAtributos();
                                 atualizarStatusBase();
-                            }
+                            });
 
-                            setTimeout(() => isTouch = false, 50);
+                            el.addEventListener("contextmenu", (e) => {
+                                e.preventDefault();
+
+                                if (atributos[key] <= 0) return;
+
+                                atributos[key]--;
+                                pontosRestantes++;
+
+                                renderAtributos();
+                                atualizarStatusBase();
+                            });
                         });
 
-                        el.addEventListener("click", () => {
-                            if (isTouch) return;
+                        // ===============================
+                        // SELECTS
+                        // ===============================
 
-                            if (pontosRestantes <= 0) return;
-                            if (atributos[key] >= limite) return;
+                        function populateSelect(select, data, placeholder) {
+                            select.innerHTML = "";
 
-                            atributos[key]++;
-                            pontosRestantes--;
-
-                            renderAtributos();
-                            atualizarStatusBase();
-                        });
-
-                        el.addEventListener("contextmenu", (e) => {
-                            e.preventDefault();
-
-                            if (atributos[key] <= 0) return;
-
-                            atributos[key]--;
-                            pontosRestantes++;
-
-                            renderAtributos();
-                            atualizarStatusBase();
-                        });
-                    });
-
-                    // ===============================
-                    // SELECTS
-                    // ===============================
-
-                    function populateSelect(select, data, placeholder) {
-                        select.innerHTML = "";
-
-                        if (placeholder) {
                             const opt = document.createElement("option");
+                            opt.value = "";
                             opt.textContent = placeholder;
                             opt.disabled = true;
                             opt.selected = true;
-                            opt.hidden = true;
+
                             select.appendChild(opt);
+
+                            data.forEach(item => {
+                                const option = document.createElement("option");
+                                option.value = item.id || item.nome;
+                                option.textContent = item.nome;
+                                select.appendChild(option);
+                            });
                         }
 
-                        data.forEach(item => {
-                            const option = document.createElement("option");
-                            option.value = getValue(item);
-                            option.textContent = getName(item);
-                            select.appendChild(option);
+                        function populateTrilhas() {
+                            const lista = trilhas[classeSelect.value] || [];
+
+                            populateSelect(trilhaSelect, lista, "Trilha");
+                        }
+
+                        function populateNivel() {
+                            for (let i = 1; i <= 20; i++) {
+                                const o = document.createElement("option");
+                                o.value = i;
+                                o.textContent = i;
+                                nivelSelect.appendChild(o);
+                            }
+                        }
+
+                        populateSelect(classeSelect, classes, "Classe");
+                        populateSelect(origemSelect, origens, "Origem");
+                        populateSelect(trilhaSelect, [], "Trilha");
+
+                        populateNivel();
+
+                        // ===============================
+                        // UI - DETERMINAÇÃO
+                        // ===============================
+
+                        determinacaoCheckbox.addEventListener("change", () => {
+
+                            const detWrapper = document.getElementById("det-wrapper");
+
+                            if (determinacaoCheckbox.checked) {
+                                document.querySelectorAll(".san-pe").forEach(el => el.classList.add("hidden"));
+                                detWrapper.classList.remove("hidden");
+                            } else {
+                                document.querySelectorAll(".san-pe").forEach(el => el.classList.remove("hidden"));
+                                detWrapper.classList.add("hidden");
+                            }
                         });
-                    }
 
-                    function populateNivel() {
-                        nivelSelect.innerHTML = "";
+                        // ===============================
+                        // VALIDAÇÃO
+                        // ===============================
 
-                        for (let i = 1; i <= 20; i++) {
-                            const o = document.createElement("option");
-                            o.value = i;
-                            o.textContent = i;
-                            nivelSelect.appendChild(o);
-                        }
-                    }
+                        function validarFormulario(mostrarErros = false) {
 
-                    populateSelect(classeSelect, classes, "Classe");
-                    populateSelect(origemSelect, origens, "Origem");
-                    populateSelect(trilhaSelect, [], "Trilha");
-                    populateNivel();
+                            const nome = nomeInput.value.trim();
+                            const classe = classeSelect.value !== "";
+                            const origem = origemSelect.value !== "";
+                            const trilha = trilhaSelect.value !== "";
 
-                    // ===============================
-                    // EVENTS
-                    // ===============================
+                            let valido = true;
 
-                    classeSelect.addEventListener("change", () => {
-                        updatePontosClasse(classeSelect.value);
+                            // RESET visual
+                            [nomeInput, classeSelect, origemSelect, trilhaSelect]
+                                .forEach(el => el.classList.remove("invalid"));
 
-                        const lista = trilhas[classeSelect.value] || [];
-                        populateSelect(trilhaSelect, lista, "Trilha");
-                    });
+                            pontosRestantesEl.style.color = "white";
 
-                    nexInput.addEventListener("input", atualizarStatusBase);
+                            // SÓ MOSTRA ERRO SE PEDIDO
+                            if (mostrarErros) {
 
-                    checkboxNivel.addEventListener("change", () => {
-                        levelBox.classList.toggle("hidden", !checkboxNivel.checked);
-                    });
+                                if (!nome) {
+                                    nomeInput.classList.add("invalid");
+                                    valido = false;
+                                }
 
-                    determinacaoCheckbox.addEventListener("change", () => {
-                        if (determinacaoCheckbox.checked) {
-                            sanidadeInput.classList.add("hidden");
-                            esforcoInput.classList.add("hidden");
-                            determinacaoInput.classList.remove("hidden");
-                        } else {
-                            sanidadeInput.classList.remove("hidden");
-                            esforcoInput.classList.remove("hidden");
-                            determinacaoInput.classList.add("hidden");
-                        }
-                    });
+                                if (!classe) {
+                                    classeSelect.classList.add("invalid");
+                                    valido = false;
+                                }
 
-                    // ===============================
-                    // HINT
-                    // ===============================
+                                if (!origem) {
+                                    origemSelect.classList.add("invalid");
+                                    valido = false;
+                                }
 
-                    function isMobile() {
-                        return window.matchMedia("(max-width: 768px)").matches
-                            || "ontouchstart" in window;
-                    }
+                                if (!trilha) {
+                                    trilhaSelect.classList.add("invalid");
+                                    valido = false;
+                                }
 
-                    function updateHint() {
-                        attrHint.textContent = isMobile()
-                            ? "Toque para aumentar • Segure para diminuir"
-                            : "Esquerdo para aumentar • Direito para diminuir";
-                    }
-
-                    updateHint();
-                    window.addEventListener("resize", updateHint);
-
-                    // ===============================
-                    // MODAL
-                    // ===============================
-
-                    function openModal(item) {
-                        modalTitle.textContent = getName(item);
-                        modalDesc.innerHTML = `<p>${getDesc(item)}</p>`;
-                        modal.classList.remove("hidden");
-                    }
-
-                    closeModal.addEventListener("click", () => {
-                        modal.classList.add("hidden");
-                    });
-
-                    document.querySelectorAll(".info-btn").forEach(btn => {
-                        btn.addEventListener("click", () => {
-
-                            const type = btn.dataset.type;
-                            let data = null;
-
-                            if (type === "classe") data = findItem(classes, classeSelect.value);
-                            if (type === "origem") data = findItem(origens, origemSelect.value);
-                            if (type === "trilha") {
-                                const lista = trilhas[classeSelect.value] || [];
-                                data = lista.find(t => getValue(t) == trilhaSelect.value);
+                                if (pontosRestantes !== 0) {
+                                    pontosRestantesEl.style.color = "#ff4d4d";
+                                    valido = false;
+                                }
+                            } else {
+                                // mesmo sem mostrar erro, ainda precisa validar
+                                if (!nome || !classe || !origem || !trilha || pontosRestantes !== 0) {
+                                    valido = false;
+                                }
                             }
 
-                            if (data) openModal(data);
+                            // BOTÃO SEMPRE ATIVO
+                            submitBtn.disabled = false;
+
+                            // botões ?
+                            infoBtns.forEach(btn => {
+
+                                let ativo = false;
+
+                                if (btn.dataset.type === "classe") ativo = classe;
+                                if (btn.dataset.type === "origem") ativo = origem;
+                                if (btn.dataset.type === "trilha") ativo = trilha;
+
+                                btn.classList.toggle("disabled", !ativo);
+                                btn.disabled = !ativo;
+                            });
+
+                            return valido;
+                        }
+
+                        // ===============================
+                        // EVENTOS
+                        // ===============================
+
+                        classeSelect.addEventListener("change", () => {
+                            updatePontosClasse(classeSelect.value);
+                            populateTrilhas();
                         });
-                    });
 
-                    async function salvarPersonagem() {
+                        nomeInput.addEventListener("input", () => validarFormulario(false));
+                        classeSelect.addEventListener("change", () => validarFormulario(false));
+                        origemSelect.addEventListener("change", () => validarFormulario(false));
+                        trilhaSelect.addEventListener("change", () => validarFormulario(false));
 
-                        const user = auth.currentUser;
+                        nexInput.addEventListener("input", () => {
 
-                        if (!user) {
-                            alert("Você precisa estar logado.");
-                            return;
+                            let valor = parseInt(nexInput.value) || 0;
+
+                            if (valor < 0) valor = 0;
+                            if (valor > 99) valor = 99;
+
+                            nexInput.value = valor;
+
+                            atualizarStatusBase();
+                        });
+
+                        nivelSelect.addEventListener("change", atualizarStatusBase);
+
+                        checkboxNivel.addEventListener("change", () => {
+                            levelBox.classList.toggle("hidden", !checkboxNivel.checked);
+                            atualizarStatusBase();
+                        });
+
+                        nivelSelect.addEventListener("input", atualizarStatusBase);
+
+                        // ===============================
+                        // MODAL
+                        // ===============================
+
+                        function getNomePericia(id) {
+                            const p = pericias.find(p => p.id === id);
+                            return p ? p.nome : id;
                         }
 
-                        const classe = classes.find(c => c.id == classeSelect.value);
+                        function openModal(item, type) {
 
-                        if (!classe) {
-                            alert("Classe inválida.");
-                            return;
+                            modalTitle.textContent = item.nome;
+
+                            // ===============================
+                            // CLASSE
+                            // ===============================
+                            if (type === "classe") {
+
+                                modalBody.innerHTML = `
+            <div class="modal-section">
+
+                <p>${item.descricao || ""}</p>
+
+                <div class="modal-divider"></div>
+
+                <div class="modal-stats">
+                    <div>Vida inicial: ${item.vida_inicial ?? "-"}</div>
+                    <div>Sanidade inicial: ${item.sanidade_inicial ?? "-"}</div>
+                    <div>PE inicial: ${item.esforco_inicial ?? "-"}</div>
+                    <div>PD inicial: ${item.determinacao_inicial ?? "-"}</div>
+                </div>
+
+                <div class="modal-divider"></div>
+
+                <div><strong>Perícias treinadas:</strong><br>${(item.pericias || []).map(getNomePericia).join(", ") || "-"}</div>
+                <div><strong>Proficiências:</strong><br>${(item.proficiencias || []).join(", ") || "-"}</div>
+
+            </div>
+        `;
+                            }
+
+                            // ===============================
+                            // ORIGEM
+                            // ===============================
+                            if (type === "origem") {
+
+                                const habilidade = habilidades.find(h => h.id === item.habilidadeId);
+
+                                modalBody.innerHTML = `
+            <div class="modal-section">
+
+                <p>${item.descricao || ""}</p>
+
+                <div class="modal-divider"></div>
+
+                <div><strong>Perícias treinadas:</strong><br>${(item.pericias || []).map(getNomePericia).join(", ") || "-"}</div>
+
+                <div class="modal-divider"></div>
+
+                <div>
+                    <strong>Habilidade:</strong><br>
+                    ${habilidade ? habilidade.nome : "-"}
+                </div>
+
+                <div class="modal-habilidade-desc">
+                    ${habilidade ? habilidade.descricao : ""}
+                </div>
+
+            </div>
+        `;
+                            }
+
+                            // ===============================
+                            // TRILHA
+                            // ===============================
+                            if (type === "trilha") {
+
+                                const listaHabilidades = (item.habilidades || []).map(id => {
+                                    const h = habilidades.find(h => h.id === id);
+
+                                    return h ? `
+            <div class="modal-habilidade">
+                <strong>${h.nome}</strong>
+                <div class="modal-habilidade-desc">
+                    ${h.descricao}
+                </div>
+            </div>
+        ` : "";
+                                }).join("");
+
+                                modalBody.innerHTML = `
+        <div class="modal-section">
+
+            <p>${item.descricao || ""}</p>
+
+            <div class="modal-divider"></div>
+
+            <div>
+                <strong>Habilidades:</strong>
+            </div>
+
+            ${listaHabilidades || "<p>-</p>"}
+
+        </div>
+    `;
+                            }
+
+                            modal.classList.remove("hidden");
                         }
 
-                        const usarNivel = checkboxNivel.checked;
-                        const usarDeterminacao = determinacaoCheckbox.checked;
+                        document.querySelectorAll(".info-btn").forEach(btn => {
+                            btn.addEventListener("click", () => {
 
-                        const nivel = usarNivel
-                            ? (parseInt(nivelSelect.value) || 0)
-                            : 0;
+                                let data = null;
 
-                        const data = {
-                            nome: document.getElementById("nome-input").value || "Sem nome",
+                                if (btn.dataset.type === "classe") {
+                                    data = classes.find(c => c.id == classeSelect.value);
+                                }
 
-                            // ===============================
-                            // IDS (IMPORTANTE)
-                            // ===============================
-                            classe: classeSelect.value,
-                            origem: origemSelect.value,
-                            trilha: trilhaSelect.value,
+                                if (btn.dataset.type === "origem") {
+                                    data = origens.find(o => o.id == origemSelect.value);
+                                }
 
-                            // ===============================
-                            // PROGRESSÃO
-                            // ===============================
-                            nex: parseInt(nexInput.value) || 0,
-                            nivel: nivel,
-                            usarNivel: usarNivel,
-                            usarDeterminacao: usarDeterminacao,
+                                if (btn.dataset.type === "trilha") {
+                                    const lista = trilhas[classeSelect.value] || [];
+                                    data = lista.find(t => (t.id || t.nome) == trilhaSelect.value);
+                                }
 
-                            // ===============================
-                            // DADOS BASE
-                            // ===============================
-                            atributos: { ...atributos },
+                                if (!data) return;
 
-                            vida: Number(vidaInput.value) || 0,
-                            esforco: Number(esforcoInput.value) || 0,
-                            sanidade: Number(sanidadeInput.value) || 0,
-                            determinacao: Number(determinacaoInput.value) || 0,
+                                openModal(data, btn.dataset.type);
+                            });
+                        });
 
-                            // ===============================
-                            // META
-                            // ===============================
-                            uid: user.uid,
-                            createdAt: Date.now()
-                        };
+                        document.getElementById("close-modal")
+                            .addEventListener("click", () => modal.classList.add("hidden"));
 
-                        try {
+                        // ===============================
+                        // SALVAR
+                        // ===============================
+
+                        async function salvarPersonagem() {
+
+                            if (submitBtn.disabled) return;
+
+                            const user = auth.currentUser;
+                            if (!user) return alert("Loga primeiro.");
+
                             const id = `${user.uid}_${Date.now()}`;
+
+                            const data = {
+                                nome: nomeInput.value,
+                                historia: historiaInput.value,
+
+                                classe: classeSelect.value,
+                                origem: origemSelect.value,
+                                trilha: trilhaSelect.value,
+
+                                nex: Number(nexInput.value) || 0,
+                                nivel: checkboxNivel.checked ? Number(nivelSelect.value) : 0,
+
+                                usarNivel: checkboxNivel.checked,
+                                usarDeterminacao: determinacaoCheckbox.checked,
+
+                                atributos: { ...atributos },
+
+                                vida: Number(vidaInput.value),
+                                esforco: Number(esforcoInput.value),
+                                sanidade: Number(sanidadeInput.value),
+                                determinacao: Number(determinacaoInput.value),
+
+                                uid: user.uid,
+                                createdAt: Date.now()
+                            };
 
                             await setDoc(doc(db, "personagens", id), data);
 
-                            alert("Personagem salvo com sucesso!");
-
-                        } catch (err) {
-                            console.error(err);
-                            alert("Erro ao salvar personagem.");
+                            window.location.href = `./ficha.html?id=${id}`;
                         }
-                    }
 
-                    // ===============================
-                    // INIT
-                    // ===============================
+                        submitBtn.addEventListener("click", () => {
 
-                    renderAtributos();
-                    atualizarStatusBase();
+                            const valido = validarFormulario(true);
 
-                    document.getElementById("submit-btn")
-                        .addEventListener("click", salvarPersonagem);
+                            if (!valido) return;
 
+                            salvarPersonagem();
+                        });
+
+                        // ===============================
+                        // INIT
+                        // ===============================
+
+                        renderAtributos();
+                        atualizarStatusBase();
+                        validarFormulario();
+
+                    });
                 });
             });
         });
